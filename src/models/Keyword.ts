@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { KeywordInfo } from '../interfaces/keword/KeywordInfo';
+import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 
 const KeywordSchema = new mongoose.Schema(
   {
