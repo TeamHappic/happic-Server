@@ -10,7 +10,6 @@ export interface CharacterInfo {
 }
 
 export interface CharacterTalkInfo {
-  title: String;
   question: String;
   answer: String;
 }
