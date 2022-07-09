@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export interface CharacterInfo {
+export interface FilmInfo {
   writer: mongoose.Types.ObjectId;
   photo: String;
   keyword: mongoose.Types.ObjectId[];
