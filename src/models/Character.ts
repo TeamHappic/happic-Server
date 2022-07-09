@@ -15,10 +15,6 @@ const CharacterSchema = new mongoose.Schema(
     ],
     talk: [
       {
-        title: {
-          type: String,
-          required: true,
-        },
         question: {
           type: String,
           required: true,
