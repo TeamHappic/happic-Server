@@ -60,7 +60,7 @@ jobs:
 
       - name: deploy with AWS codeDeploy
         run: aws deploy create-deployment
-          --application-name hous-codedeploy
+          --application-name happic-codedeploy
           --deployment-config-name CodeDeployDefault.OneAtATime
           --deployment-group-name GROUP
-          --s3-location bucket=hous-build,bundleType=zip,key=deploy/hous.zip
+          --s3-location bucket=happic-build,bundleType=zip,key=deploy/happic.zip
