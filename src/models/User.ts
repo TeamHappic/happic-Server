@@ -12,19 +12,19 @@ const UserSchema = new mongoose.Schema({
   },
   characterId: {
     type: Number,
-    required: true,
   },
   characterName: {
     type: String,
-    require: true,
   },
   growthRate: {
     type: Number,
     required: true,
+    default: 0,
   },
   level: {
     type: Number,
     required: true,
+    default: 1,
   },
   film: [
     {
