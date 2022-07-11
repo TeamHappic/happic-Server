@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  characterId: {
+    type: Number,
+    required: true,
+  },
   characterName: {
     type: String,
     require: true,
@@ -19,14 +23,8 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   level: {
-    type: mongoose.Types.ObjectId,
+    type: Number,
     required: true,
-    ref: 'Character',
-  },
-  character: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'Character',
   },
   film: [
     {
@@ -38,8 +36,8 @@ const UserSchema = new mongoose.Schema({
   fcmToken: {
     type: String,
     required: true,
-    unique: true
-  }
+    unique: true,
+  },
 });
 
 export default mongoose.model<UserInfo & mongoose.Document>('User', UserSchema);
