@@ -10,7 +10,10 @@ const FilmSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      require: true,
+      required: true,
+    },
+    thumbnail: {
+      type: String,
     },
     keyword: [
       {

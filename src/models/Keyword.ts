@@ -14,7 +14,7 @@ const KeywordSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      require: true,
+      required: true,
     },
     count: {
       type: Number,
