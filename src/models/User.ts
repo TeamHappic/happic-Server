@@ -35,6 +35,11 @@ const UserSchema = new mongoose.Schema({
       ref: 'Film',
     },
   ],
+  fcmToken: {
+    type: String,
+    required: true,
+    unique: true
+  }
 });
 
 export default mongoose.model<UserInfo & mongoose.Document>('User', UserSchema);
