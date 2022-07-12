@@ -1,26 +1,130 @@
-# Happic-Server
+<img src = "https://user-images.githubusercontent.com/80062632/178316819-9873c137-bcbc-4162-afae-095e1a8e99ce.png">  <br>
 
-- 설계한 Collection (SQL 일 시 ERD 대체)
-- 팀 별 역할 분담
-- commit, coding convention, branch 전략
-- 프로젝트 폴더 구조
-- 전체 API 로직 구현 진척도
+# happic: 해픽
+
+**Be happy, take a happic:**
+
+> **매일의 추억이 나의 행복이 되어, 해픽** <br>
+> 저희는 해픽입니다
+>
+> SOPT 30th APP JAM <br>
+> 프로젝트 기간 : 2021.07.02 ~ 2021.07.23
+
+`추후 릴리즈 예정 `
+
+<br>
+
+<br>
+
+##  Team happic SERVER Developers
+ <img src="https://user-images.githubusercontent.com/69195315/178483597-66729963-bffd-423b-8e89-c725ff4174b3.png" width="500"> | <img src="https://user-images.githubusercontent.com/69195315/178483568-97b1c139-84ee-4cef-817b-456d09dc1db6.png" width="500"> | <img src="https://user-images.githubusercontent.com/69195315/178483535-694834b5-ca8f-4386-8b0f-515f9ef84ac1.png" width="500"> |
+ :---------:|:----------:|:---------:
+ 이서우 | 김동재 | 유송경 |
+[dltjdn](https://github.com/dltjdn) | [ehdwoKIM](https://github.com/ehdwoKIM) | [ssong915](https://github.com/ssong915) |
+
+<br>
+
+## 🌲 Git Branch Convention
+
+- main: 배포를 위한 브랜치 ( **최종본** )
+
+- develop: 기능 개발이 완료된 코드들이 모이는 곳 ( **검증된 곳이자 검증할 곳** )
+
+- feature: 기능 개발을 위한 브랜치 ( **feature/본인이름/기능명** )
+
 
 <br/>
 
-# 🌲 branch 전략
+## 💌 Commit Convention
 
 ```
-💟 main: 배포를 위한 브랜치 (`최최최최종본`)
-
-👾 develop: 기능 개발이 완료된 코드들이 모이는 곳(`검증된 곳이자 검증할 곳`)
-
-🔗feature: 기능 개발을 위한 브랜치 (`feature/자기이름/기능명`)
+- [ADD] : 새로운 기능 구현
+- [FEAT] : ADD 이외의 부수적인 코드 추가, 라이브러리 추가, 새로운 파일 생성 시
+- [CHORE]: 코드 수정, 내부 파일 수정
+- [FIX] : 버그, 오류 해결
+- [DEL] : 쓸모없는 코드 삭제
+- [DOCS] : README나 WIKI 등의 문서 개정
+- [MOVE] : 프로젝트 내 파일이나 코드의 이동
+- [RENAME] : 파일 이름의 변경
+- [STYLE] : 코드가 아닌 스타일 변경을 하는 경우
 ```
 
 <br/>
 
-# 🗂 프로젝트 폴더 구조
+## ✨ Coding Convention
+<details>
+<summary> 명명규칙 (Naming Conventions)</summary>
+<div markdown="1">
+ 
+1. 이름으로부터 의도가 읽혀질 수 있게 쓴다.   
+2. 오브젝트, 함수, 그리고 인스턴스에는 `camelCase`를 사용한다.    
+3. 클래스나 constructor에는 `PascalCase`를 사용한다.    
+4. 함수 이름은 동사 + 명사 형태로 작성한다.    
+    ex) `postUserInformation()`
+ 5. 약어 사용은 최대한 지양한다.
+ 6. 이름에 네 단어 이상이 들어가면 팀원과 상의를 거친 후 사용한다.
+ 7. 데이터베이스 명은 영어 소문자로 구성한다.
+</div>
+</details>
+<details>
+<summary> 블록 (Blocks)</summary>
+<div markdown="1">
+
+ 1. 복수행의 블록에는 중괄호({})를 사용한다.
+ 2. 복수행 블록의 if 와 else 를 이용하는 경우 else 는 if 블록 끝의 중괄호( } )와 같은 행에 위치시킨다.
+
+</div>
+</details>
+<details>
+<summary> 코멘트 (Comments)</summary>
+<div markdown="1">
+
+1. 복수형의 코멘트는 `/** ... */` 를 사용한다.
+2. 단일 행의 코멘트에는 `//` 을 사용하고 코멘트를 추가하고 싶은 코드의 상부에 배치한다. 그리고 코멘트의 앞에 빈 행을 넣는다.
+
+</div>
+</details>
+<details>
+<summary> 문자열 (Strings)</summary>
+<div markdown="1">
+
+1. 문자열에는 싱크쿼트 `''` 를 사용한다..
+2. 프로그램에서 문자열을 생성하는 경우는 문자열 연결이 아닌 `template strings`를 이용한다.
+
+</div>
+</details>
+<details>
+<summary> 함수 (Functions)</summary>
+<div markdown="1">
+
+1. 화살표 함수를 사용한다.
+ ```javascript
+  var arr1 = [1, 2, 3];
+  var pow1 = arr.map(function (x) { // ES5 Not Good
+    return x * x;
+  });
+
+  const arr2 = [1, 2, 3];
+  const pow2 = arr.map(x => x * x); // ES6 Good
+ ```
+2. 비동기 함수 사용 시
+ Promise함수의 사용은 지양하고 **async, await** 를 사용하도록 한다.
+
+</div>
+</details>
+<details>
+<summary> 조건식과 등가식 (Comparsion Operators & Equality)</summary>
+<div markdown="1">
+
+1. `==`이나 `!=`보다 `===` 와 `!==`을 사용한다.
+2. 단축형을 사용한다.
+3. 비동기 함수를 사용할 때 `Promise`함수의 사용은 지양하고 `async, await`를 쓰도록 한다.
+ 
+</div>
+</details>
+<br/>
+
+## 🗂 Project Foldering
 
 ```
 📦 config                    // port, mongoURI 등 설정
@@ -62,24 +166,155 @@
 
 <br/>
 
-# 💌 커밋 컨벤션
+## 🗒 DB Schema
+<details>
+<summary> User</summary>
+<div markdown="1">
 
+```typescript
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  characterId: {
+    type: Number,
+  },
+  characterName: {
+    type: String,
+  },
+  growthRate: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  level: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
+  film: [
+    {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: 'Film',
+    },
+  ],
+  fcmToken: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+});
 ```
-- [ADD] : 새로운 기능 구현
-- [FEAT] : ADD 이외의 부수적인 코드 추가, 라이브러리 추가, 새로운 파일 생성 시
-- [CHORE]: 코드 수정, 내부 파일 수정
-- [FIX] : 버그, 오류 해결
-- [DEL] : 쓸모없는 코드 삭제
-- [DOCS] : README나 WIKI 등의 문서 개정
-- [MOVE] : 프로젝트 내 파일이나 코드의 이동
-- [RENAME] : 파일 이름의 변경
-- [STYLE] : 코드가 아닌 스타일 변경을 하는 경우
+
+</div>
+</details>
+<details>
+<summary> Film</summary>
+<div markdown="1">
+
+```typescript
+const FilmSchema = new mongoose.Schema(
+  {
+    writer: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    photo: {
+      type: String,
+      required: true,
+    },
+    thumbnail: {
+      type: String,
+    },
+    keyword: [
+      {
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: 'Keyword',
+      },
+    ],
+  },
+  {
+    timestamps: true, // createdAt, updatedAt 자동기록
+  }
+);
 ```
+
+</div>
+</details>
+<details>
+<summary> Keyword</summary>
+<div markdown="1">
+
+```typescript
+const KeywordSchema = new mongoose.Schema(
+  {
+    writer: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    count: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true, // createdAt, updatedAt 자동기록
+  }
+);
+```
+
+</div>
+</details>
+
 
 <br/>
 
-# 📄 API
+## 🛠 API
 
 - [API 명세서](https://www.notion.so/API-7c20c52cd7444e1391762dc8b502fd1a)
 
 <br />
+
+## 📚 Task & Role <img width=25px src=https://user-images.githubusercontent.com/80062632/178400930-fffb094c-32ce-4b28-8901-527938888f0c.png>
+
+Route | 기능 | 구현 여부 | 담당자
+:---------:|---------|:----------:|:---------:
+ home | 메인화면 조회 |  | 유송경
+ &nbsp; | 푸시알림 조회 |  | 김동재
+  &nbsp; | 해픽캡슐 조회 |  | 김동재
+  mypage | 해픽레포트 조회 |  | 유송경
+  &nbsp; | 키워드 전체 순위 조회 |  | 유송경
+  &nbsp; | 카테고리별 전체 순위 조회 |  | 유송경
+  &nbsp; | 월별 하루해픽 횟수 조회 | | 유송경
+  daily | 하루해픽 전체 조회 | | 이서우
+   &nbsp; | 하루해픽 생성 |  | 이서우
+  &nbsp; | 하루해픽 키워드 조회 |  | 이서우
+  &nbsp; | 하루해픽 상세 조회 |  | 이서우
+  &nbsp; | 하루해픽 삭제 |  | 이서우
+  &nbsp; | 하루제목 전체 조회 | | 이서우
+  user | 소셜로그인 | | 김동재
+  setting | 캐릭터 변경 | | 김동재 
+  
+
+
+---
+
+<img src = "https://user-images.githubusercontent.com/80062632/178400592-f38ba33e-d58e-4ecf-9c1a-96fec9f305a6.png" width="100"> 
