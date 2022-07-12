@@ -33,6 +33,11 @@ const UserSchema = new mongoose.Schema({
       ref: 'Film',
     },
   ],
+  count: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   fcmToken: {
     type: String,
     required: true,
