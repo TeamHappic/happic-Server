@@ -21,12 +21,19 @@ const findUserById = async (
     if (!user) {
       return null;
     }
+    
+    const film = await Film.findById(user.film[0])
+    var isPosted = false
+    if (film){
+        isPosted = isSameDate(film.createAt)
+    }
+
     const data = {
       characterId: user.characterId,
       characterName: user.characterName,
       growthRate: user.growthRate,
       level: user.level,
-      isPosted: isSameDate(user.film[0].createAt),
+      isPosted: isPosted,
     };
     return data;
 
