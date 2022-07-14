@@ -6,6 +6,6 @@ export interface KeywordResponseDto {
   category: String;
   content: String;
   count: Number;
-  year: Number;
-  month: Number;
+  year: String;
+  month: String;
 }
