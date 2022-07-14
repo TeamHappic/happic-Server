@@ -1,2 +1,4 @@
+import FileController from './FileController';
+
 // controller index file
-export {};
+export { FileController };
