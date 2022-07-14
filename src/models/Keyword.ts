@@ -17,11 +17,11 @@ const KeywordSchema = new mongoose.Schema(
       required: true,
     },
     year: {
-      type: Number,
+      type: String,
       required: true,
     },
     month: {
-      type: Number,
+      type: String,
       required: true,
     },
     count: {
@@ -36,6 +36,6 @@ const KeywordSchema = new mongoose.Schema(
 );
 
 export default mongoose.model<KeywordInfo & mongoose.Document>(
-  'Keword',
+  'Keyword',
   KeywordSchema
 );
