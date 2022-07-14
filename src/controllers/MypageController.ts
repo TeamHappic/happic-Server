@@ -21,7 +21,7 @@ const getAllRank = async (req: Request, res: Response) => {
     const { year, month, option } = req.query;
     
     try {
-        let data: KeywordResponseDto[] = [];
+        let data: Object = [];
         if (year && month && option) {
             const isOptionType = (
                 option: string,

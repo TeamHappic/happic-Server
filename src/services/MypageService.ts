@@ -7,7 +7,7 @@ const getAllRank = async (
     year : string,
     month : string,
     option:  KeywordOptionType,
-): Promise<KeywordResponseDto[]> => {
+): Promise<object> => {
 
     let keywords: KeywordInfo[] = [];
     let rank1s = []
@@ -79,7 +79,7 @@ const getAllRank = async (
             rank2s,
             rank4s
         };
-
+        
         return data;
 
     } catch (error) {
