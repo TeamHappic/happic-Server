@@ -16,6 +16,14 @@ const KeywordSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    year: {
+      type: Number,
+      required: true,
+    },
+    month: {
+      type: Number,
+      required: true,
+    },
     count: {
       type: Number,
       required: true,
