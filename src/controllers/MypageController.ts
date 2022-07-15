@@ -19,7 +19,8 @@ import { MypageService } from '../services';
  */
 const getAllRank = async (req: Request, res: Response) => {
     const { year, month, option } = req.query;
-    
+    const { userId } = req.params;
+
     try {
         let data: Object = [];
         if (year && month && option) {
@@ -40,9 +41,12 @@ const getAllRank = async (req: Request, res: Response) => {
                         util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
                     );
             }
+            const keyword_year = Number(year)
+            const keyword_month = Number(month)
             data = await MypageService.getAllRank(
-                year as string,
-                month as string,
+                userId as string,
+                keyword_year as Number,
+                keyword_month as Number,
                 option as KeywordOptionType
             ); 
         } 

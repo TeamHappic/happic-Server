@@ -17,11 +17,11 @@ const KeywordSchema = new mongoose.Schema(
       required: true,
     },
     year: {
-      type: String,
+      type: Number,
       required: true,
     },
     month: {
-      type: String,
+      type: Number,
       required: true,
     },
     count: {
