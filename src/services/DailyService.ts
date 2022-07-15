@@ -11,35 +11,41 @@ const createDaily = async (
     let year = today.getFullYear(); // 년도
     let month = today.getMonth() + 1; // 월
 
-    const { photo, when, where, who, what } = filmCreateDto;
-
+    // #when 저장
     const keyword1 = new Keyword({
+      writer: '62cef0997f008c29128704ed',
       category: 'when',
-      content: when,
+      content: filmCreateDto.when,
       year: year,
       month: month,
     });
     await keyword1.save();
 
+    // # where 저장
     const keyword2 = new Keyword({
+      writer: '62cef0997f008c29128704ed',
       category: 'where',
-      content: where,
+      content: filmCreateDto.where,
       year: year,
       month: month,
     });
     await keyword2.save();
 
+    // # who 저장
     const keyword3 = new Keyword({
+      writer: '62cef0997f008c29128704ed',
       category: 'who',
-      content: who,
+      content: filmCreateDto.who,
       year: year,
       month: month,
     });
     await keyword3.save();
 
+    // # what 저장
     const keyword4 = new Keyword({
+      writer: '62cef0997f008c29128704ed',
       category: 'what',
-      content: what,
+      content: filmCreateDto.what,
       year: year,
       month: month,
     });
@@ -53,7 +59,8 @@ const createDaily = async (
     ];
 
     const film = new Film({
-      photo: photo,
+      writer: '62cef0997f008c29128704ed',
+      photo: filmCreateDto.photo,
       keyword: keywordList,
     });
 

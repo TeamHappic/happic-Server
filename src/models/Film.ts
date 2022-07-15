@@ -5,7 +5,7 @@ const FilmSchema = new mongoose.Schema(
   {
     writer: {
       type: mongoose.Types.ObjectId,
-      //required: true,
+      required: true,
       ref: 'User',
     },
     photo: {
