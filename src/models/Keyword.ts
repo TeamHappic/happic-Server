@@ -5,7 +5,7 @@ const KeywordSchema = new mongoose.Schema(
   {
     writer: {
       type: mongoose.Types.ObjectId,
-      required: true,
+      //required: true,
       ref: 'User',
     },
     category: {
@@ -26,7 +26,7 @@ const KeywordSchema = new mongoose.Schema(
     },
     count: {
       type: Number,
-      required: true,
+      //required: true,
       default: 0,
     },
   },

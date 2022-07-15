@@ -8,6 +8,9 @@ const message = {
 
   // 파일
   CREATE_FILE_SUCCESS: '파일 업로드 성공',
+
+  // 하루 해픽
+  CREATE_DAILY_SUCCESS: '하루 해픽 생성 성공',
 };
 
 export default message;
