@@ -41,6 +41,31 @@ const createDaily = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @route DELETE /daily/:filmId
+ * @desc 하루 해픽을 삭제합니다
+ * @access
+ */
+const deleteDaily = async (req: Request, res: Response) => {
+  const { filmId } = req.params;
+  try {
+    await DailyService.deleteDaily(filmId);
+    res.status(statusCode.NO_CONTENT).send(); //204
+  } catch (error) {
+    console.log(error);
+    // 서버 내부에서 오류 발생
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
+
 export default {
   createDaily,
+  deleteDaily,
 };
