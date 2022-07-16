@@ -218,21 +218,19 @@ const getKeywordByMonth = async (
   month: Number
 ): Promise<object> => {
   let films: FilmInfo[] = [];
-  let ranks: Array<object> = [];
+  let ranks: object = [];
+  let filmDates: Number[] = [];
   try {
     if (year && month) {
-      let filmDates: Number[] = [];
       films = await Film.find({ writer: userId, year: year, month: month });
       for (var i = 0; i < films.length; i++) {
         var day = dayjs(films[i].createdAt);
         filmDates.push(day.get('date'));
       }
-      ranks.push({ month: month, count: films.length, dates: filmDates });
+      //ranks.push({ month: month, count: films.length, dates: filmDates });
     }
 
-    const data = {
-      ranks,
-    };
+    const data = { month: month, count: films.length, dates: filmDates };
 
     return data;
   } catch (error) {
