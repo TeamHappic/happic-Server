@@ -16,6 +16,4 @@ router.post(
   DailyController.createDaily
 );
 
-router.delete('/:filmId', DailyController.deleteDaily);
-
 export default router;

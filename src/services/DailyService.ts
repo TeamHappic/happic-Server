@@ -132,58 +132,6 @@ const createDaily = async (
   }
 };
 
-const deleteDaily = async (filmId: string): Promise<void> => {
-  try {
-    const film = await Film.find({ _id: filmId }, { _id: 0, keyword: 1 });
-
-    const whenId = film[0].keyword[0].toString();
-    const whereId = film[0].keyword[1].toString();
-    const whoId = film[0].keyword[2].toString();
-    const whatId = film[0].keyword[3].toString();
-
-    // #when Count - 1
-    const whenKeyword = await Keyword.find(
-      { _id: whenId },
-      { _id: 0, count: 1 }
-    );
-    let whenCount: Number = whenKeyword[0].count;
-    whenCount = (whenCount as number) - 1;
-    await Keyword.findByIdAndUpdate(whenId, { count: whenCount });
-
-    // #where Count - 1
-    const whereKeyword = await Keyword.find(
-      { _id: whereId },
-      { _id: 0, count: 1 }
-    );
-    let whereCount: Number = whereKeyword[0].count;
-    whereCount = (whereCount as number) - 1;
-    await Keyword.findByIdAndUpdate(whereId, { count: whereCount });
-
-    // #who Count - 1
-    const whoKeyword = await Keyword.find({ _id: whoId }, { _id: 0, count: 1 });
-    let whoCount: Number = whoKeyword[0].count;
-    whoCount = (whoCount as number) - 1;
-    await Keyword.findByIdAndUpdate(whoId, { count: whoCount });
-    console.log(await Keyword.find({ _id: whoId }, { _id: 0, count: 1 }));
-
-    // #what Count - 1
-    const whatKeyword = await Keyword.find(
-      { _id: whatId },
-      { _id: 0, count: 1 }
-    );
-    let whatCount: Number = whatKeyword[0].count;
-    whatCount = (whatCount as number) - 1;
-    await Keyword.findByIdAndUpdate(whatId, { count: whatCount });
-    console.log(await Keyword.find({ _id: whenId }, { _id: 0, count: 1 }));
-
-    await Film.findByIdAndDelete(filmId);
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 export default {
   createDaily,
-  deleteDaily,
 };
