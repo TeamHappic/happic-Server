@@ -8,6 +8,6 @@ const router: Router = Router();
 router.get('/:userId',MypageController.getAllRank);
 router.get('/keyword/:userId', MypageController.getKeywordRank);
 router.get('/category/:userId', MypageController.getKeywordByCategory);
-//router.get('/monthly', MypageController.getKeywordByMonth);
+router.get('/monthly/:userId', MypageController.getKeywordByMonth);
 
 export default router;

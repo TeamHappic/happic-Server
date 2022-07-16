@@ -74,7 +74,6 @@ const getAllRank = async (req: Request, res: Response) => {
 
     try {
         let data: Object = [];
-        console.log('1')
         if (year && month ) {
             const keyword_year = Number(year)
             const keyword_month = Number(month)
@@ -84,7 +83,6 @@ const getAllRank = async (req: Request, res: Response) => {
                 keyword_month as Number,
             ); 
         }else{            
-            console.log('2')
             return res
                 .status(statusCode.BAD_REQUEST)
                 .send(
@@ -105,7 +103,6 @@ const getAllRank = async (req: Request, res: Response) => {
         );
     }
 
- 
 };
 
 /**\
@@ -161,8 +158,52 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
 };
 
 
+/**\
+ * @route GET /mypage/monthly?year=&month=
+ * @desc get monthly report
+ * @access public
+ */
+ const getKeywordByMonth = async (req: Request, res: Response) => {
+    const { year, month } = req.query;
+    const { userId } = req.params;
+
+    try {
+        let data: Object = [];
+        if (year && month ) {
+            const keyword_year = Number(year)
+            const keyword_month = Number(month)
+            data = await MypageService.getKeywordByMonth(
+                userId as string,
+                keyword_year as Number,
+                keyword_month as Number,
+            ); 
+        }else{            
+            return res
+                .status(statusCode.BAD_REQUEST)
+                .send(
+                    util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
+                );
+        }
+        
+        res.status(statusCode.OK).send(
+            util.success(statusCode.OK, message.GET_MONTHLY_REPORT_SUCCESS, data),
+        );
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(
+            util.fail(
+                statusCode.INTERNAL_SERVER_ERROR,
+                message.INTERNAL_SERVER_ERROR,
+            ),
+        );
+    }
+
+};
+
+
 export default{
     getAllRank,
     getKeywordRank,
-    getKeywordByCategory
+    getKeywordByCategory,
+    getKeywordByMonth,
 };
