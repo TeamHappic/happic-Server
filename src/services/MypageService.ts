@@ -28,13 +28,13 @@ const getCategoryRank = async (
     // 키워드는 4개만 보여줌
     if (keywords[i]) {
       // keywords[i]로 작성된 film 검색
-      films = await Film.find({ writer: userId, keyword: keywords[i] });
+      films = await Film.find({ writer: userId, keyword: keywords[i] }).sort({count:-1});
       for (var j = 0; j < 3; j++) {
         if (films[j]) {
           images.push(films[j].photo);
         } // 추후에 thumbnail로 바꾸기
       }
-      const temp = { content: keywords[i].content, images: images };
+      const temp = { content: keywords[i].content, images: images, count:keywords[i].count };
       rank3s_1.push(temp);
       images = [];
     }
@@ -178,7 +178,37 @@ const getKeywordRank = async (
   }
 };
 
+const getKeywordByCategory = async (
+    userId: String,
+    year: Number,
+    month: Number,
+    option: KeywordOptionType
+  ): Promise<object> => {
+    let keywords: KeywordInfo[] = [];
+    let films: FilmInfo[] = [];
+    let ranks: Array<object> = [];
+    try {
+      if (year && month && option) {
+  
+        // rank3
+        let images: String[] = [];
+        ranks = await getCategoryRank(userId, year, month, option, 8);
+
+      }
+  
+      const data = {
+        ranks,
+      };
+  
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
 export default {
   getAllRank,
   getKeywordRank,
+  getKeywordByCategory,
 };

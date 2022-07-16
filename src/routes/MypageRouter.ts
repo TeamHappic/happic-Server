@@ -7,7 +7,7 @@ const router: Router = Router();
 
 router.get('/:userId',MypageController.getAllRank);
 router.get('/keyword/:userId', MypageController.getKeywordRank);
-//router.get('/category', MypageController.getKeywordByCategory);
+router.get('/category/:userId', MypageController.getKeywordByCategory);
 //router.get('/monthly', MypageController.getKeywordByMonth);
 
 export default router;
