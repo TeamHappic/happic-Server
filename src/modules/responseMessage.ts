@@ -12,6 +12,7 @@ const message = {
 
   //마이페이지
   GET_HAPPICREPORT_SUCCESS: '해픽레포트 조회 성공',
+  GET_ALL_KEYWORD_SUCCESS: '해픽레포트 키워드 전체 순위 조회 성공'
 };
 
 export default message;
