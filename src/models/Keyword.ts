@@ -36,6 +36,6 @@ const KeywordSchema = new mongoose.Schema(
 );
 
 export default mongoose.model<KeywordInfo & mongoose.Document>(
-  'Keword',
+  'Keyword',
   KeywordSchema
 );
