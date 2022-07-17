@@ -4,8 +4,8 @@ REPOSITORY=/home/ubuntu/build
 cd $REPOSITORY
 
 sudo /usr/bin/yarn
+sudo /usr/bin/pm2 start yarn -- start:dev
 
-sudo /usr/bin/pm2 start dist
 
 
 

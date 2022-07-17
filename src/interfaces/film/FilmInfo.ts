@@ -5,4 +5,6 @@ export interface FilmInfo {
   photo: String;
   thumbnail: String;
   keyword: mongoose.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 }
