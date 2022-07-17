@@ -229,75 +229,74 @@ const deleteDaily = async (filmId: string): Promise<void> => {
   }
 };
 
-const postedDaily = async (
-  userId: string,
-): Promise<object|null> => {
+const postedDaily = async (userId: string): Promise<object | null> => {
   try {
     const dayjs = require('dayjs');
-    const films = await Film.find({writer:userId}).sort({createAt:-1});
-    
-    var isPosted = false
+    const films = await Film.find({ writer: userId }).sort({ createAt: -1 });
+
+    var isPosted = false;
 
     if (!films) {
-      return {isPosted: isPosted};
+      return { isPosted: isPosted };
     }
-  
+
     const lastDate = dayjs(films[0].createdAt);
-    const lastDateFormat = lastDate.format("YY-MM-DD");
+    const lastDateFormat = lastDate.format('YY-MM-DD');
 
     const nowDate = dayjs();
-    const nowDateFormat = nowDate.format("YY-MM-DD");
+    const nowDateFormat = nowDate.format('YY-MM-DD');
 
-    const todayPosted = (lastDateFormat === nowDateFormat)
-    return {isPosted:todayPosted };
-
+    const todayPosted = lastDateFormat === nowDateFormat;
+    return { isPosted: todayPosted };
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
 
-const getTopKeyword = async (
-  userId: String,
-): Promise<object> => {
-
+const getTopKeyword = async (userId: String): Promise<object> => {
   try {
     let where_keywords: KeywordInfo[] = [];
     let who_keywords: KeywordInfo[] = [];
     let what_keywords: KeywordInfo[] = [];
 
-    const where: String[] =[];
-    const who: String[] =[];
-    const what: String[] =[];
+    const where: String[] = [];
+    const who: String[] = [];
+    const what: String[] = [];
     const dayjs = require('dayjs');
 
-    where_keywords = await Keyword.find({writer:userId,category:'where'}).sort({count:-1});
-    who_keywords = await Keyword.find({writer:userId,category:'who'}).sort({count:-1});
-    what_keywords = await Keyword.find({writer:userId,category:'what'}).sort({count:-1});
+    where_keywords = await Keyword.find({
+      writer: userId,
+      category: 'where',
+    }).sort({ count: -1 });
+    who_keywords = await Keyword.find({ writer: userId, category: 'who' }).sort(
+      { count: -1 }
+    );
+    what_keywords = await Keyword.find({
+      writer: userId,
+      category: 'what',
+    }).sort({ count: -1 });
 
-    for(var i =0;i<9;i++){
-      if(!where_keywords[i]){
+    for (var i = 0; i < 9; i++) {
+      if (!where_keywords[i]) {
         break;
-      }
-      else{
+      } else {
         where.push(where_keywords[i].content);
       }
     }
 
-    for(var i =0;i<9;i++){
-      if(!who_keywords[i]){
+    for (var i = 0; i < 9; i++) {
+      if (!who_keywords[i]) {
         break;
-      }
-      else{
+      } else {
         who.push(who_keywords[i].content);
       }
     }
 
-    for(var i =0;i<9;i++){
-      if(!what_keywords[i]){
+    for (var i = 0; i < 9; i++) {
+      if (!what_keywords[i]) {
         break;
-      }
-      else{
+      } else {
         what.push(what_keywords[i].content);
       }
     }
@@ -308,8 +307,45 @@ const getTopKeyword = async (
       currentDate,
       where,
       who,
-      what
+      what,
     };
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const getAllTitle = async (userId: String): Promise<object[] | null> => {
+  try {
+    const films = await Film.find({ writer: userId });
+    const data: object[] = [];
+
+    for (var i = 0; i < films.length; i++) {
+      const id: String = films[i].id;
+      const date: Date = films[i].createdAt;
+      var when: String = '';
+      var where: String = '';
+      var who: String = '';
+      var what: String = '';
+
+      const keywordArr = films[i].keyword;
+      for (var j = 0; j < keywordArr.length; j++) {
+        const keyword = await Keyword.findOne({ _id: keywordArr[j] });
+        if (keyword) {
+          if (keyword.category == 'when') when = keyword.content;
+          else if (keyword.category == 'where') where = keyword.content;
+          else if (keyword.category == 'who') who = keyword.content;
+          else if (keyword.category == 'what') what = keyword.content;
+        }
+      }
+      data.push({ id, date, when, where, who, what });
+    }
+
+    if (films.length === 0) {
+      return null;
+    }
 
     return data;
   } catch (error) {
@@ -324,7 +360,9 @@ export default {
   getAllDaily,
   postedDaily,
   getTopKeyword,
+  getAllTitle,
 };
+
 function dayjs(createdAt: Date) {
   throw new Error('Function not implemented.');
 }
