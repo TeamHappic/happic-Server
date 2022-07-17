@@ -22,6 +22,10 @@ const FilmSchema = new mongoose.Schema(
         ref: 'Keyword',
       },
     ],
+    createAt: {
+        type: Date,
+        default: Date.now
+    }
   },
   {
     timestamps: true, // createdAt, updatedAt 자동기록

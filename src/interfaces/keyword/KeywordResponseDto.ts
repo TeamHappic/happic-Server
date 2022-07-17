@@ -1,11 +1,10 @@
+import { UserInfo } from '../user/UserInfo';
 import mongoose from 'mongoose';
 
-export interface KeywordInfo {
-  writer: mongoose.Types.ObjectId;
+export interface KeywordResponseDto {
+  writer: UserInfo;
   category: String;
   content: String;
-  year: Number;
-  month: Number;
   count: Number;
   year: Number;
   month: Number;

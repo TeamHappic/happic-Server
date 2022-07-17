@@ -29,7 +29,6 @@ const UserSchema = new mongoose.Schema({
   film: [
     {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: 'Film',
     },
   ],

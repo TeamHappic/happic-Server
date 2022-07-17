@@ -1,4 +1,4 @@
-import FileController from './FileController';
-
+import UserController from './UserController';
+import MypageController from './MypageController';
 // controller index file
-export { FileController };
+export {UserController,MypageController}
