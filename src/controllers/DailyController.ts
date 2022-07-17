@@ -135,6 +135,7 @@ const deleteDaily = async (req: Request, res: Response) => {
   }
 
 };
+
 /**
  * @route GET /daily/keyword
  * @desc get top 9 keywords
@@ -170,10 +171,40 @@ const deleteDaily = async (req: Request, res: Response) => {
 
 };
 
+/**
+ *  @route GET /daily/title?year=&month=
+ *  @desc Get All HappicTitle
+ *  @access Public
+ */
+ const getAllTitle = async (req: Request, res: Response) => {
+  try {
+      const {userId} = req.params;
+      const data = await DailyService.getAllTitle(userId as string,);
+      if (!data) {
+          return res
+              .status(statusCode.NOT_FOUND)
+              .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+      }
+      return res
+          .status(statusCode.OK)
+          .send(util.success(statusCode.OK, message.GET_ALLTITLE_SUCCESS, data));
+  } catch (error) {
+      console.log(error);
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(
+          util.fail(
+              statusCode.INTERNAL_SERVER_ERROR,
+              message.INTERNAL_SERVER_ERROR,
+          ),
+      );
+  }
+};
+
+
 export default {
   createDaily,
   deleteDaily,
   postedDaily,
   getTopKeyword,
   getAllDaily,
+  getAllTitle,
 };
