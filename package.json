@@ -28,6 +28,7 @@
   "dependencies": {
     "aws-sdk": "^2.1143.0",
     "bcryptjs": "^2.4.3",
+    "dayjs": "^1.11.3",
     "dotenv": "^16.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
