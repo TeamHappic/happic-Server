@@ -5,6 +5,7 @@ import express, { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import DailyService from '../services/DailyService';
+import dayjs from "dayjs";
 
 /**
  * @router POST /daily
@@ -65,7 +66,44 @@ const deleteDaily = async (req: Request, res: Response) => {
   }
 };
 
+
+/**
+ * @route GET /daily/posted
+ * @desc get posted or non posted
+ * @access public
+ */
+ const postedDaily = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  try {      
+      const data = await DailyService.postedDaily(
+          userId as string,)
+
+      if(!userId){            
+          return res
+              .status(statusCode.BAD_REQUEST)
+              .send(
+                  util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
+              );
+      }
+      
+      res.status(statusCode.OK).send(
+          util.success(statusCode.OK, message.GET_POSTED_DAILY, data),
+      );
+  } catch (error) {
+      console.log(error);
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(
+          util.fail(
+              statusCode.INTERNAL_SERVER_ERROR,
+              message.INTERNAL_SERVER_ERROR,
+          ),
+      );
+  }
+
+};
+
 export default {
   createDaily,
   deleteDaily,
+  postedDaily,
 };

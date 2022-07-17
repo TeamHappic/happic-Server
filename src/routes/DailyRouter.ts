@@ -15,7 +15,7 @@ router.post(
   ],
   DailyController.createDaily
 );
-
+router.get('/posted/:userId',DailyController.postedDaily);
 router.delete('/:filmId', DailyController.deleteDaily);
 
 export default router;

@@ -21,6 +21,7 @@ const message = {
 
   // 하루 해픽
   CREATE_DAILY_SUCCESS: '하루 해픽 생성 성공',
+  GET_POSTED_DAILY:'하루해픽 생성 여부 확인 성공',
 };
 
 export default message;
