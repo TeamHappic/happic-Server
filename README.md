@@ -168,6 +168,49 @@
 
 ## 🗒 DB Schema
 <details>
+<summary> Char</summary>
+<div markdown="1">
+
+```typescript
+const CharSchema = new mongoose.Schema({
+  characterId: {
+    type: Number,
+    required: true,
+  },
+  characterName: {
+    type: String,
+    required: true,
+  },
+});
+```
+
+</div>
+</details>
+<details>
+<summary> File</summary>
+<div markdown="1">
+
+```typescript
+const FileSchema = new mongoose.Schema(
+  {
+    link: {
+      type: String,
+      required: true,
+    },
+    fileName: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true, // createdAt, updatedAt 자동기록
+  }
+);
+```
+
+</div>
+</details>
+<details>
 <summary> User</summary>
 <div markdown="1">
 
@@ -177,15 +220,28 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  social: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  socialId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   characterId: {
     type: Number,
+    required: true,
   },
   characterName: {
     type: String,
+    required: true,
   },
   growthRate: {
     type: Number,
@@ -200,11 +256,20 @@ const UserSchema = new mongoose.Schema({
   film: [
     {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: 'Film',
     },
   ],
+  count: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   fcmToken: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  refreshToken: {
     type: String,
     required: true,
     unique: true,
@@ -240,6 +305,14 @@ const FilmSchema = new mongoose.Schema(
         ref: 'Keyword',
       },
     ],
+    year: {
+      type: Number,
+      required: true,
+    },
+    month: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true, // createdAt, updatedAt 자동기록
@@ -267,6 +340,14 @@ const KeywordSchema = new mongoose.Schema(
     },
     content: {
       type: String,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+    },
+    month: {
+      type: Number,
       required: true,
     },
     count: {
