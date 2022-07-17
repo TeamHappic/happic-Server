@@ -10,7 +10,7 @@ import { logger } from "../config/winstonConfig";
 import em from "../modules/exceptionMessage";
 import jwt from "../modules/jwtHandler";
 import {SocialUser} from "../interfaces/SocialUser";
-import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
+import { PostBaseResponseDto } from "../interfaces/common/postBaseResponseDto";
 import CharService from "../services/CharService";
 import { CharCreateDto } from "../interfaces/user/CharCreateDto";
 
