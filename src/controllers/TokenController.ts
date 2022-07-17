@@ -32,19 +32,19 @@
 
 //     if (access === exceptionMessage.TOKEN_EXPIRED) {
 //         const refresh = jwt.verify(refreshToken as string);
-  
+
 //         if (refresh === exceptionMessage.TOKEN_INVALID) {
 //           return res
 //             .status(statusCode.UNAUTHORIZED)
 //             .send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
 //         }
-  
+
 //         if (refresh === exceptionMessage.TOKEN_EXPIRED) {
 //           return res
 //             .status(statusCode.UNAUTHORIZED)
 //             .send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
 //         }
-  
+
 //         const user = await UserService.findUserByRfToken(refreshToken as string);
 //         const data = {
 //           accessToken: jwt.sign(user?._id, user?.email as string),
@@ -71,4 +71,3 @@
 // };
 
 // export default { getToken };
-

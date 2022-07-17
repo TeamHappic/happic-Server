@@ -10,7 +10,6 @@ const CharSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
 });
 
 export default mongoose.model<UserInfo & mongoose.Document>('Char', CharSchema);

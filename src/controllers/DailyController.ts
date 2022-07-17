@@ -5,7 +5,7 @@ import express, { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import DailyService from '../services/DailyService';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 /**
  * @route GET /daily?year=&month=
@@ -100,40 +100,37 @@ const deleteDaily = async (req: Request, res: Response) => {
   }
 };
 
-
 /**
  * @route GET /daily/posted
  * @desc get posted or non posted
  * @access public
  */
- const postedDaily = async (req: Request, res: Response) => {
+const postedDaily = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
-  try {      
-      const data = await DailyService.postedDaily(
-          userId as string,)
+  try {
+    const data = await DailyService.postedDaily(userId as string);
 
-      if(!userId){            
-          return res
-              .status(statusCode.BAD_REQUEST)
-              .send(
-                  util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
-              );
-      }
-      
-      res.status(statusCode.OK).send(
-          util.success(statusCode.OK, message.GET_POSTED_DAILY, data),
-      );
+    if (!userId) {
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+    }
+
+    res
+      .status(statusCode.OK)
+      .send(util.success(statusCode.OK, message.GET_POSTED_DAILY, data));
   } catch (error) {
-      console.log(error);
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(
-          util.fail(
-              statusCode.INTERNAL_SERVER_ERROR,
-              message.INTERNAL_SERVER_ERROR,
-          ),
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
       );
   }
-
 };
 
 /**
@@ -141,34 +138,34 @@ const deleteDaily = async (req: Request, res: Response) => {
  * @desc get top 9 keywords
  * @access public
  */
- const getTopKeyword = async (req: Request, res: Response) => {
+const getTopKeyword = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
-  try {      
-      const data = await DailyService.getTopKeyword(
-          userId as string,)
+  try {
+    const data = await DailyService.getTopKeyword(userId as string);
 
-      if(!userId){            
-          return res
-              .status(statusCode.BAD_REQUEST)
-              .send(
-                  util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
-              );
-      }
-      
-      res.status(statusCode.OK).send(
-          util.success(statusCode.OK, message.GET_TOP9_KEYWORDS_SUCCESS, data),
+    if (!userId) {
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+    }
+
+    res
+      .status(statusCode.OK)
+      .send(
+        util.success(statusCode.OK, message.GET_TOP9_KEYWORDS_SUCCESS, data)
       );
   } catch (error) {
-      console.log(error);
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(
-          util.fail(
-              statusCode.INTERNAL_SERVER_ERROR,
-              message.INTERNAL_SERVER_ERROR,
-          ),
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
       );
   }
-
 };
 
 /**
@@ -176,29 +173,30 @@ const deleteDaily = async (req: Request, res: Response) => {
  *  @desc Get All HappicTitle
  *  @access Public
  */
- const getAllTitle = async (req: Request, res: Response) => {
+const getAllTitle = async (req: Request, res: Response) => {
   try {
-      const {userId} = req.params;
-      const data = await DailyService.getAllTitle(userId as string,);
-      if (!data) {
-          return res
-              .status(statusCode.NOT_FOUND)
-              .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
-      }
+    const { userId } = req.params;
+    const data = await DailyService.getAllTitle(userId as string);
+    if (!data) {
       return res
-          .status(statusCode.OK)
-          .send(util.success(statusCode.OK, message.GET_ALLTITLE_SUCCESS, data));
+        .status(statusCode.NOT_FOUND)
+        .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
+    return res
+      .status(statusCode.OK)
+      .send(util.success(statusCode.OK, message.GET_ALLTITLE_SUCCESS, data));
   } catch (error) {
-      console.log(error);
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(
-          util.fail(
-              statusCode.INTERNAL_SERVER_ERROR,
-              message.INTERNAL_SERVER_ERROR,
-          ),
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
       );
   }
 };
-
 
 export default {
   createDaily,

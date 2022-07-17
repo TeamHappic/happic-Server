@@ -1,4 +1,4 @@
 export interface SocialUser {
-    userId: string;
-    email: string;
-  }
+  userId: string;
+  email: string;
+}

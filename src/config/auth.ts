@@ -1,43 +1,42 @@
-import axios from "axios";
-import exceptionMessage from "../modules/exceptionMessage";
-import jwt from "jsonwebtoken";
-import {SocialUser} from "../interfaces/SocialUser";
-import { logger } from "./winstonConfig";
+import axios from 'axios';
+import exceptionMessage from '../modules/exceptionMessage';
+import jwt from 'jsonwebtoken';
+import { SocialUser } from '../interfaces/SocialUser';
+import { logger } from './winstonConfig';
 
 const kakaoAuth = async (kakaoAccessToken: string) => {
-    try {
-        const user = await axios({
-            method: "get",
-            url: "https://kapi.kakao.com/v2/user/me",
-            headers: {
-              Authorization: `Bearer ${kakaoAccessToken}`,
-            },
-      });
-  
-      const userId = user.data.id;
+  try {
+    const user = await axios({
+      method: 'get',
+      url: 'https://kapi.kakao.com/v2/user/me',
+      headers: {
+        Authorization: `Bearer ${kakaoAccessToken}`,
+      },
+    });
 
-      if (!userId) return exceptionMessage.INVALID_USER;
+    const userId = user.data.id;
 
-      if (!user.data.kakao_account) {
-          return {
-              userId: userId,
-              email: null
-          };
-      }
+    if (!userId) return exceptionMessage.INVALID_USER;
 
-      const kakaoUser: SocialUser = {
+    if (!user.data.kakao_account) {
+      return {
         userId: userId,
-        email: user.data.kakao_account.email,
+        email: null,
       };
-
-      return kakaoUser;
-    } catch (error) {
-      logger.e("KakaoAuth error", error);
-      return null;
     }
-  };
-    
-  export default {
-    kakaoAuth
-  };
 
+    const kakaoUser: SocialUser = {
+      userId: userId,
+      email: user.data.kakao_account.email,
+    };
+
+    return kakaoUser;
+  } catch (error) {
+    logger.e('KakaoAuth error', error);
+    return null;
+  }
+};
+
+export default {
+  kakaoAuth,
+};

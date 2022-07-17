@@ -5,4 +5,4 @@ import FileService from './FileService';
 import CharService from './CharService';
 
 //service index file
-export {UserService,MypageService, FileService, DailyService,CharService}
+export { UserService, MypageService, FileService, DailyService, CharService };

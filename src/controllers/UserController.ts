@@ -6,13 +6,13 @@ import UserService from '../services/UserService';
 import { validationResult } from 'express-validator';
 import getToken from '../modules/jwtHandler';
 
-import { logger } from "../config/winstonConfig";
-import em from "../modules/exceptionMessage";
-import jwt from "../modules/jwtHandler";
-import {SocialUser} from "../interfaces/SocialUser";
-import { PostBaseResponseDto } from "../interfaces/common/postBaseResponseDto";
-import CharService from "../services/CharService";
-import { CharCreateDto } from "../interfaces/user/CharCreateDto";
+import { logger } from '../config/winstonConfig';
+import em from '../modules/exceptionMessage';
+import jwt from '../modules/jwtHandler';
+import { SocialUser } from '../interfaces/SocialUser';
+import { PostBaseResponseDto } from '../interfaces/common/postBaseResponseDto';
+import CharService from '../services/CharService';
+import { CharCreateDto } from '../interfaces/user/CharCreateDto';
 
 /**
  *  @route GET /home
@@ -29,7 +29,7 @@ const findCharacter = async (req: Request, res: Response) => {
 
   try {
     //const user = await UserService.findUserById(req.body.user.id);
-    const {userId} = req.params;
+    const { userId } = req.params;
     const data = await UserService.findCharacter(userId);
 
     if (!data) {
@@ -37,8 +37,6 @@ const findCharacter = async (req: Request, res: Response) => {
         .status(statusCode.NOT_FOUND)
         .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
     }
-
-    //const isPosted = isSameDate(user.film,today);
 
     res
       .status(statusCode.OK)
@@ -58,21 +56,34 @@ const findCharacter = async (req: Request, res: Response) => {
 
 /**
  * @route POST /character
- * @desc Determine Char Info 
+ * @desc Determine Char Info
  * @access Public
  */
 const createChar = async (req: Request, res: Response): Promise<void> => {
-    const charCreateDto: CharCreateDto = req.body;
-    //console.log(charCreateDto);
-    try {
-        const data: PostBaseResponseDto = await CharService.createChar(charCreateDto);
-        
-        res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATED_CHAR_SUCCESS, data));
-    }catch (error){
-        console.log(error);
-        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
-    }
-}
+  const charCreateDto: CharCreateDto = req.body;
+  //console.log(charCreateDto);
+  try {
+    const data: PostBaseResponseDto = await CharService.createChar(
+      charCreateDto
+    );
+
+    res
+      .status(statusCode.CREATED)
+      .send(
+        util.success(statusCode.CREATED, message.CREATED_CHAR_SUCCESS, data)
+      );
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
 
 // /**
 //  * @route PATCH /setting
@@ -85,14 +96,13 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
 
 //     try {
 //         await CharService.changeChar(charChangeDto);
-        
+
 //         res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.CREATED_CHAR_SUCCESS, data));
 //     }catch (error){
 //         console.log(error);
 //         res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
 //     }
 // }
-
 
 // /**
 //  * @route POST /auth
@@ -123,7 +133,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
 //     }
 
 //     const existUser = await UserService.findUserById(
-//         (user as SocialUser).userId, 
+//         (user as SocialUser).userId,
 //         social,
 //     );
 //     if (!existUser) {
@@ -152,7 +162,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
 //         logger.e("UserController getUser error", error);
 //         return res
 //             .status(sc.INTERNAL_SERVER_ERROR)
-//             .send(util.fail(sc.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));       
+//             .send(util.fail(sc.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
 //     }
 // };
 
@@ -165,7 +175,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
 //       refreshToken,
 //     );
 //     const accessToken = jwt.sign(newUser._id, newUser.email);
-  
+
 //     return {
 //       user: newUser,
 //       accessToken: accessToken,
@@ -173,10 +183,8 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
 //     };
 //   }
 
-
-export default{
-    //getUser,
-    createChar,
-    findCharacter,
+export default {
+  //getUser,
+  createChar,
+  findCharacter,
 };
-  
