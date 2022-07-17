@@ -117,6 +117,8 @@ const createDaily = async (
       writer: '62cef0997f008c29128704ed',
       photo: filmCreateDto.photo,
       keyword: keywordList,
+      year: year,
+      month: month,
     });
 
     await film.save();
