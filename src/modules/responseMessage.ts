@@ -21,9 +21,6 @@ const message = {
     SIGN_IN_SUCCESS: "로그인 성공!",
     SIGN_UP_SUCCESS: "회원가입 성공!",
 
-  NULL_VALUE_TOKEN: '토큰이 없습니다.',
-  INVALID_TOKEN: '만료된 토큰입니다.',
-
   // 홈화면
   READ_USER_SUCCESS: '홈화면 조회 성공',
 

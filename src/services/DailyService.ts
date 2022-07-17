@@ -3,13 +3,12 @@ import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
-import dayjs from 'dayjs';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
 const getAllDaily = async (year: string, month: string) => {
-  const daily: FilmResponseDto[] = [];
   const dayjs = require('dayjs');
+  const daily: FilmResponseDto[] = [];
 
   try {
     if (year && month) {
@@ -234,6 +233,7 @@ const postedDaily = async (
   userId: string,
 ): Promise<object|null> => {
   try {
+    const dayjs = require('dayjs');
     const films = await Film.find({writer:userId}).sort({createAt:-1});
     
     var isPosted = false
@@ -269,6 +269,7 @@ const getTopKeyword = async (
     const where: String[] =[];
     const who: String[] =[];
     const what: String[] =[];
+    const dayjs = require('dayjs');
 
     where_keywords = await Keyword.find({writer:userId,category:'where'}).sort({count:-1});
     who_keywords = await Keyword.find({writer:userId,category:'who'}).sort({count:-1});

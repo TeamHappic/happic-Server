@@ -67,10 +67,10 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
     try {
         const data: PostBaseResponseDto = await CharService.createChar(charCreateDto);
         
-        res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.CREATED_CHAR_SUCCESS, data));
+        res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATED_CHAR_SUCCESS, data));
     }catch (error){
         console.log(error);
-        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
     }
 }
 
