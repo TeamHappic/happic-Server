@@ -3,6 +3,36 @@ import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 
+
+const getAllDaily = async (
+  year: string,
+  month: string
+): Promise<FilmResponseDto[] | null> => {
+  try {
+
+
+      if (year && month) {
+      films = await Film.find({ createdAt:   });
+      for (var i = 0; i < films.length; i++) {
+        var day = dayjs(films[i].createdAt);
+        filmDates.push(day.get('date'));
+      }
+    const film = await Film.find({ year: year, month: month });
+    
+    if (film.length===0) return null;
+
+    const data = [{
+      thumbnail: daily.thumbnail;
+      day: 
+    }]
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const createDaily = async (
   filmCreateDto: FilmCreateDto
 ): Promise<PostBaseResponseDto> => {
@@ -131,4 +161,5 @@ const deleteDaily = async (filmId: string): Promise<void> => {
 export default {
   createDaily,
   deleteDaily,
+  getAllDaily,
 };

@@ -11,6 +11,7 @@ const message = {
 
   // 하루 해픽
   CREATE_DAILY_SUCCESS: '하루 해픽 생성 성공',
+  READ_ALLDAILY_SUCCESS: '하루 해픽 전체 조회 성공',
 };
 
 export default message;
