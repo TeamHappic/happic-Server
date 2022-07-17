@@ -1,5 +1,5 @@
 import User from "../models/User";
-import { logger } from  "../config/winstonconfig";
+import { logger } from  "../config/winstonConfig";
 import { authStrategy } from "./SocialAuthStrategy";
 import { FilmInfo } from '../interfaces/film/FilmInfo';
 import { UserResponseDto } from '../interfaces/user/UserResponseDto';

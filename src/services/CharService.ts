@@ -1,7 +1,8 @@
+import { PostBaseResponseDto } from "../interfaces/common/postBaseResponseDto";
 import { CharCreateDto } from "../interfaces/user/CharCreateDto";
 import Char from "../models/Char";
 
-const createChar = async (charCreateDto: CharCreateDto) => {
+const createChar = async (charCreateDto: CharCreateDto):Promise<PostBaseResponseDto> => {
     try{
         const char = new Char({
             characterId: charCreateDto.characterId,
@@ -9,7 +10,10 @@ const createChar = async (charCreateDto: CharCreateDto) => {
         });
 
         await char.save();
-        
+        const data = {
+            id:char.id,
+        }
+        return data
        
     }catch (error){
         console.log(error);
