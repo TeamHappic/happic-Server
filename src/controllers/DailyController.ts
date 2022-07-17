@@ -8,6 +8,40 @@ import DailyService from '../services/DailyService';
 import dayjs from "dayjs";
 
 /**
+ * @route GET /daily?year=&month=
+ * @desc Get Movie By Movie Id
+ * @access Public
+ */
+const getAllDaily = async (req: Request, res: Response) => {
+  const { year, month } = req.query;
+
+  try {
+    const data = await DailyService.getAllDaily(
+      year as string,
+      month as string
+    );
+    if (!data) {
+      res
+        .status(statusCode.NOT_FOUND)
+        .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
+    res
+      .status(statusCode.OK)
+      .send(util.success(statusCode.OK, message.READ_ALLDAILY_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
+
+/**
  * @router POST /daily
  * @desc 새로운 하루 해픽 생성
  * @access
@@ -141,4 +175,5 @@ export default {
   deleteDaily,
   postedDaily,
   getTopKeyword,
+  getAllDaily,
 };

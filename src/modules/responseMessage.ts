@@ -23,6 +23,7 @@ const message = {
   CREATE_DAILY_SUCCESS: '하루 해픽 생성 성공',
   GET_POSTED_DAILY:'하루해픽 생성 여부 확인 성공',
   GET_TOP9_KEYWORDS_SUCCESS: '하루해픽 최다 키워드 조회 성공',
+  READ_ALLDAILY_SUCCESS: '하루 해픽 전체 조회 성공',
 };
 
 export default message;

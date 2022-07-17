@@ -5,6 +5,35 @@ import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 import dayjs from 'dayjs';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
+import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
+
+const getAllDaily = async (year: string, month: string) => {
+  const daily: FilmResponseDto[] = [];
+  const dayjs = require('dayjs');
+
+  try {
+    if (year && month) {
+      const films = await Film.find({
+        year: Number(year),
+        month: Number(month),
+      });
+      if (films.length === 0) return null;
+
+      for (var i = 0; i < films.length; i++) {
+        let id = films[i]._id;
+        let thumbnail = films[i].thumbnail;
+        let createdAt = dayjs(films[i].createdAt);
+        const day = createdAt.get('date');
+
+        daily.push({ id, day, thumbnail });
+      }
+      return daily;
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
 const createDaily = async (
   filmCreateDto: FilmCreateDto
@@ -291,6 +320,10 @@ const getTopKeyword = async (
 export default {
   createDaily,
   deleteDaily,
+  getAllDaily,
   postedDaily,
   getTopKeyword,
 };
+function dayjs(createdAt: Date) {
+  throw new Error('Function not implemented.');
+}
