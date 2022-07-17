@@ -4,6 +4,7 @@ import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 import dayjs from 'dayjs';
+import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 
 const createDaily = async (
   filmCreateDto: FilmCreateDto
@@ -227,8 +228,69 @@ const postedDaily = async (
   }
 };
 
+const getTopKeyword = async (
+  userId: String,
+): Promise<object> => {
+
+  try {
+    let where_keywords: KeywordInfo[] = [];
+    let who_keywords: KeywordInfo[] = [];
+    let what_keywords: KeywordInfo[] = [];
+
+    const where: String[] =[];
+    const who: String[] =[];
+    const what: String[] =[];
+
+    where_keywords = await Keyword.find({writer:userId,category:'where'}).sort({count:-1});
+    who_keywords = await Keyword.find({writer:userId,category:'who'}).sort({count:-1});
+    what_keywords = await Keyword.find({writer:userId,category:'what'}).sort({count:-1});
+
+    for(var i =0;i<9;i++){
+      if(!where_keywords[i]){
+        break;
+      }
+      else{
+        where.push(where_keywords[i].content);
+      }
+    }
+
+    for(var i =0;i<9;i++){
+      if(!who_keywords[i]){
+        break;
+      }
+      else{
+        who.push(who_keywords[i].content);
+      }
+    }
+
+    for(var i =0;i<9;i++){
+      if(!what_keywords[i]){
+        break;
+      }
+      else{
+        what.push(what_keywords[i].content);
+      }
+    }
+
+    const currentDate = dayjs();
+
+    const data = {
+      currentDate,
+      where,
+      who,
+      what
+    };
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export default {
   createDaily,
   deleteDaily,
   postedDaily,
+  getTopKeyword,
 };

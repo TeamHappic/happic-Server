@@ -101,9 +101,44 @@ const deleteDaily = async (req: Request, res: Response) => {
   }
 
 };
+/**
+ * @route GET /daily/keyword
+ * @desc get top 9 keywords
+ * @access public
+ */
+ const getTopKeyword = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  try {      
+      const data = await DailyService.getTopKeyword(
+          userId as string,)
+
+      if(!userId){            
+          return res
+              .status(statusCode.BAD_REQUEST)
+              .send(
+                  util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
+              );
+      }
+      
+      res.status(statusCode.OK).send(
+          util.success(statusCode.OK, message.GET_TOP9_KEYWORDS_SUCCESS, data),
+      );
+  } catch (error) {
+      console.log(error);
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(
+          util.fail(
+              statusCode.INTERNAL_SERVER_ERROR,
+              message.INTERNAL_SERVER_ERROR,
+          ),
+      );
+  }
+
+};
 
 export default {
   createDaily,
   deleteDaily,
   postedDaily,
+  getTopKeyword,
 };
