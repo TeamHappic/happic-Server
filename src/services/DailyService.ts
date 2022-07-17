@@ -3,31 +3,30 @@ import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
+import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
+const getAllDaily = async (year: string, month: string) => {
+  const daily: FilmResponseDto[] = [];
+  const dayjs = require('dayjs');
 
-const getAllDaily = async (
-  year: string,
-  month: string
-): Promise<FilmResponseDto[] | null> => {
   try {
+    if (year && month) {
+      const films = await Film.find({
+        year: Number(year),
+        month: Number(month),
+      });
+      if (films.length === 0) return null;
 
-
-      if (year && month) {
-      films = await Film.find({ createdAt:   });
       for (var i = 0; i < films.length; i++) {
-        var day = dayjs(films[i].createdAt);
-        filmDates.push(day.get('date'));
+        let id = films[i]._id;
+        let thumbnail = films[i].thumbnail;
+        let createdAt = dayjs(films[i].createdAt);
+        const day = createdAt.get('date');
+
+        daily.push({ id, day, thumbnail });
       }
-    const film = await Film.find({ year: year, month: month });
-    
-    if (film.length===0) return null;
-
-    const data = [{
-      thumbnail: daily.thumbnail;
-      day: 
-    }]
-
-    return data;
+      return daily;
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -230,3 +229,6 @@ export default {
   deleteDaily,
   getAllDaily,
 };
+function dayjs(createdAt: Date) {
+  throw new Error('Function not implemented.');
+}

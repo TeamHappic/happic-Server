@@ -4,6 +4,8 @@ import DailyController from '../controllers/DailyController';
 
 const router: Router = Router();
 
+router.get('/', DailyController.getAllDaily);
+
 router.post(
   '/',
   [
