@@ -7,6 +7,4 @@ export interface KeywordInfo {
   year: Number;
   month: Number;
   count: Number;
-  year: Number;
-  month: Number;
 }

@@ -11,9 +11,8 @@ import { KeywordOptionType } from '../interfaces/keyword/KeywordOptionType';
 import { MypageService } from '../services';
 
 
-/**
- * @route GET /movie?search=&option=&page=
- * @route GET /mypage/keyword?year=&month=
+/**\
+ * @route GET /mypage/keyword?year=&month=&option=
  * @desc get keyword rank
  * @access public
  */
@@ -64,6 +63,52 @@ const getAllRank = async (req: Request, res: Response) => {
     }
 };
 
+/**\
+ * @route GET /mypage/keyword?year=&month=
+ * @desc get keyword rank
+ * @access public
+ */
+ const getKeywordRank = async (req: Request, res: Response) => {
+    const { year, month } = req.query;
+    const { userId } = req.params;
+
+    try {
+        let data: Object = [];
+        console.log('1')
+        if (year && month ) {
+            const keyword_year = Number(year)
+            const keyword_month = Number(month)
+            data = await MypageService.getKeywordRank(
+                userId as string,
+                keyword_year as Number,
+                keyword_month as Number,
+            ); 
+        }else{            
+            console.log('2')
+            return res
+                .status(statusCode.BAD_REQUEST)
+                .send(
+                    util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE),
+                );
+        }
+        
+        res.status(statusCode.OK).send(
+            util.success(statusCode.OK, message.GET_ALL_KEYWORD_SUCCESS, data),
+        );
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(
+            util.fail(
+                statusCode.INTERNAL_SERVER_ERROR,
+                message.INTERNAL_SERVER_ERROR,
+            ),
+        );
+    }
+
+ 
+};
+
 export default{
     getAllRank,
+    getKeywordRank
 };
