@@ -19,7 +19,7 @@ import { CharCreateDto } from "../interfaces/user/CharCreateDto";
  */
 const createChar = async (req: Request, res: Response): Promise<void> => {
     const charCreateDto: CharCreateDto = req.body;
-    console.log(charCreateDto);
+    //console.log(charCreateDto);
     try {
         const data: PostBaseResponseDto = await CharService.createChar(charCreateDto);
         
@@ -29,6 +29,25 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
         res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
 }
+
+// /**
+//  * @route PATCH /setting
+//  * @desc Change Char Info
+//  * @access Private
+//  */
+//  const changeChar = async (req: Request, res: Response): Promise<void> => {
+//     const charChangeDto: CharChangeDto = req.body;
+//     const {}
+
+//     try {
+//         await CharService.changeChar(charChangeDto);
+        
+//         res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.CREATED_CHAR_SUCCESS, data));
+//     }catch (error){
+//         console.log(error);
+//         res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+//     }
+// }
 
 
 // /**

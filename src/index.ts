@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 const app = express();
 import connectDB from "./loaders/db";
-import routes from './routes';
+import router from "./routes";
 require('dotenv').config();
 
 connectDB();
@@ -9,7 +9,7 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(routes);   //라우터 
+app.use(router);   //라우터 
 // error handler
 
 interface ErrorType {

@@ -6,15 +6,28 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  social: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  socialId:{
+    type: String,
+    required: true,
+    unique: true
+  },
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   characterId: {
     type: Number,
+    required: true,
   },
   characterName: {
     type: String,
+    required: true,
   },
   growthRate: {
     type: Number,
@@ -39,6 +52,11 @@ const UserSchema = new mongoose.Schema({
     default: 0,
   },
   fcmToken: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  refreshToken: {
     type: String,
     required: true,
     unique: true,
