@@ -3,6 +3,7 @@ import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
+import dayjs from 'dayjs';
 
 const createDaily = async (
   filmCreateDto: FilmCreateDto
@@ -199,7 +200,35 @@ const deleteDaily = async (filmId: string): Promise<void> => {
   }
 };
 
+const postedDaily = async (
+  userId: string,
+): Promise<object|null> => {
+  try {
+    const films = await Film.find({writer:userId}).sort({createAt:-1});
+    
+    var isPosted = false
+
+    if (!films) {
+      return {isPosted: isPosted};
+    }
+  
+    const lastDate = dayjs(films[0].createdAt);
+    const lastDateFormat = lastDate.format("YY-MM-DD");
+
+    const nowDate = dayjs();
+    const nowDateFormat = nowDate.format("YY-MM-DD");
+
+    const todayPosted = (lastDateFormat === nowDateFormat)
+    return {isPosted:todayPosted };
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export default {
   createDaily,
   deleteDaily,
+  postedDaily,
 };
