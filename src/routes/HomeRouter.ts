@@ -5,6 +5,6 @@ import auth from '../middleware/auth';
 
 const router: Router = Router();
 
-router.get('/:userId', UserController.findUserById);
+router.get('/:userId', UserController.findCharacter);
 
 export default router;

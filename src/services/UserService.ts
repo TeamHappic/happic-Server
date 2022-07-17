@@ -12,7 +12,7 @@ const isSameDate = (date1: Date) => {
   );
 };
 
-const findUserById = async (
+const findCharacter = async (
   userId: string
 ): Promise<UserResponseDto | null> => {
   try {
@@ -44,5 +44,5 @@ const findUserById = async (
 };
 
 export default {
-  findUserById,
+  findCharacter,
 };

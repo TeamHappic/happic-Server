@@ -12,7 +12,7 @@ import getToken from '../modules/jwtHandler';
  *  @desc Read User
  *  @access Public
  */
-const findUserById = async (req: Request, res: Response) => {
+const findCharacter = async (req: Request, res: Response) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
     return res
@@ -23,7 +23,7 @@ const findUserById = async (req: Request, res: Response) => {
   try {
     //const user = await UserService.findUserById(req.body.user.id);
     const {userId} = req.params;
-    const data = await UserService.findUserById(userId);
+    const data = await UserService.findCharacter(userId);
 
     if (!data) {
       return res
@@ -50,5 +50,5 @@ const findUserById = async (req: Request, res: Response) => {
 };
 
 export default {
-  findUserById,
+  findCharacter,
 };
