@@ -4,7 +4,7 @@ import { UserController } from "../controllers";
 
 const router: Router = Router();
 
-//router.post("/", UserController.getUser);
+router.post("/", UserController.getUser);
 //router.get("/token", TokenController.getToken);
 
 export default router;

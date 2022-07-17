@@ -1,7 +1,7 @@
 import axios from "axios";
-import exceptionMessage from "../modules/exceptionMessage";
 import jwt from "jsonwebtoken";
 import {SocialUser} from "../interfaces/SocialUser";
+import exceptionMessage from "../modules/exceptionMessage";
 import { logger } from "./winstonConfig";
 
 const kakaoAuth = async (kakaoAccessToken: string) => {

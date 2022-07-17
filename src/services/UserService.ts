@@ -2,9 +2,10 @@ import { logger } from "../config/winstonconfig";
 import User from "../models/User";
 import { authStrategy } from "./SocialAuthStrategy";
 
+
 export type SocialPlatform = "kakao";
 
-const getUser = async(social: SocialPlatform, accessToken: string) =>{
+const getUser = async(social: SocialPlatform, accessToken: string) => {
     try{
         const user = await authStrategy[social].execute(accessToken);
         return user;
