@@ -1,13 +1,16 @@
 import mongoose from 'mongoose';
 
 export interface UserInfo {
-  name: String;
-  email: String;
+  name: string;
+  social: string;
+  socialId: string;
+  email: string;
   characterId?: Number;
-  characterName?: String;
+  characterName?: string;
   growthRate: Number;
   level: Number;
   film: mongoose.Types.ObjectId[];
   count: Number;
-  fcmToken: String;
+  fcmToken: string;
+  refreshToken: string;
 }

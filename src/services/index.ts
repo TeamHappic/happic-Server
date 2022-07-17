@@ -4,4 +4,4 @@ import DailyService from './DailyService';
 import FileService from './FileService';
 
 //service index file
-export {UserService,MypageService, FileService, DailyService}
+export {UserService,MypageService, FileService, DailyService,CharService}
