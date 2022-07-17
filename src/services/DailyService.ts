@@ -1,5 +1,6 @@
 import { PostBaseResponseDto } from '../interfaces/common/postBaseResponseDto';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
+import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 
@@ -112,6 +113,8 @@ const createDaily = async (
       writer: '62cef0997f008c29128704ed',
       photo: filmCreateDto.photo,
       keyword: keywordList,
+      year: year,
+      month: month,
     });
 
     await film.save();
