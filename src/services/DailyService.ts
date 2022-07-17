@@ -102,6 +102,7 @@ const createDaily = async (
         month: month,
         count: 1,
       });
+
       await keyword4.save();
       keywordList.push(keyword4._id);
     } else {
@@ -116,7 +117,7 @@ const createDaily = async (
       writer: '62cef0997f008c29128704ed',
       photo: filmCreateDto.photo,
       keyword: keywordList,
-      yaer: year,
+      year: year,
       month: month,
     });
 
@@ -148,7 +149,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
       { _id: 0, count: 1 }
     );
     let whenCount: Number = whenKeyword[0].count;
-    if (whenCount === 0) {
+    if (whenCount <= 1) {
       await Keyword.findByIdAndDelete(whenId);
     } else {
       whenCount = (whenCount as number) - 1;
@@ -161,7 +162,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
       { _id: 0, count: 1 }
     );
     let whereCount: Number = whereKeyword[0].count;
-    if (whereCount === 0) {
+    if (whereCount <= 1) {
       await Keyword.findByIdAndDelete(whereId);
     } else {
       whereCount = (whereCount as number) - 1;
@@ -171,7 +172,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
     // #who Count - 1
     const whoKeyword = await Keyword.find({ _id: whoId }, { _id: 0, count: 1 });
     let whoCount: Number = whoKeyword[0].count;
-    if (whoCount === 0) {
+    if (whoCount <= 1) {
       await Keyword.findByIdAndDelete(whoId);
     } else {
       whoCount = (whoCount as number) - 1;
@@ -184,7 +185,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
       { _id: 0, count: 1 }
     );
     let whatCount: Number = whatKeyword[0].count;
-    if (whatCount === 0) {
+    if (whatCount <= 1) {
       await Keyword.findByIdAndDelete(whatId);
     } else {
       whatCount = (whatCount as number) - 1;
