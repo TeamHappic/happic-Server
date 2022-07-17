@@ -26,7 +26,7 @@ const KeywordSchema = new mongoose.Schema(
     },
     count: {
       type: Number,
-      required: true,
+      //required: true,
       default: 0,
     },
   },
