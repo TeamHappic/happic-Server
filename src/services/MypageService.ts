@@ -60,7 +60,7 @@ const getAllRank = async (
   let rank1s: Array<object> = [];
   let rank2s: Array<object> = [];
   let rank3s: Array<object> = [];
-  let rank4s: Array<object> = [];
+  let rank4s: object = {};
   try {
     if (year && month) {
       //rank1
@@ -129,7 +129,7 @@ const getAllRank = async (
 
       // rank4
       films = await Film.find({ writer: userId, year: year, month: month });
-      rank4s.push({ month: month, count: films.length });
+      rank4s = { month: month, count: films.length };
     }
 
     const data = {
