@@ -55,10 +55,11 @@ const updateRefreshToken = async (userId: string, refreshToken: string) => {
         { $set: { refreshToken: refreshToken } },
       );
     } catch (error) {
-      logger.error("", error);
+      logger.e(error);
       throw error;
     }
   };
+
 
 export default {
     getUser,

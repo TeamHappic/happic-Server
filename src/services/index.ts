@@ -1,4 +1,8 @@
 //service index file
-export {
+import UserService from "./UserService";
+import CharService from "./CharService";
 
-}
+export default {
+    UserService,
+    CharService
+};
