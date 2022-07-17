@@ -27,6 +27,7 @@ const createDaily = async (
         content: filmCreateDto.when,
         year: year,
         month: month,
+        count: 1,
       });
       await keyword1.save();
 
@@ -51,6 +52,7 @@ const createDaily = async (
         content: filmCreateDto.where,
         year: year,
         month: month,
+        count: 1,
       });
       await keyword2.save();
 
@@ -75,6 +77,7 @@ const createDaily = async (
         content: filmCreateDto.who,
         year: year,
         month: month,
+        count: 1,
       });
       await keyword3.save();
       keywordList.push(keyword3._id);
@@ -98,6 +101,7 @@ const createDaily = async (
         content: filmCreateDto.what,
         year: year,
         month: month,
+        count: 1,
       });
       await keyword4.save();
       keywordList.push(keyword4._id);
@@ -145,7 +149,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
       { _id: 0, count: 1 }
     );
     let whenCount: Number = whenKeyword[0].count;
-    if (whenCount === 0) {
+    if ((whenCount as number) === 1) {
       await Keyword.findByIdAndDelete(whenId);
     } else {
       whenCount = (whenCount as number) - 1;
@@ -158,7 +162,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
       { _id: 0, count: 1 }
     );
     let whereCount: Number = whereKeyword[0].count;
-    if (whereCount === 0) {
+    if ((whereCount as number) === 1) {
       await Keyword.findByIdAndDelete(whereId);
     } else {
       whereCount = (whereCount as number) - 1;
@@ -168,7 +172,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
     // #who Count - 1
     const whoKeyword = await Keyword.find({ _id: whoId }, { _id: 0, count: 1 });
     let whoCount: Number = whoKeyword[0].count;
-    if (whoCount === 0) {
+    if ((whoCount as number) === 1) {
       await Keyword.findByIdAndDelete(whoId);
     } else {
       whoCount = (whoCount as number) - 1;
@@ -181,7 +185,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
       { _id: 0, count: 1 }
     );
     let whatCount: Number = whatKeyword[0].count;
-    if (whatCount === 0) {
+    if ((whatCount as number) === 1) {
       await Keyword.findByIdAndDelete(whatId);
     } else {
       whatCount = (whatCount as number) - 1;
