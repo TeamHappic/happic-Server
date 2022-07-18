@@ -17,7 +17,7 @@ import { MypageService } from '../services';
  */
 const getAllRank = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const { userId } = req.body.user.id;
+  const userId = req.body.user.id;
 
   try {
     let data: Object = [];
@@ -60,7 +60,7 @@ const getAllRank = async (req: Request, res: Response) => {
  */
 const getKeywordRank = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const { userId } = req.body.user.id;
+  const userId = req.body.user.id;
 
   try {
     let data: Object = [];
@@ -101,7 +101,7 @@ const getKeywordRank = async (req: Request, res: Response) => {
  */
 const getKeywordByCategory = async (req: Request, res: Response) => {
   const { year, month, option } = req.query;
-  const { userId } = req.body.user.id;
+  const userId = req.body.user.id;
 
   try {
     let data: Object = [];
@@ -154,7 +154,7 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
  */
 const getKeywordByMonth = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const { userId } = req.body.user.id;
+  const userId = req.body.user.id;
 
   try {
     let data: Object = [];

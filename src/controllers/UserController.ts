@@ -27,7 +27,7 @@ const findCharacter = async (req: Request, res: Response) => {
 
   try {
     //const user = await UserService.findUserById(req.body.user.id);
-    const { userId } = req.body.user.id;
+    const userId = req.body.user.id;
     const data = await UserService.findCharacter(userId);
 
     if (!data) {

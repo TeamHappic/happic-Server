@@ -106,7 +106,7 @@ const deleteDaily = async (req: Request, res: Response) => {
  * @access public
  */
 const postedDaily = async (req: Request, res: Response) => {
-  const { userId } = req.body.user.id;
+  const userId = req.body.user.id;
 
   try {
     const data = await DailyService.postedDaily(userId as string);
@@ -139,7 +139,7 @@ const postedDaily = async (req: Request, res: Response) => {
  * @access public
  */
 const getTopKeyword = async (req: Request, res: Response) => {
-  const { userId } = req.body.user.id;
+  const userId = req.body.user.id;
 
   try {
     const data = await DailyService.getTopKeyword(userId as string);
@@ -175,7 +175,7 @@ const getTopKeyword = async (req: Request, res: Response) => {
  */
 const getAllTitle = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.body.user.id;
+    const userId = req.body.user.id;
     const data = await DailyService.getAllTitle(userId as string);
     if (!data) {
       return res
