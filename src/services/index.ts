@@ -6,3 +6,7 @@ export default {
     UserService,
     CharService
 };
+
+export function getUser(social: any, token: any) {
+    throw new Error("Function not implemented.");
+}

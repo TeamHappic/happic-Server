@@ -65,7 +65,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
         .send(BaseResponse.failure(sc.UNAUTHORIZED, message.NULL_VALUE_TOKEN));
     }
     try {
-      const user = await (UserService as any).getUser(social, token);
+      const user = await UserService.getUser(social, token);
   
       if (!user) {
         return res
@@ -82,7 +82,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
             ),
           );
       }
-
+  
       const existUser = await (UserService as any).findUserById(
         (user as SocialUser).userId,
         social,
@@ -96,35 +96,35 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
             BaseResponse.success(sc.CREATED, message.SIGN_UP_SUCCESS, await data),
           );
       }
-
+  
       const refreshToken = jwt.createRefresh();
-    const accessToken = jwt.sign(existUser._id, existUser.email);
-
-    await (UserService as any).updateRefreshToken(existUser._id, refreshToken);
-
-    const data = {
-      user: existUser,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    };
-
-    return res
-      .status(sc.OK)
-      .send(BaseResponse.success(sc.OK, message.SIGN_IN_SUCCESS, data));
-  } catch (error) {
-    logger.e("UserController getUser error", error);
-    return res
-      .status(sc.INTERNAL_SERVER_ERROR)
-      .send(
-        BaseResponse.failure(
-          sc.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR,
-        ),
-      );
-  }
-};
-
-async function createUser(social: string, user: SocialUser) {
+      const accessToken = jwt.sign(existUser._id, existUser.email);
+  
+      await (UserService as any).updateRefreshToken(existUser._id, refreshToken);
+  
+      const data = {
+        user: existUser,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      };
+  
+      return res
+        .status(sc.OK)
+        .send(BaseResponse.success(sc.OK, message.SIGN_IN_SUCCESS, data));
+    } catch (error) {
+      logger.e("UserController getUser error", error);
+      return res
+        .status(sc.INTERNAL_SERVER_ERROR)
+        .send(
+          BaseResponse.failure(
+            sc.INTERNAL_SERVER_ERROR,
+            message.INTERNAL_SERVER_ERROR,
+          ),
+        );
+    }
+  };
+  
+  async function createUser(social: string, user: SocialUser) {
     const refreshToken = jwt.createRefresh();
     const newUser = await (UserService as any).signUpUser(
       social,
