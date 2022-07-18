@@ -36,6 +36,7 @@ const createDaily = async (
 
       whenCount = (whenCount as number) + 1;
       await Keyword.findByIdAndUpdate(whenKeyword[0]._id, { count: whenCount });
+      keywordList.push(whenKeyword[0]._id);
     }
 
     // # where 저장
@@ -62,6 +63,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whenKeyword[0]._id, {
         count: whereCount,
       });
+      keywordList.push(whereKeyword[0]._id);
     }
 
     // # who 저장
@@ -86,6 +88,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whoKeyword[0]._id, {
         count: whoCount,
       });
+      keywordList.push(whoKeyword[0]._id);
     }
 
     // # what 저장
@@ -111,6 +114,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whatKeyword[0]._id, {
         count: whatCount,
       });
+      keywordList.push(whatKeyword[0]._id);
     }
 
     const film = new Film({
