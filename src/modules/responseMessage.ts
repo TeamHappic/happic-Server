@@ -13,17 +13,19 @@ const message = {
   //마이페이지
   GET_HAPPICREPORT_SUCCESS: '해픽레포트 조회 성공',
   GET_ALL_KEYWORD_SUCCESS: '해픽레포트 키워드 전체 순위 조회 성공',
-  GET_ALL_KEYWORD_BY_CATEGORY_SUCCESS: '해픽레포트 카테고리별 순위 전체 조회 성공',
+  GET_ALL_KEYWORD_BY_CATEGORY_SUCCESS:
+    '해픽레포트 카테고리별 순위 전체 조회 성공',
   GET_MONTHLY_REPORT_SUCCESS: '월별 해픽레포트 조회 성공',
-  
+
   // 파일
   CREATE_FILE_SUCCESS: '파일 업로드 성공',
 
   // 하루 해픽
   CREATE_DAILY_SUCCESS: '하루 해픽 생성 성공',
-  GET_POSTED_DAILY:'하루해픽 생성 여부 확인 성공',
+  GET_POSTED_DAILY: '하루해픽 생성 여부 확인 성공',
   GET_TOP9_KEYWORDS_SUCCESS: '하루해픽 최다 키워드 조회 성공',
   READ_ALLDAILY_SUCCESS: '하루 해픽 전체 조회 성공',
+  READ_DAILY_SUCCESS: '하루 해픽 상세 조회 성공',
 };
 
 export default message;

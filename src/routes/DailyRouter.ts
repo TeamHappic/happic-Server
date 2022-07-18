@@ -5,6 +5,7 @@ import DailyController from '../controllers/DailyController';
 const router: Router = Router();
 
 router.get('/', DailyController.getAllDaily);
+router.get('/:filmId', DailyController.getDaily);
 
 router.post(
   '/',
@@ -17,8 +18,8 @@ router.post(
   ],
   DailyController.createDaily
 );
-router.get('/posted/:userId',DailyController.postedDaily);
-router.get('/keyword/:userId',DailyController.getTopKeyword);
+router.get('/posted/:userId', DailyController.postedDaily);
+router.get('/keyword/:userId', DailyController.getTopKeyword);
 router.delete('/:filmId', DailyController.deleteDaily);
 
 export default router;
