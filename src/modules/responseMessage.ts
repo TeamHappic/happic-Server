@@ -6,6 +6,7 @@ const message = {
   INVALID_PASSWORD: '비밀번호 오류',
 
   CREATED_CHAR_SUCCESS: '캐릭터 생성 성공',
+  CHANGE_CHARACTER_SUCCESS: '캐릭터 수정 성공',
 
   //token
   NULL_VALUE_TOKEN: '토큰이 없습니다',
@@ -27,7 +28,8 @@ const message = {
   //마이페이지
   GET_HAPPICREPORT_SUCCESS: '해픽레포트 조회 성공',
   GET_ALL_KEYWORD_SUCCESS: '해픽레포트 키워드 전체 순위 조회 성공',
-  GET_ALL_KEYWORD_BY_CATEGORY_SUCCESS:'해픽레포트 카테고리별 순위 전체 조회 성공',
+  GET_ALL_KEYWORD_BY_CATEGORY_SUCCESS:
+    '해픽레포트 카테고리별 순위 전체 조회 성공',
   GET_MONTHLY_REPORT_SUCCESS: '월별 해픽레포트 조회 성공',
 
   // 파일

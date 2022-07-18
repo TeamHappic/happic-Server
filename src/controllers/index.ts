@@ -2,6 +2,13 @@ import UserController from './UserController';
 import MypageController from './MypageController';
 import DailyController from './DailyController';
 import FileController from './FileController';
+import SettingController from './SettingController';
 
 // controller index file
-export { FileController, UserController, MypageController, DailyController};
+export {
+  FileController,
+  UserController,
+  MypageController,
+  DailyController,
+  SettingController,
+};
