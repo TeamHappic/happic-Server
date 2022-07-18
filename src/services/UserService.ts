@@ -4,10 +4,8 @@ import { authStrategy } from './SocialAuthStrategy';
 import { FilmInfo } from '../interfaces/film/FilmInfo';
 import { UserResponseDto } from '../interfaces/user/UserResponseDto';
 import Film from '../models/Film';
+
 export type SocialPlatform = 'kakao';
-
-
-export type SocialPlatform = "kakao";
 const isSameDate = (date1: Date) => {
   const today = new Date();
   return (
@@ -45,14 +43,16 @@ const findCharacter = async (
     console.log(error);
     throw error;
   }
-const loginUser = async(social: SocialPlatform, accessToken: string) => {
-    try{
-        const user = await authStrategy[social].execute(accessToken);
-        return user;
-    } catch (error){
-        logger.e(error);
-        throw error;
-    }  
+};
+
+const loginUser = async (social: SocialPlatform, accessToken: string) => {
+  try {
+    const user = await authStrategy[social].execute(accessToken);
+    return user;
+  } catch (error) {
+    logger.e(error);
+    throw error;
+  }
 };
 const getUser = async (social: SocialPlatform, accessToken: string) => {
   try {
@@ -116,8 +116,7 @@ const updateRefreshToken = async (userId: string, refreshToken: string) => {
 };
 
 export default {
-    loginUser,
-    updateRefreshToken
+  loginUser,
   getUser,
   findUserById,
   signUpUser,

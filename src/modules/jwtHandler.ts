@@ -4,7 +4,7 @@ import config from '../config';
 import { logger } from '../config/winstonConfig';
 import em from './exceptionMessage';
 
-const sign = (userId: mongoose.Schema.Types.ObjectId, email: string) => {
+const sign = (userId: mongoose.Schema.Types.ObjectId, email: String) => {
   const payload = {
     id: userId,
     email: email,
