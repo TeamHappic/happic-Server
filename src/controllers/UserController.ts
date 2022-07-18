@@ -5,18 +5,18 @@ import jwt from "../modules/jwtHandler";
 import message from "../modules/responseMessage";
 import { default as sc, default as statusCode } from "../modules/statusCode";
 import util from "../modules/util";
-import UserService from "../services";
+import { UserService, CharService } from "../services";
 import {SocialUser} from "../interfaces/SocialUser";
 import responseMessage from "../modules/responseMessage";
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
-import CharService from "../services/CharService";
 import { CharCreateDto } from "../interfaces/user/CharCreateDto";
 import BaseResponse from "../modules/BaseResponse";
+import User from "../models/User";
 
 /**
  * @route POST /character
  * @desc Determine Char Info 
- * @access Public
+ * @access Private
  */
 const createChar = async (req: Request, res: Response): Promise<void> => {
     const charCreateDto: CharCreateDto = req.body;
@@ -55,7 +55,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
  * @desc Authenticate user & Get token
  * @access Private
  */
- const getUser = async (req: Request, res: Response) => {
+ const loginUser = async (req: Request, res: Response) => {
     const social = req.body.social;
     const token = req.body.token;
   
@@ -65,7 +65,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
         .send(BaseResponse.failure(sc.UNAUTHORIZED, message.NULL_VALUE_TOKEN));
     }
     try {
-      const user = await UserService.getUser(social, token);
+      const user = await UserService.loginUser(social, token);
   
       if (!user) {
         return res
@@ -83,10 +83,8 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
           );
       }
   
-      const existUser = await (UserService as any).findUserById(
-        (user as SocialUser).userId,
-        social,
-      );
+      const existUser = await UserService.findUserById((user as SocialUser).userId, social,);
+      
       if (!existUser) {
         const data = createUser(social, user);
   
@@ -100,7 +98,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
       const refreshToken = jwt.createRefresh();
       const accessToken = jwt.sign(existUser._id, existUser.email);
   
-      await (UserService as any).updateRefreshToken(existUser._id, refreshToken);
+      await UserService.updateRefreshToken(existUser._id, refreshToken);
   
       const data = {
         user: existUser,
@@ -126,7 +124,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
   
   async function createUser(social: string, user: SocialUser) {
     const refreshToken = jwt.createRefresh();
-    const newUser = await (UserService as any).signUpUser(
+    const newUser = await UserService.signUpUser(
       social,
       (user as SocialUser).userId,
       (user as SocialUser).email,
@@ -142,7 +140,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
   }
 
 export default{
-    getUser,
+    loginUser,
     createChar
 };
   

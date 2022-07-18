@@ -2,7 +2,7 @@
 import UserService from "./UserService";
 import CharService from "./CharService";
 
-export default {
+export {
     UserService,
     CharService
 };

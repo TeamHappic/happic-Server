@@ -5,7 +5,7 @@ import { authStrategy } from "./SocialAuthStrategy";
 
 export type SocialPlatform = "kakao";
 
-const getUser = async(social: SocialPlatform, accessToken: string) => {
+const loginUser = async(social: SocialPlatform, accessToken: string) => {
     try{
         const user = await authStrategy[social].execute(accessToken);
         return user;
@@ -63,7 +63,7 @@ const updateRefreshToken = async (userId: string, refreshToken: string) => {
 
 
 export default {
-    getUser,
+    loginUser,
     findUserById,
     signUpUser,
     updateRefreshToken
