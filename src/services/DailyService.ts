@@ -40,17 +40,26 @@ const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
   try {
     const films: FilmInfo[] = await Film.find({}).sort({ createdAt: -1 });
     const index = films.findIndex((x) => x.id === filmId);
-    console.log(index);
-    const leftFilmId = films[index + 1].id;
-    const rightFilmId = films[index - 1].id;
-    console.log(leftFilmId, rightFilmId);
+
+    let leftFilmId;
+    let rightFilmId;
+    if (index > 0) {
+      leftFilmId = films[index - 1].id;
+    } else {
+      leftFilmId = ' ';
+    }
+
+    if (index < films.length - 1) {
+      rightFilmId = films[index + 1].id;
+    } else {
+      rightFilmId = ' ';
+    }
 
     const film = await Film.find(
       { _id: filmId },
       { _id: 0, photo: 1, keyword: 1, createdAt: 1 }
     );
 
-    console.log('필름', film);
     const whenId = film[0].keyword[0].toString();
     const whereId = film[0].keyword[1].toString();
     const whoId = film[0].keyword[2].toString();
@@ -114,6 +123,7 @@ const createDaily = async (
 
       whenCount = (whenCount as number) + 1;
       await Keyword.findByIdAndUpdate(whenKeyword[0]._id, { count: whenCount });
+      keywordList.push(whenKeyword[0]._id);
     }
 
     // # where 저장
@@ -140,6 +150,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whenKeyword[0]._id, {
         count: whereCount,
       });
+      keywordList.push(whereKeyword[0]._id);
     }
 
     // # who 저장
@@ -164,6 +175,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whoKeyword[0]._id, {
         count: whoCount,
       });
+      keywordList.push(whoKeyword[0]._id);
     }
 
     // # what 저장
@@ -188,6 +200,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whatKeyword[0]._id, {
         count: whatCount,
       });
+      keywordList.push(whatKeyword[0]._id);
     }
 
     const film = new Film({
