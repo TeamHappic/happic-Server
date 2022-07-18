@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 
 /**
  * @route GET /daily?year=&month=
- * @desc Get Movie By Movie Id
+ * @desc 하루 해픽 전체 조회
  * @access Public
  */
 const getAllDaily = async (req: Request, res: Response) => {
@@ -28,6 +28,37 @@ const getAllDaily = async (req: Request, res: Response) => {
     res
       .status(statusCode.OK)
       .send(util.success(statusCode.OK, message.READ_ALLDAILY_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
+
+/**
+ * @route GET /daily/:filmId
+ * @desc 하루해픽 상세 조회
+ * @access Public
+ */
+const getDaily = async (req: Request, res: Response) => {
+  const { filmId } = req.params;
+
+  try {
+    const data = await DailyService.getDaily(filmId);
+    if (!data) {
+      res
+        .status(statusCode.NOT_FOUND)
+        .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
+    res
+      .status(statusCode.OK)
+      .send(util.success(statusCode.OK, message.READ_DAILY_SUCCESS, data));
   } catch (error) {
     console.log(error);
     res
@@ -198,6 +229,37 @@ const getAllTitle = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @route GET /daily/:filmId
+ * @desc 하루해픽 상세 조회
+ * @access Public
+ */
+const getDaily = async (req: Request, res: Response) => {
+  const { filmId } = req.params;
+
+  try {
+    const data = await DailyService.getDaily(filmId);
+    if (!data) {
+      res
+        .status(statusCode.NOT_FOUND)
+        .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+    }
+    res
+      .status(statusCode.OK)
+      .send(util.success(statusCode.OK, message.READ_DAILY_SUCCESS, data));
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
+
 export default {
   createDaily,
   deleteDaily,
@@ -205,4 +267,5 @@ export default {
   getTopKeyword,
   getAllDaily,
   getAllTitle,
+  getDaily,
 };

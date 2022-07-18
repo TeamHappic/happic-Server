@@ -1,7 +1,11 @@
-import { KeywordInfo } from '../keyword/KeywordInfo';
-
 export interface FilmResponseDto {
   id: String;
-  day: Number;
-  thumbnail: String;
+  leftId: String;
+  rightId: String;
+  date: Date;
+  photo: String;
+  when: Number;
+  where: String;
+  who: String;
+  what: String;
 }

@@ -5,6 +5,7 @@ import DailyController from '../controllers/DailyController';
 const router: Router = Router();
 
 router.get('/', DailyController.getAllDaily);
+router.get('/:filmId', DailyController.getDaily);
 
 router.post(
   '/',

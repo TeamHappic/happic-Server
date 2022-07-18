@@ -4,6 +4,7 @@ import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
+import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
 const getAllDaily = async (year: string, month: string) => {
@@ -28,6 +29,60 @@ const getAllDaily = async (year: string, month: string) => {
       }
       return daily;
     }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
+  try {
+    const films: FilmInfo[] = await Film.find({}).sort({ createdAt: -1 });
+    const index = films.findIndex((x) => x.id === filmId);
+
+    let leftFilmId;
+    let rightFilmId;
+    if (index > 0) {
+      leftFilmId = films[index - 1].id;
+    } else {
+      leftFilmId = ' ';
+    }
+
+    if (index < films.length - 1) {
+      rightFilmId = films[index + 1].id;
+    } else {
+      rightFilmId = ' ';
+    }
+
+    const film = await Film.find(
+      { _id: filmId },
+      { _id: 0, photo: 1, keyword: 1, createdAt: 1 }
+    );
+
+    const whenId = film[0].keyword[0].toString();
+    const whereId = film[0].keyword[1].toString();
+    const whoId = film[0].keyword[2].toString();
+    const whatId = film[0].keyword[3].toString();
+
+    const whenKeyword = await Keyword.find({ _id: whenId }, { content: 1 });
+    const whereKeyword = await Keyword.find({ _id: whereId }, { content: 1 });
+    const whoKeyword = await Keyword.find({ _id: whoId }, { content: 1 });
+    const whatKeyword = await Keyword.find({ _id: whatId }, { content: 1 });
+
+    const data = {
+      id: filmId,
+      leftId: leftFilmId,
+      rightId: rightFilmId,
+      date: film[0].createdAt,
+      photo: film[0].photo,
+      when: Number(whenKeyword[0].content),
+      where: whereKeyword[0].content,
+      who: whoKeyword[0].content,
+      what: whatKeyword[0].content,
+    };
+
+    if (!data) return null;
+    return data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -67,6 +122,7 @@ const createDaily = async (
 
       whenCount = (whenCount as number) + 1;
       await Keyword.findByIdAndUpdate(whenKeyword[0]._id, { count: whenCount });
+      keywordList.push(whenKeyword[0]._id);
     }
 
     // # where 저장
@@ -93,6 +149,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whenKeyword[0]._id, {
         count: whereCount,
       });
+      keywordList.push(whereKeyword[0]._id);
     }
 
     // # who 저장
@@ -117,6 +174,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whoKeyword[0]._id, {
         count: whoCount,
       });
+      keywordList.push(whoKeyword[0]._id);
     }
 
     // # what 저장
@@ -141,6 +199,7 @@ const createDaily = async (
       await Keyword.findByIdAndUpdate(whatKeyword[0]._id, {
         count: whatCount,
       });
+      keywordList.push(whatKeyword[0]._id);
     }
 
     const film = new Film({
@@ -361,8 +420,5 @@ export default {
   postedDaily,
   getTopKeyword,
   getAllTitle,
+  getDaily,
 };
-
-function dayjs(createdAt: Date) {
-  throw new Error('Function not implemented.');
-}
