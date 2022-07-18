@@ -8,7 +8,7 @@ import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
 const getAllDaily = async (year: string, month: string) => {
   const dayjs = require('dayjs');
-  const daily: FilmResponseDto[] = [];
+  const daily: FilmAllResponseDto[] = [];
 
   try {
     if (year && month) {
@@ -36,7 +36,7 @@ const getAllDaily = async (year: string, month: string) => {
 
 const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
   try {
-    const films: FilmInfo[] = await Film.find({}).sort({ createdAt: -1 });
+    const films = await Film.find({}).sort({ createdAt: -1 });
     const index = films.findIndex((x) => x.id === filmId);
 
     let leftFilmId;

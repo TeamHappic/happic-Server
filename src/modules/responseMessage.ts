@@ -27,8 +27,7 @@ const message = {
   //마이페이지
   GET_HAPPICREPORT_SUCCESS: '해픽레포트 조회 성공',
   GET_ALL_KEYWORD_SUCCESS: '해픽레포트 키워드 전체 순위 조회 성공',
-  GET_ALL_KEYWORD_BY_CATEGORY_SUCCESS:
-    '해픽레포트 카테고리별 순위 전체 조회 성공',
+  GET_ALL_KEYWORD_BY_CATEGORY_SUCCESS:'해픽레포트 카테고리별 순위 전체 조회 성공',
   GET_MONTHLY_REPORT_SUCCESS: '월별 해픽레포트 조회 성공',
 
   // 파일
@@ -40,6 +39,7 @@ const message = {
   GET_TOP9_KEYWORDS_SUCCESS: '하루해픽 최다 키워드 조회 성공',
   READ_ALLDAILY_SUCCESS: '하루해픽 전체 조회 성공',
   GET_ALLTITLE_SUCCESS: '하루제목 전체 조회 성공',
+  READ_DAILY_SUCCESS: '하루해픽 상세 조회 성공',
 };
 
 export default message;
