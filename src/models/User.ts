@@ -16,19 +16,19 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  characterId: {
-    type: Number,
-    required: true,
-  },
-  characterName: {
-    type: String,
-    required: true,
-  },
+  // email: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
+  // characterId: {
+  //   type: Number,
+  //   required: true,
+  // },
+  // characterName: {
+  //   type: String,
+  //   required: true,
+  // },
   growthRate: {
     type: Number,
     required: true,
@@ -50,11 +50,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
-  fcmToken: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  // fcmToken: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
   refreshToken: {
     type: String,
     required: true,
