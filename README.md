@@ -14,6 +14,9 @@
 
 <br>
 
+## Service workflow
+
+![IA-FLOW@3x](https://user-images.githubusercontent.com/80062632/178763859-26283266-06bc-4469-b121-223da1c52b53.png)
 <br>
 
 ##  Team happic SERVER Developers
