@@ -110,7 +110,7 @@ const createChar = async (req: Request, res: Response): Promise<void> => {
         .status(sc.OK)
         .send(BaseResponse.success(sc.OK, message.SIGN_IN_SUCCESS, data));
     } catch (error) {
-      logger.e("UserController getUser error", error);
+      logger.e("UserController loginUser error", error);
       return res
         .status(sc.INTERNAL_SERVER_ERROR)
         .send(
