@@ -1,4 +1,4 @@
-import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
+import { PostBaseResponseDto } from "../interfaces/common/postBaseResponseDto";
 import { CharCreateDto } from "../interfaces/user/CharCreateDto";
 import Char from "../models/Char";
 
