@@ -1,6 +1,5 @@
 import { PostBaseResponseDto } from '../interfaces/common/postBaseResponseDto';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
-import { FilmInfo } from '../interfaces/film/FilmInfo';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
@@ -191,6 +190,7 @@ const createDaily = async (
         month: month,
         count: 1,
       });
+
       await keyword4.save();
       keywordList.push(keyword4._id);
     } else {
