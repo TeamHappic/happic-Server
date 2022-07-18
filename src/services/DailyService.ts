@@ -19,7 +19,7 @@ const getAllDaily = async (year: string, month: string) => {
 
       for (var i = 0; i < films.length; i++) {
         let id = films[i]._id;
-        let thumbnail = films[i].thumbnail;
+        let thumbnail = films[i].photo;
         let createdAt = dayjs(films[i].createdAt);
         const day = createdAt.get('date');
 
