@@ -14,9 +14,11 @@ import dayjs from 'dayjs';
  */
 const getAllDaily = async (req: Request, res: Response) => {
   const { year, month } = req.query;
+  const userId = req.body.user.id;
 
   try {
     const data = await DailyService.getAllDaily(
+      userId as string,
       year as string,
       month as string
     );

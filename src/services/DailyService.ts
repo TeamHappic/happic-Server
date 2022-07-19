@@ -6,13 +6,15 @@ import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
-const getAllDaily = async (year: string, month: string) => {
+const getAllDaily = async (userId: string, year: string, month: string) => {
+  const daily: FilmResponseDto[] = [];
   const dayjs = require('dayjs');
   const daily: FilmAllResponseDto[] = [];
 
   try {
     if (year && month) {
       const films = await Film.find({
+        writer: userId,
         year: Number(year),
         month: Number(month),
       });
