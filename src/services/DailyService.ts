@@ -5,13 +5,14 @@ import Film from '../models/Film';
 import Keyword from '../models/Keyword';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
-const getAllDaily = async (year: string, month: string) => {
+const getAllDaily = async (userId: string, year: string, month: string) => {
   const daily: FilmResponseDto[] = [];
   const dayjs = require('dayjs');
 
   try {
     if (year && month) {
       const films = await Film.find({
+        writer: userId,
         year: Number(year),
         month: Number(month),
       });
