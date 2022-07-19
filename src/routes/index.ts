@@ -6,6 +6,7 @@ import HomeRouter from './HomeRouter';
 import MypageRouter from './MypageRouter';
 import AuthRouter from './AuthRouter';
 import CharRouter from './CharRouter';
+import SettingRouter from './SettingRouter';
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.use('/mypage', MypageRouter);
 router.use('/daily', DailyRouter);
 router.use('/auth', AuthRouter);
 router.use('/character', CharRouter);
+router.use('/setting', SettingRouter);
 
 export default router;
