@@ -14,7 +14,7 @@ const sign = (userId: mongoose.Schema.Types.ObjectId, email: String) => {
     // 암호화
     payload,
     config.jwtSecret,
-    { expiresIn: '1h' } // 한시간동안
+    { expiresIn: '14d' }
   );
   return accessToken;
 };
