@@ -1,4 +1,4 @@
-import auth from '../config/auth';
+import auth from '../config/kakaoAuth';
 import { SocialPlatform } from './UserService';
 
 export interface SocialAuthStrategy {
