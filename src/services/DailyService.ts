@@ -57,6 +57,7 @@ const getDaily = async (
     } else {
       rightFilmId = ' ';
     }
+    
 
     const film = await Film.find(
       { writer: userId, _id: filmId },
