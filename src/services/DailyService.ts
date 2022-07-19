@@ -34,9 +34,12 @@ const getAllDaily = async (year: string, month: string) => {
   }
 };
 
-const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
+const getDaily = async (
+  userId: string,
+  filmId: string
+): Promise<FilmResponseDto | null> => {
   try {
-    const films = await Film.find({}).sort({ createdAt: -1 });
+    const films = await Film.find({ writer: userId }).sort({ createdAt: -1 });
     const index = films.findIndex((x) => x.id === filmId);
 
     let leftFilmId;
@@ -54,7 +57,7 @@ const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
     }
 
     const film = await Film.find(
-      { _id: filmId },
+      { writer: userId, _id: filmId },
       { _id: 0, photo: 1, keyword: 1, createdAt: 1 }
     );
 
@@ -63,10 +66,22 @@ const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
     const whoId = film[0].keyword[2].toString();
     const whatId = film[0].keyword[3].toString();
 
-    const whenKeyword = await Keyword.find({ _id: whenId }, { content: 1 });
-    const whereKeyword = await Keyword.find({ _id: whereId }, { content: 1 });
-    const whoKeyword = await Keyword.find({ _id: whoId }, { content: 1 });
-    const whatKeyword = await Keyword.find({ _id: whatId }, { content: 1 });
+    const whenKeyword = await Keyword.find(
+      { writer: userId, _id: whenId },
+      { content: 1 }
+    );
+    const whereKeyword = await Keyword.find(
+      { writer: userId, _id: whereId },
+      { content: 1 }
+    );
+    const whoKeyword = await Keyword.find(
+      { writer: userId, _id: whoId },
+      { content: 1 }
+    );
+    const whatKeyword = await Keyword.find(
+      { writer: userId, _id: whatId },
+      { content: 1 }
+    );
 
     const data = {
       id: filmId,
@@ -89,6 +104,7 @@ const getDaily = async (filmId: string): Promise<FilmResponseDto | null> => {
 };
 
 const createDaily = async (
+  userId: string,
   filmCreateDto: FilmCreateDto
 ): Promise<PostBaseResponseDto> => {
   try {
@@ -100,13 +116,13 @@ const createDaily = async (
 
     // #when 저장
     const whenKeyword = await Keyword.find(
-      { category: 'when', content: filmCreateDto.when },
+      { writer: userId, category: 'when', content: filmCreateDto.when },
       { count: 1 }
     );
 
     if (whenKeyword.length === 0) {
       const keyword1 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'when',
         content: filmCreateDto.when,
         year: year,
@@ -126,13 +142,13 @@ const createDaily = async (
 
     // # where 저장
     const whereKeyword = await Keyword.find(
-      { category: 'where', content: filmCreateDto.where },
+      { writer: userId, category: 'where', content: filmCreateDto.where },
       { count: 1 }
     );
 
     if (whereKeyword.length === 0) {
       const keyword2 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'where',
         content: filmCreateDto.where,
         year: year,
@@ -153,12 +169,12 @@ const createDaily = async (
 
     // # who 저장
     const whoKeyword = await Keyword.find(
-      { category: 'who', content: filmCreateDto.who },
+      { writer: userId, category: 'who', content: filmCreateDto.who },
       { count: 1 }
     );
     if (whoKeyword.length === 0) {
       const keyword3 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'who',
         content: filmCreateDto.who,
         year: year,
@@ -178,12 +194,12 @@ const createDaily = async (
 
     // # what 저장
     const whatKeyword = await Keyword.find(
-      { category: 'what', content: filmCreateDto.what },
+      { writer: userId, category: 'what', content: filmCreateDto.what },
       { count: 1 }
     );
     if (whatKeyword.length === 0) {
       const keyword4 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'what',
         content: filmCreateDto.what,
         year: year,
@@ -203,7 +219,7 @@ const createDaily = async (
     }
 
     const film = new Film({
-      writer: '62cef0997f008c29128704ed',
+      writer: userId,
       photo: filmCreateDto.photo,
       keyword: keywordList,
       year: year,
@@ -223,9 +239,12 @@ const createDaily = async (
   }
 };
 
-const deleteDaily = async (filmId: string): Promise<void> => {
+const deleteDaily = async (userId: string, filmId: string): Promise<void> => {
   try {
-    const film = await Film.find({ _id: filmId }, { _id: 0, keyword: 1 });
+    const film = await Film.find(
+      { writer: userId, _id: filmId },
+      { _id: 0, keyword: 1 }
+    );
 
     const whenId = film[0].keyword[0].toString();
     const whereId = film[0].keyword[1].toString();
@@ -234,7 +253,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
 
     // #when Count - 1
     const whenKeyword = await Keyword.find(
-      { _id: whenId },
+      { writer: userId, _id: whenId },
       { _id: 0, count: 1 }
     );
     let whenCount: Number = whenKeyword[0].count;
@@ -247,7 +266,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
 
     // #where Count - 1
     const whereKeyword = await Keyword.find(
-      { _id: whereId },
+      { writer: userId, _id: whereId },
       { _id: 0, count: 1 }
     );
     let whereCount: Number = whereKeyword[0].count;
@@ -259,7 +278,10 @@ const deleteDaily = async (filmId: string): Promise<void> => {
     }
 
     // #who Count - 1
-    const whoKeyword = await Keyword.find({ _id: whoId }, { _id: 0, count: 1 });
+    const whoKeyword = await Keyword.find(
+      { writer: userId, _id: whoId },
+      { _id: 0, count: 1 }
+    );
     let whoCount: Number = whoKeyword[0].count;
     if ((whoCount as number) === 1) {
       await Keyword.findByIdAndDelete(whoId);
@@ -270,7 +292,7 @@ const deleteDaily = async (filmId: string): Promise<void> => {
 
     // #what Count - 1
     const whatKeyword = await Keyword.find(
-      { _id: whatId },
+      { writer: userId, _id: whatId },
       { _id: 0, count: 1 }
     );
     let whatCount: Number = whatKeyword[0].count;
