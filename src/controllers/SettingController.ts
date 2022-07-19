@@ -11,8 +11,8 @@ import SettingService from '../services/SettingService';
  * @access Public
  */
 const changeChar = async (req: Request, res: Response) => {
-  const userId = '62cef0997f008c29128704ed';
   const { characterId, characterName } = req.body;
+  const userId = req.body.user.id;
 
   try {
     await SettingService.changeChar(userId, characterId, characterName);
