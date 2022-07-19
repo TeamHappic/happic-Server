@@ -329,6 +329,17 @@ const deleteDaily = async (userId: string, filmId: string): Promise<void> => {
       await Keyword.findByIdAndUpdate(whatId, { count: whatCount });
     }
 
+    const user = await User.find({ _id: userId }, { count: 1 });
+    let count: Number = user[0].count;
+    if ((count as number) > 0) {
+      count = (count as number) - 1;
+    } else {
+      count = 0;
+    }
+    await User.findByIdAndUpdate(userId, {
+      count: count,
+    });
+
     await Film.findByIdAndDelete(filmId);
   } catch (error) {
     console.log(error);
