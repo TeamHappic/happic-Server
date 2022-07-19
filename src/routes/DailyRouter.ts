@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { body } from 'express-validator/check';
 import DailyController from '../controllers/DailyController';
+import auth from '../middleware/auth';
 
 const router: Router = Router();
 
-router.get('/', DailyController.getAllDaily);
+router.get('/', auth, DailyController.getAllDaily);
 
 router.post(
   '/',
@@ -15,9 +16,10 @@ router.post(
     body('who').notEmpty(),
     body('what').notEmpty(),
   ],
+  auth,
   DailyController.createDaily
 );
 
-router.delete('/:filmId', DailyController.deleteDaily);
+router.delete('/:filmId', auth, DailyController.deleteDaily);
 
 export default router;
