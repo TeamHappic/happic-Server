@@ -78,7 +78,7 @@ const getDaily = async (req: Request, res: Response) => {
 /**
  * @router POST /daily
  * @desc 새로운 하루 해픽 생성
- * @access
+ * @access Private
  */
 const createDaily = async (req: Request, res: Response) => {
   const error = validationResult(req);

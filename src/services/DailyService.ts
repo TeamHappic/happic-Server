@@ -2,6 +2,7 @@ import { PostBaseResponseDto } from '../interfaces/common/postBaseResponseDto';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
+import User from '../models/User';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
@@ -219,6 +220,30 @@ const createDaily = async (
       keywordList.push(whatKeyword[0]._id);
     }
 
+    // 유저 업데이트
+    const user = await User.find(
+      { _id: userId },
+      { count: 1, growthRate: 1, level: 1 }
+    );
+
+    let count: Number = user[0].count;
+    let growthRate: Number = user[0].growthRate;
+    let level: Number = user[0].level;
+
+    count = (count as number) + 1;
+    growthRate = (growthRate as number) + 1;
+    if (growthRate === 6) {
+      level = (level as number) + 1;
+      growthRate = 0;
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      count: count,
+      growthRate: growthRate,
+      level: level,
+    });
+
+    // 필름 생성
     const film = new Film({
       writer: userId,
       photo: filmCreateDto.photo,
