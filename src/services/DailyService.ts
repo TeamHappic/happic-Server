@@ -2,8 +2,10 @@ import { PostBaseResponseDto } from '../interfaces/common/postBaseResponseDto';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import Film from '../models/Film';
 import Keyword from '../models/Keyword';
+import User from '../models/User';
 
 const createDaily = async (
+  userId: string,
   filmCreateDto: FilmCreateDto
 ): Promise<PostBaseResponseDto> => {
   try {
@@ -15,13 +17,13 @@ const createDaily = async (
 
     // #when 저장
     const whenKeyword = await Keyword.find(
-      { category: 'when', content: filmCreateDto.when },
+      { writer: userId, category: 'when', content: filmCreateDto.when },
       { count: 1 }
     );
 
     if (whenKeyword.length === 0) {
       const keyword1 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'when',
         content: filmCreateDto.when,
         year: year,
@@ -41,13 +43,13 @@ const createDaily = async (
 
     // # where 저장
     const whereKeyword = await Keyword.find(
-      { category: 'where', content: filmCreateDto.where },
+      { writer: userId, category: 'where', content: filmCreateDto.where },
       { count: 1 }
     );
 
     if (whereKeyword.length === 0) {
       const keyword2 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'where',
         content: filmCreateDto.where,
         year: year,
@@ -68,12 +70,12 @@ const createDaily = async (
 
     // # who 저장
     const whoKeyword = await Keyword.find(
-      { category: 'who', content: filmCreateDto.who },
+      { writer: userId, category: 'who', content: filmCreateDto.who },
       { count: 1 }
     );
     if (whoKeyword.length === 0) {
       const keyword3 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'who',
         content: filmCreateDto.who,
         year: year,
@@ -93,12 +95,12 @@ const createDaily = async (
 
     // # what 저장
     const whatKeyword = await Keyword.find(
-      { category: 'what', content: filmCreateDto.what },
+      { writer: userId, category: 'what', content: filmCreateDto.what },
       { count: 1 }
     );
     if (whatKeyword.length === 0) {
       const keyword4 = new Keyword({
-        writer: '62cef0997f008c29128704ed',
+        writer: userId,
         category: 'what',
         content: filmCreateDto.what,
         year: year,
@@ -117,8 +119,32 @@ const createDaily = async (
       keywordList.push(whatKeyword[0]._id);
     }
 
+    // 유저 업데이트
+    const user = await User.find(
+      { _id: userId },
+      { count: 1, growthRate: 1, level: 1 }
+    );
+
+    let count: Number = user[0].count;
+    let growthRate: Number = user[0].growthRate;
+    let level: Number = user[0].level;
+
+    count = (count as number) + 1;
+    growthRate = (growthRate as number) + 1;
+    if (growthRate === 6) {
+      level = (level as number) + 1;
+      growthRate = 0;
+    }
+
+    await User.findByIdAndUpdate(userId, {
+      count: count,
+      growthRate: growthRate,
+      level: level,
+    });
+
+    // 필름 생성
     const film = new Film({
-      writer: '62cef0997f008c29128704ed',
+      writer: userId,
       photo: filmCreateDto.photo,
       keyword: keywordList,
       year: year,
@@ -138,72 +164,6 @@ const createDaily = async (
   }
 };
 
-const deleteDaily = async (filmId: string): Promise<void> => {
-  try {
-    const film = await Film.find({ _id: filmId }, { _id: 0, keyword: 1 });
-
-    const whenId = film[0].keyword[0].toString();
-    const whereId = film[0].keyword[1].toString();
-    const whoId = film[0].keyword[2].toString();
-    const whatId = film[0].keyword[3].toString();
-
-    // #when Count - 1
-    const whenKeyword = await Keyword.find(
-      { _id: whenId },
-      { _id: 0, count: 1 }
-    );
-    let whenCount: Number = whenKeyword[0].count;
-    if (whenCount <= 1) {
-      await Keyword.findByIdAndDelete(whenId);
-    } else {
-      whenCount = (whenCount as number) - 1;
-      await Keyword.findByIdAndUpdate(whenId, { count: whenCount });
-    }
-
-    // #where Count - 1
-    const whereKeyword = await Keyword.find(
-      { _id: whereId },
-      { _id: 0, count: 1 }
-    );
-    let whereCount: Number = whereKeyword[0].count;
-    if (whereCount <= 1) {
-      await Keyword.findByIdAndDelete(whereId);
-    } else {
-      whereCount = (whereCount as number) - 1;
-      await Keyword.findByIdAndUpdate(whereId, { count: whereCount });
-    }
-
-    // #who Count - 1
-    const whoKeyword = await Keyword.find({ _id: whoId }, { _id: 0, count: 1 });
-    let whoCount: Number = whoKeyword[0].count;
-    if (whoCount <= 1) {
-      await Keyword.findByIdAndDelete(whoId);
-    } else {
-      whoCount = (whoCount as number) - 1;
-      await Keyword.findByIdAndUpdate(whoId, { count: whoCount });
-    }
-
-    // #what Count - 1
-    const whatKeyword = await Keyword.find(
-      { _id: whatId },
-      { _id: 0, count: 1 }
-    );
-    let whatCount: Number = whatKeyword[0].count;
-    if (whatCount <= 1) {
-      await Keyword.findByIdAndDelete(whatId);
-    } else {
-      whatCount = (whatCount as number) - 1;
-      await Keyword.findByIdAndUpdate(whatId, { count: whatCount });
-    }
-
-    await Film.findByIdAndDelete(filmId);
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 export default {
   createDaily,
-  deleteDaily,
 };

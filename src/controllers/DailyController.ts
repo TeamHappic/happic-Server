@@ -9,7 +9,7 @@ import DailyService from '../services/DailyService';
 /**
  * @router POST /daily
  * @desc 새로운 하루 해픽 생성
- * @access
+ * @access Private
  */
 const createDaily = async (req: Request, res: Response) => {
   const error = validationResult(req);
@@ -20,9 +20,10 @@ const createDaily = async (req: Request, res: Response) => {
   }
 
   const filmCreateDto: FilmCreateDto = req.body;
+  const userId = req.body.user.id;
 
   try {
-    const data = await DailyService.createDaily(filmCreateDto);
+    const data = await DailyService.createDaily(userId, filmCreateDto);
     res
       .status(statusCode.CREATED)
       .send(
@@ -40,6 +41,7 @@ const createDaily = async (req: Request, res: Response) => {
       );
   }
 };
+
 export default {
   createDaily,
 };
