@@ -7,9 +7,8 @@ import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 
 const getAllDaily = async (userId: string, year: string, month: string) => {
-  const daily: FilmResponseDto[] = [];
-  const dayjs = require('dayjs');
   const daily: FilmAllResponseDto[] = [];
+  const dayjs = require('dayjs');
 
   try {
     if (year && month) {
