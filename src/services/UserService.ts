@@ -146,6 +146,7 @@ const registerFcm = async (userId: string, fcmToken: string) => {
     await User.findByIdAndUpdate(userId, {
       fcmToken: fcmToken,
     });
+
   } catch (error) {
     console.log(error);
     throw error;
@@ -156,4 +157,5 @@ export default {
   signUp,
   signIn,
   findUserById,
+  registerFcm,
 };

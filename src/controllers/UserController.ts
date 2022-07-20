@@ -89,21 +89,20 @@ const signIn = async (req: Request, res: Response) => {
 
   try {
     const existUser = await UserService.findUserById(userId);
-    const user = await UserService.signUp(
-      characterId,
-      characterName,
-      accessToken
-    );
 
-    // if (!existUser) {
-    //   const data = createUser(user);
+    if (!existUser) {
+      const data = await UserService.signUp(
+        characterId,
+        characterName,
+        accessToken
+      );
 
-    //   return res
-    //     .status(statusCode.CREATED)
-    //     .send(
-    //       BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await data),
-    //     );
-    // }
+      return res
+        .status(statusCode.CREATED)
+        .send(
+          BaseResponse.success(statusCode.CREATED, message.SIGN_UP_SUCCESS, data),
+        );
+    }
 
     const jwtToken = getToken(existUser._id);
 
@@ -134,20 +133,13 @@ async function createUser(user: SocialUser) {
     (user as SocialUser).characterName,
     (user as SocialUser).accessToken
   );
-  const jwtToken = getToken(newUser._id);
 
   return {
-    user: newUser,
-    jwtToken: jwtToken,
+    jwtToken: newUser,
   };
 }
 
 // fcmToken 동록
-/**
- * @router POST /movie
- * @desc Create Movie
- * @access Private
- */
 
 const registerFcm = async (req: Request, res: Response) => {
   const error = validationResult(req);
