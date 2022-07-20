@@ -4,7 +4,7 @@ import DailyRouter from './DailyRouter';
 import FileRouter from './FileRouter';
 import HomeRouter from './HomeRouter';
 import MypageRouter from './MypageRouter';
-import AuthRouter from './AuthRouter';
+import UserRouter from './UserRouter';
 import CharRouter from './CharRouter';
 import SettingRouter from './SettingRouter';
 
@@ -14,7 +14,7 @@ router.use('/file', FileRouter);
 router.use('/home', HomeRouter);
 router.use('/mypage', MypageRouter);
 router.use('/daily', DailyRouter);
-router.use('/auth', AuthRouter);
+router.use('/user', UserRouter);
 router.use('/character', CharRouter);
 router.use('/setting', SettingRouter);
 

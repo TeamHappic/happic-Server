@@ -21,6 +21,7 @@ const message = {
   //auth
   SIGN_IN_SUCCESS: '로그인 성공!',
   SIGN_UP_SUCCESS: '회원가입 성공!',
+  REGISTER_FCM_SUCCESS: 'FCM 토큰 등록 성공',
 
   // 홈화면
   READ_USER_SUCCESS: '홈화면 조회 성공',
