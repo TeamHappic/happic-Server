@@ -98,12 +98,13 @@ const signIn = async (social: SocialPlatform,  accessToken: string) => {
 //   }
 // };
 
-const findUserById = async (userId: string, social: string) => {
+const findUserById = async (accessToken: string) => {
   try {
+    console.log("before user check");
     const user = await User.findOne({
-      social: social,
-      socialId: userId,
+      accessToken: accessToken
     });
+    console.log(user);
     return user;
   } catch (error) {
     logger.e(error);
@@ -112,7 +113,7 @@ const findUserById = async (userId: string, social: string) => {
 };
 //회원가입
 const signUp = async(
-  social: string,
+  //social: string,
   // socialId: string,
   //email: string
   characterId: number,
@@ -124,7 +125,7 @@ const signUp = async(
     //if (!email) {
       user = new User({
         name: `해픽${characterId}`,
-        social: social,
+        //social: social,
         characterId: characterId,
         characterName: characterName,
         accessToken: accessToken

@@ -28,6 +28,9 @@ const kakaoAuth = async (kakaoAccessToken: string) => {
     const kakaoUser: SocialUser = {
       userId: userId,
       email: user.data.kakao_account.email,
+      characterId: 0,
+      characterName: '',
+      accessToken: kakaoAccessToken
     };
 
     return kakaoUser;

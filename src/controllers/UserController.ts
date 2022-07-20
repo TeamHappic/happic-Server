@@ -1,3 +1,4 @@
+import { Request, Response} from 'express';
 import { SocialUser } from "../interfaces/SocialUser";
 import { UserCreateDto } from "../interfaces/user/UserCreateDto";
 import BaseResponse from "../modules/BaseResponse";
@@ -8,13 +9,14 @@ import UserService from "../services/UserService";
 import em from '../modules/exceptionMessage';
 import jwt from '../modules/jwtHandler';
 import { logger } from "../config/winstonConfig";
+import User from '../models/User';
 
 /**
- * @route POST user/signup
+ * @route POST /signup
  * @desc 회원가입
  * @access Private
  */
- const signUp = async (req: Request, res: Response): Promise<void> => {
+ const signUp = async (req: Request, res: Response) => {
     const social = req.body.social;
     // const userId = req.body.userId;
     // const email = req.body.email;
@@ -29,48 +31,34 @@ import { logger } from "../config/winstonConfig";
     }
   
     try {
-      const user = await UserService.signUp(social, charId, charName, token);
-  
+      const user = await UserService.signUp(charId, charName, token);
+      console.log("error");
       if (!user) {
         return res
           .status(statusCode.UNAUTHORIZED)
           .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
       }
-      if (user === em.INVALID_USER) {
-        return res
-          .status(statusCode.UNAUTHORIZED)
-          .send(
-            BaseResponse.failure(
-              statusCode.UNAUTHORIZED,
-              responseMessage.UNAUTHORIZED_SOCIAL_USER,
-            ),
-          );
-      }
+      // if (user === em.INVALID_USER) {
+      //   return res
+      //     .status(statusCode.UNAUTHORIZED)
+      //     .send(
+      //       BaseResponse.failure(
+      //         statusCode.UNAUTHORIZED,
+      //         responseMessage.UNAUTHORIZED_SOCIAL_USER,
+      //       ),
+      //     );
+      // }
 
-      const existUser = await UserService.findUserById(
-        (user as SocialUser).userId,
-        social
-      );
-      if (!existUser) {
-        const data = createUser(social, charName, token);
-        
-        return res
-          .status(statusCode.CREATED)
-          .send(
-            BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await data),
-          );
-      }
-
-      const jwtToken = jwt.sign(existUser._id, existUser.email);
+      const jwtToken = jwt.sign(user._id, user.email);
       
       const data = {
-        user: existUser,
+        user: user,
         jwtToken: jwtToken,
       };
 
       return res
         .status(statusCode.OK)
-        .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_IN_SUCCESS, data));
+        .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS, data));
     } catch (error) {
       logger.e("UserController signUp error", error);
       return res
@@ -84,93 +72,69 @@ import { logger } from "../config/winstonConfig";
     }
   };
 
-  async function createUser(social:string, user: SocialUser) {
-    const newUser = await UserService.signUp(
-      social,
-      (user as SocialUser).characterId,
-      (user as SocialUser).characterName,
-      (user as SocialUser).accessToken
-    );
-    const jwtToken = jwt.sign(newUser._id, newUser.email);
-  
-    return {
-      user: newUser,
-      jwtToken: jwtToken
+  /**
+ * @route POST /signin
+ * @desc Sign In
+ * @access Private
+ */
+const signIn = async (req: Request, res: Response) => {
+  console.log("first signIn");
+  const {characterId} = req.body;
+  const {characterName} = req.body;
+  const {accessToken} = req.body;
+   
+  try{
+    const existUser = await UserService.findUserById(accessToken);
+    const user = await UserService.signUp(characterId, characterName, accessToken);
+    
+    // if (!existUser) {
+    //   const data = createUser(user);
+      
+    //   return res
+    //     .status(statusCode.CREATED)
+    //     .send(
+    //       BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await data),
+    //     );
+    // }
+
+    const jwtToken = jwt.sign(existUser._id, existUser.email);
+      
+    const data = {
+      user: existUser,
+      jwtToken: jwtToken,
     };
+
+    return res
+      .status(statusCode.OK)
+      .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_IN_SUCCESS, data));
+  } catch (error) {
+    logger.e("UserController signIn error", error);
+    return res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          responseMessage.INTERNAL_SERVER_ERROR
+        )
+      );
   }
+};
 
-//   /**
-//  * @route POST /signup
-//  * @desc Sign Up
-//  * @access Private
-//  */
-// const signIn = async (req: Request, res: Response) => {
-//   const token = req.body.token;
+async function createUser(user:SocialUser) {
+  const newUser = await UserService.signUp(
+    (user as SocialUser).characterId,
+    (user as SocialUser).characterName,
+    (user as SocialUser).accessToken
+  );
+  const jwtToken = jwt.sign(newUser._id, newUser.email);
 
-//   if (!token) {
-//     return res
-//       .status(statusCode.UNAUTHORIZED)
-//       .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.NULL_VALUE_TOKEN));
-//   }
-//   try {
-//     const user = await UserService.loginUser(token);
-
-//     if (!user) {
-//       return res
-//         .status(statusCode.UNAUTHORIZED)
-//         .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
-//     }
-//     if (user === em.INVALID_USER) {
-//       return res
-//         .status(statusCode.UNAUTHORIZED)
-//         .send(
-//           BaseResponse.failure(
-//             statusCode.UNAUTHORIZED,
-//             responseMessage.UNAUTHORIZED_SOCIAL_USER
-//           )
-//         );
-//     }
-
-//     const existUser = await UserService.findUserById(
-//       (user as SocialUser).userId,
-//       social
-//     );
-
-//     if (!existUser) {
-//       const data = createUser(social, user);
-
-//       return res
-//         .status(sc.CREATED)
-//         .send(
-//           BaseResponse.success(sc.CREATED, message.SIGN_UP_SUCCESS, await data)
-//         );
-//     }
-
-//     const jwtToken = jwt.sign(existUser._id, existUser.email);
-
-//     const data = {
-//       user: existUser,
-//       jwtToken: jwtToken,
-//     };
-
-//     return res
-//       .status(statusCode.OK)
-//       .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_IN_SUCCESS, data));
-//   } catch (error) {
-//     logger.e('UserController loginUser error', error);
-//     return res
-//       .status(statusCode.INTERNAL_SERVER_ERROR)
-//       .send(
-//         BaseResponse.failure(
-//           statusCode.INTERNAL_SERVER_ERROR,
-//           responseMessage.INTERNAL_SERVER_ERROR
-//         )
-//       );
-//   }
-// };
-
-  
+  return {
+    user: newUser,
+    jwtToken: jwtToken
+  };
+}
 
 export default {
     signUp,
+    signIn
 };

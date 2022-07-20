@@ -57,7 +57,7 @@ const findCharacter = async (req: Request, res: Response) => {
  *  @access Private
  */
 
-const getRandom
+
 
 export default {
   findCharacter,
