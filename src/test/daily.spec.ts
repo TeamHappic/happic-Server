@@ -11,7 +11,7 @@ describe('GET /daily/poseted', () => {
     req(app)
       .get('/daily/poseted')
       .set('Content-Type', 'application/json') 
-      
+      .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
       .expect(200)
       .then((res) => {
         done();
