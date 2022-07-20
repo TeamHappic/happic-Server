@@ -1,11 +1,9 @@
 import User from '../models/User';
 import { logger } from '../config/winstonConfig';
 import { authStrategy } from './SocialAuthStrategy';
-import { FilmInfo } from '../interfaces/film/FilmInfo';
 import { UserResponseDto } from '../interfaces/user/UserResponseDto';
 import Film from '../models/Film';
 
-export type SocialPlatform = 'kakao';
 const isSameDate = (date1: Date) => {
   const today = new Date();
   return (
@@ -45,24 +43,60 @@ const findCharacter = async (
   }
 };
 
-const loginUser = async (social: SocialPlatform, accessToken: string) => {
-  try {
-    const user = await authStrategy[social].execute(accessToken);
-    return user;
+
+export type SocialPlatform = 'kakao';
+
+//로그인
+const signIn = async (social: SocialPlatform,  accessToken: string) => {
+  try{
+      // const signup = new SignUp({
+      //     characterId: userCreateDto.characterId,
+      //     characterName: userCreateDto.characterName,
+      //     accesToken: userCreateDto.accessToken
+      // });
+
+      const user = await authStrategy[social].execute(accessToken);
+      return user;
+  // await signup.save();
+
+  // const data = {
+  //   id: signup.id,
+  // };
+
+  // return data;
   } catch (error) {
     logger.e(error);
     throw error;
   }
 };
-const getUser = async (social: SocialPlatform, accessToken: string) => {
-  try {
-    const user = await authStrategy[social].execute(accessToken);
-    return user;
-  } catch (error) {
-    logger.e(error);
-    throw error;
-  }
-};
+
+
+// const signinUser = async (socialId: string, email: string) => {
+
+//   try {
+//     const signup = new SignUp({
+//       socialId: socialId,
+//       email: email,
+//     });
+
+//     await signup.save();
+
+//     return signup;
+//   } catch (error) {
+//     logger.e(error);
+//     throw error;
+//   }
+// };
+
+// const loginUser = async (accessToken: string) => {
+//   try {
+//     const user = await authStrategy[social].execute(accessToken);
+//     return user;
+//   } catch (error) {
+//     logger.e(error);
+//     throw error;
+//   }
+// };
 
 const findUserById = async (userId: string, social: string) => {
   try {
@@ -76,50 +110,45 @@ const findUserById = async (userId: string, social: string) => {
     throw error;
   }
 };
-
-const signUpUser = async (
+//회원가입
+const signUp = async(
   social: string,
-  socialId: string,
-  email: string,
-  refreshToken: string
+  // socialId: string,
+  //email: string
+  characterId: number,
+  characterName: string,
+  accessToken: string
 ) => {
   try {
-    const userCount = await User.count();
-
-    const user = new User({
-      name: `해픽${userCount + 1}`,
-      social: social,
-      socialId: socialId,
-      email: email,
-      refreshToken: refreshToken,
-    });
-
+    let user;
+    //if (!email) {
+      user = new User({
+        name: `해픽${characterId}`,
+        social: social,
+        characterId: characterId,
+        characterName: characterName,
+        accessToken: accessToken
+      });
+    // } else {
+    //   user = new User({
+    //     name: `해픽${socialId}`,
+    //     social: social,
+    //     socialId: socialId,
+    //     email: email,
+    //   });
+    // }
     await user.save();
 
     return user;
-  } catch (error) {
-    logger.e(error);
-    throw error;
-  }
-};
-
-const updateRefreshToken = async (userId: string, refreshToken: string) => {
-  try {
-    await User.updateOne(
-      { _id: userId },
-      { $set: { refreshToken: refreshToken } }
-    );
-  } catch (error) {
-    logger.e(error);
-    throw error;
-  }
+    }catch (error){
+      logger.e("", error);
+      throw error;
+    }
 };
 
 export default {
-  loginUser,
-  getUser,
+  signUp,
+  signIn,
   findUserById,
-  signUpUser,
-  updateRefreshToken,
-  findCharacter,
+  findCharacter
 };

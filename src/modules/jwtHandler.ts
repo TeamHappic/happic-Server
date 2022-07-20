@@ -1,27 +1,28 @@
+import { Types } from 'aws-sdk/clients/s3';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import config from '../config';
 import { logger } from '../config/winstonConfig';
 import em from './exceptionMessage';
 
-const sign = (userId: mongoose.Schema.Types.ObjectId, email: String) => {
+const sign = (userId: Types.ObjectId, email: String) => {
   const payload = {
     id: userId,
-    email: email,
+    email: email
   };
 
-  const accessToken: string = jwt.sign(
+  let validityDate = "14d";
+  if (process.env.NODE_ENV === "production") {
+    validityDate = "14d";
+  }
+
+  const jwtToken: string = jwt.sign(
     // 암호화
     payload,
     config.jwtSecret,
-    { expiresIn: '1h' } // 한시간동안
+    {expiresIn: validityDate} // 14일동안
   );
-  return accessToken;
-};
-
-const createRefresh = () => {
-  const refreshToken = jwt.sign({}, config.jwtSecret, { expiresIn: '14d' });
-  return refreshToken;
+  return jwtToken;
 };
 
 const verify = (token: string) => {
@@ -46,6 +47,5 @@ const verify = (token: string) => {
 
 export default {
   sign,
-  createRefresh,
   verify,
 };

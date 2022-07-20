@@ -1,4 +1,4 @@
-import UserController from './UserController';
+import UserController from './HomeController';
 import MypageController from './MypageController';
 import DailyController from './DailyController';
 import FileController from './FileController';
