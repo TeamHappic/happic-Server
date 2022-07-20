@@ -19,12 +19,10 @@ import getToken from '../modules/jwtHandler';
  */
  const signUp = async (req: Request, res: Response) => {
     const social = req.body.social;
-    // const userId = req.body.userId;
-    // const email = req.body.email;
     const charId = req.body.charId;
     const charName = req.body.charName;
     const token = req.body.token;
-    console.log(social, charId, charName, token);
+    //console.log(social, charId, charName, token);
     
     // if (!social || !charId || !charName || !token) {
     //   console.log(123);
@@ -51,7 +49,6 @@ import getToken from '../modules/jwtHandler';
       //       ),
       //     );
       // }
-
       
       const data = {
         jwtToken: accessToken,
@@ -87,17 +84,16 @@ const signIn = async (req: Request, res: Response) => {
    
   try{
     const existUser = await UserService.findUserById(userId);
-    const user = await UserService.signUp(characterId, characterName, accessToken);
     
-    // if (!existUser) {
-    //   const data = createUser(user);
-      
-    //   return res
-    //     .status(statusCode.CREATED)
-    //     .send(
-    //       BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await data),
-    //     );
-    // }
+    if (!existUser) {
+      const user = await UserService.signUp(characterId, characterName, accessToken);
+    
+      return res
+        .status(statusCode.CREATED)
+        .send(
+          BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await user),
+        );
+    }
 
     const jwtToken = getToken(existUser._id)
       
@@ -121,20 +117,6 @@ const signIn = async (req: Request, res: Response) => {
       );
   }
 };
-
-async function createUser(user:SocialUser) {
-  const newUser = await UserService.signUp(
-    (user as SocialUser).characterId,
-    (user as SocialUser).characterName,
-    (user as SocialUser).accessToken
-  );
-  const jwtToken = getToken(newUser._id);
-
-  return {
-    user: newUser,
-    jwtToken: jwtToken
-  };
-}
 
 export default {
     signUp,
