@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { SocialUser } from '../interfaces/SocialUser';
 import { UserCreateDto } from '../interfaces/user/UserCreateDto';
 import BaseResponse from '../modules/BaseResponse';
-import responseMessage from '../modules/responseMessage';
+import message from '../modules/responseMessage';
 import statusCode from '../modules/statusCode';
 import util from '../modules/util';
 import UserService from '../services/UserService';
@@ -41,10 +41,7 @@ const signUp = async (req: Request, res: Response) => {
       return res
         .status(statusCode.UNAUTHORIZED)
         .send(
-          BaseResponse.failure(
-            statusCode.UNAUTHORIZED,
-            responseMessage.INVALID_TOKEN
-          )
+          BaseResponse.failure(statusCode.UNAUTHORIZED, message.INVALID_TOKEN)
         );
     }
     // if (user === em.INVALID_USER) {
@@ -64,13 +61,7 @@ const signUp = async (req: Request, res: Response) => {
 
     return res
       .status(statusCode.OK)
-      .send(
-        BaseResponse.success(
-          statusCode.OK,
-          responseMessage.SIGN_UP_SUCCESS,
-          data
-        )
-      );
+      .send(BaseResponse.success(statusCode.OK, message.SIGN_UP_SUCCESS, data));
   } catch (error) {
     logger.e('UserController signUp error', error);
     return res
@@ -78,7 +69,7 @@ const signUp = async (req: Request, res: Response) => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          responseMessage.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR
         )
       );
   }
@@ -123,13 +114,7 @@ const signIn = async (req: Request, res: Response) => {
 
     return res
       .status(statusCode.OK)
-      .send(
-        BaseResponse.success(
-          statusCode.OK,
-          responseMessage.SIGN_IN_SUCCESS,
-          data
-        )
-      );
+      .send(BaseResponse.success(statusCode.OK, message.SIGN_IN_SUCCESS, data));
   } catch (error) {
     logger.e('UserController signIn error', error);
     return res
@@ -137,7 +122,7 @@ const signIn = async (req: Request, res: Response) => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          responseMessage.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR
         )
       );
   }
