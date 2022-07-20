@@ -38,7 +38,7 @@ import { validationResult } from 'express-validator';
       if (!accessToken) {
         return res
           .status(statusCode.UNAUTHORIZED)
-          .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
+          .send(BaseResponse.failure(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
       }
       // if (user === em.INVALID_USER) {
       //   return res
@@ -54,31 +54,6 @@ import { validationResult } from 'express-validator';
       const data = {
         jwtToken: accessToken,
       };
-
-  try {
-    const accessToken = await UserService.signUp(charId, charName, token);
-    console.log(accessToken);
-    if (!accessToken) {
-      return res
-        .status(statusCode.UNAUTHORIZED)
-        .send(
-          BaseResponse.failure(statusCode.UNAUTHORIZED, message.INVALID_TOKEN)
-        );
-    }
-    // if (user === em.INVALID_USER) {
-    //   return res
-    //     .status(statusCode.UNAUTHORIZED)
-    //     .send(
-    //       BaseResponse.failure(
-    //         statusCode.UNAUTHORIZED,
-    //         responseMessage.UNAUTHORIZED_SOCIAL_USER,
-    //       ),
-    //     );
-    // }
-
-    const data = {
-      jwtToken: accessToken,
-    };
 
     return res
       .status(statusCode.OK)
@@ -117,7 +92,7 @@ const signIn = async (req: Request, res: Response) => {
       return res
         .status(statusCode.CREATED)
         .send(
-          BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await user),
+          BaseResponse.success(statusCode.CREATED, message.SIGN_UP_SUCCESS, await user),
         );
     }
 
@@ -157,7 +132,43 @@ const signIn = async (req: Request, res: Response) => {
       );
   }
 };
+// fcmToken 동록
+/**
+ * @router POST /movie
+ * @desc Create Movie
+ * @access Private
+ */
 
+ const registerFcm = async (req: Request, res: Response) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res
+      .status(statusCode.BAD_REQUEST)
+      .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+  }
+  const fcmToken: string = req.body;
+  const userId: string = req.body.user.id;
+
+  try {
+    const data = await UserService.registerFcm(userId, fcmToken);
+    res
+      .status(statusCode.CREATED)
+      .send(
+        util.success(statusCode.CREATED, message.REGISTER_FCM_SUCCESS, data)
+      );
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+ };
+ 
 export default {
   signUp,
   signIn,
