@@ -3,6 +3,10 @@ import { logger } from '../config/winstonConfig';
 import { authStrategy } from './SocialAuthStrategy';
 import { UserResponseDto } from '../interfaces/user/UserResponseDto';
 import Film from '../models/Film';
+import kakaoAuth from '../config/kakaoAuth';
+import { SocialUser } from '../interfaces/SocialUser';
+import axios from 'axios';
+import getToken from '../modules/jwtHandler';
 
 const isSameDate = (date1: Date) => {
   const today = new Date();
@@ -98,12 +102,9 @@ const signIn = async (social: SocialPlatform,  accessToken: string) => {
 //   }
 // };
 
-const findUserById = async (accessToken: string) => {
+const findUserById = async (userId: string) => {
   try {
-    console.log("before user check");
-    const user = await User.findOne({
-      accessToken: accessToken
-    });
+    const user = await User.findById(userId);
     console.log(user);
     return user;
   } catch (error) {
@@ -121,15 +122,49 @@ const signUp = async(
   accessToken: string
 ) => {
   try {
-    let user;
-    //if (!email) {
-      user = new User({
+    const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me',{
+      headers: { Authorization: `Bearer ${accessToken}`,}
+    });
+
+    const kakaoUserData = kakaoUser.data;
+
+    // 카카오 계정이 있는지 체크
+    if (!kakaoUserData.id) {
+      return null;
+    }
+
+    const existUser = await User.findOne({
+      socialId: kakaoUserData.id as string,
+    });
+
+    if (!existUser) {
+      const user = new User({
         name: `해픽${characterId}`,
-        //social: social,
+        social: "kakao",
+        email: "asdf",
+        socialId: kakaoUserData.id,
         characterId: characterId,
         characterName: characterName,
-        accessToken: accessToken
+        growthRate: 0,
+        level: 1,
+        film: [],
+        count: 0,
+        fcmToken: "12123"
       });
+      const jwtToken = getToken(user.id);
+      user.accessToken = jwtToken;
+      await user.save();
+
+      return jwtToken;
+    }
+
+    // 유저가 db에 있음
+    existUser.accessToken = getToken(existUser.id);
+    await User.findByIdAndUpdate(existUser._id, existUser);
+    return existUser.accessToken;
+    
+    //if (!email) {
+      
     // } else {
     //   user = new User({
     //     name: `해픽${socialId}`,
@@ -138,9 +173,6 @@ const signUp = async(
     //     email: email,
     //   });
     // }
-    await user.save();
-
-    return user;
     }catch (error){
       logger.e("", error);
       throw error;

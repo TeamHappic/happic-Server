@@ -4,7 +4,7 @@ export interface UserInfo {
   name: string;
   social: string;
   socialId: string;
-  email: string;
+  email?: string;
   characterId?: Number;
   characterName?: string;
   growthRate: Number;
@@ -12,5 +12,5 @@ export interface UserInfo {
   film: mongoose.Types.ObjectId[];
   count: Number;
   fcmToken: string;
-  refreshToken: string;
+  accessToken: string;
 }

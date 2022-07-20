@@ -10,6 +10,7 @@ import em from '../modules/exceptionMessage';
 import jwt from '../modules/jwtHandler';
 import { logger } from "../config/winstonConfig";
 import User from '../models/User';
+import getToken from '../modules/jwtHandler';
 
 /**
  * @route POST /signup
@@ -23,17 +24,19 @@ import User from '../models/User';
     const charId = req.body.charId;
     const charName = req.body.charName;
     const token = req.body.token;
+    console.log(social, charId, charName, token);
     
-    if (!social || !charId || !charName || !token) {
-      return res
-        .status(statusCode.UNAUTHORIZED)
-        .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.NULL_VALUE_TOKEN));
-    }
+    // if (!social || !charId || !charName || !token) {
+    //   console.log(123);
+    //   return res
+    //     .status(statusCode.UNAUTHORIZED)
+    //     .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.NULL_VALUE_TOKEN));
+    // }
   
     try {
-      const user = await UserService.signUp(charId, charName, token);
-      console.log("error");
-      if (!user) {
+      const accessToken = await UserService.signUp(charId, charName, token);
+      console.log(accessToken);
+      if (!accessToken) {
         return res
           .status(statusCode.UNAUTHORIZED)
           .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
@@ -49,11 +52,9 @@ import User from '../models/User';
       //     );
       // }
 
-      const jwtToken = jwt.sign(user._id, user.email);
       
       const data = {
-        user: user,
-        jwtToken: jwtToken,
+        jwtToken: accessToken,
       };
 
       return res
@@ -82,9 +83,10 @@ const signIn = async (req: Request, res: Response) => {
   const {characterId} = req.body;
   const {characterName} = req.body;
   const {accessToken} = req.body;
+  const userId = req.body.userId;
    
   try{
-    const existUser = await UserService.findUserById(accessToken);
+    const existUser = await UserService.findUserById(userId);
     const user = await UserService.signUp(characterId, characterName, accessToken);
     
     // if (!existUser) {
@@ -97,7 +99,7 @@ const signIn = async (req: Request, res: Response) => {
     //     );
     // }
 
-    const jwtToken = jwt.sign(existUser._id, existUser.email);
+    const jwtToken = getToken(existUser._id)
       
     const data = {
       user: existUser,
@@ -126,7 +128,7 @@ async function createUser(user:SocialUser) {
     (user as SocialUser).characterName,
     (user as SocialUser).accessToken
   );
-  const jwtToken = jwt.sign(newUser._id, newUser.email);
+  const jwtToken = getToken(newUser._id);
 
   return {
     user: newUser,
