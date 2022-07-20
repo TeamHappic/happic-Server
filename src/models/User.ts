@@ -47,6 +47,9 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  accessToken: {
+    type: String
+  }
   // fcmToken: {
   //   type: String,
   //   required: true,

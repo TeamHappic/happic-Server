@@ -1,6 +1,5 @@
-import { Types } from 'aws-sdk/clients/s3';
+import { Types } from 'mongoose';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
-import mongoose from 'mongoose';
 import config from '../config';
 import { logger } from '../config/winstonConfig';
 import em from './exceptionMessage';
