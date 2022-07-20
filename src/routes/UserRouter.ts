@@ -8,6 +8,6 @@ router.post('/', UserController.loginUser);
 //router.get("/token", TokenController.getToken);
 
 // 유저에 FcmToken 등록
-router.post('/', UserController.RegisterFcm);
+router.post('/', UserController.registerFcm);
 
 export default router;
