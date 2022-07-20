@@ -15,6 +15,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
   // 토큰 유무 검증
   if (!token) {
     // 토근없으면 접근 금지! 401
+    console.log(1243123);
     return res
       .status(statusCode.UNAUTHORIZED)
       .send(util.fail(statusCode.UNAUTHORIZED, message.NULL_VALUE_TOKEN));
