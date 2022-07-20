@@ -51,9 +51,7 @@ const getRandomCapsule = async (
     const films = await Film.find({ writer: userId });
     const filmsNum = films.length;
     const randomFilmIndex = Math.floor(Math.random()*filmsNum);
-    console.log(films[randomFilmIndex]);
     const randomFilm = films[randomFilmIndex];
-    console.log(randomFilm)
 
     const whenId = randomFilm.keyword[0].toString();
     const whereId = randomFilm.keyword[1].toString();

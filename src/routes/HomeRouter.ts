@@ -6,6 +6,6 @@ import auth from '../middleware/auth';
 const router: Router = Router();
 
 router.get('/', auth, HomeController.findCharacter);
-router.get('/capsule', HomeController.getRandomCapsule);
+router.get('/capsule', auth, HomeController.getRandomCapsule);
 
 export default router;
