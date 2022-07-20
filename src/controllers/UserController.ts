@@ -12,45 +12,6 @@ import { CharCreateDto } from '../interfaces/user/CharCreateDto';
 import BaseResponse from '../modules/BaseResponse';
 import User from '../models/User';
 import { validationResult } from 'express-validator';
-/**
- *  @route GET /home
- *  @desc Read User
- *  @access Public
- */
-const findCharacter = async (req: Request, res: Response) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res
-      .status(statusCode.BAD_REQUEST)
-      .send(util.fail(statusCode.BAD_REQUEST, message.BAD_REQUEST));
-  }
-
-  try {
-    //const user = await UserService.findUserById(req.body.user.id);
-    const userId = req.body.user.id;
-    const data = await UserService.findCharacter(userId);
-
-    if (!data) {
-      return res
-        .status(statusCode.NOT_FOUND)
-        .send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
-    }
-
-    res
-      .status(statusCode.OK)
-      .send(util.success(statusCode.OK, message.READ_USER_SUCCESS, data));
-  } catch (error) {
-    console.log(error);
-    res
-      .status(statusCode.INTERNAL_SERVER_ERROR)
-      .send(
-        util.fail(
-          statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
-        )
-      );
-  }
-};
 
 /**
  * @route POST /character
@@ -194,9 +155,46 @@ async function createUser(social: string, user: SocialUser) {
   };
 }
 
+// fcmToken 동록
+/**
+ * @router POST /movie
+ * @desc Create Movie
+ * @access Private
+ */
+
+const registerFcm = async (req: Request, res: Response) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res
+      .status(statusCode.BAD_REQUEST)
+      .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+  }
+  const fcmToken: string = req.body;
+  const userId: string = req.body.user.id;
+
+  try {
+    const data = await UserService.registerFcm(userId, fcmToken);
+    res
+      .status(statusCode.CREATED)
+      .send(
+        util.success(statusCode.CREATED, message.REGISTER_FCM_SUCCESS, data)
+      );
+  } catch (error) {
+    console.log(error);
+    res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
+
 export default {
   //getUser,
   createChar,
-  findCharacter,
   loginUser,
+  registerFcm,
 };
