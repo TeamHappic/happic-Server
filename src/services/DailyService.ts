@@ -351,7 +351,7 @@ const deleteDaily = async (userId: string, filmId: string): Promise<void> => {
 const postedDaily = async (userId: string): Promise<object | null> => {
   try {
     const dayjs = require('dayjs');
-    const films = await Film.find({ writer: userId }).sort({ createAt: -1 });
+    const films = await Film.find({ writer: userId }).sort({ createdAt: -1 });
 
     var isPosted = false;
 

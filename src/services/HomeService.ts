@@ -17,7 +17,7 @@ const findCharacter = async (
   userId: string
 ): Promise<UserResponseDto | null> => {
   try {
-    const user = await User.findById(userId).populate('film', 'createAt');
+    const user = await User.findById(userId).populate('film', 'createdAt');
 
     if (!user) {
       return null;
