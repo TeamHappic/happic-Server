@@ -6,7 +6,7 @@ import Film from '../models/Film';
 import kakaoAuth from '../config/kakaoAuth';
 import { SocialUser } from '../interfaces/SocialUser';
 import axios from 'axios';
-import getToken from '../modules/jwtHandle'
+import getToken from '../modules/jwtHandler'
 
 
 export type SocialPlatform = 'kakao';

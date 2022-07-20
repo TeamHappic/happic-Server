@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
  */
 const getAllDaily = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.getAllDaily(
@@ -50,7 +50,7 @@ const getAllDaily = async (req: Request, res: Response) => {
  */
 const getDaily = async (req: Request, res: Response) => {
   const { filmId } = req.params;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.getDaily(userId, filmId);
@@ -89,7 +89,7 @@ const createDaily = async (req: Request, res: Response) => {
   }
 
   const filmCreateDto: FilmCreateDto = req.body;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.createDaily(userId, filmCreateDto);
@@ -118,7 +118,7 @@ const createDaily = async (req: Request, res: Response) => {
  */
 const deleteDaily = async (req: Request, res: Response) => {
   const { filmId } = req.params;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
   try {
     await DailyService.deleteDaily(userId, filmId);
     res.status(statusCode.NO_CONTENT).send(); //204
@@ -142,7 +142,7 @@ const deleteDaily = async (req: Request, res: Response) => {
  * @access public
  */
 const postedDaily = async (req: Request, res: Response) => {
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.postedDaily(userId as string);
@@ -175,7 +175,7 @@ const postedDaily = async (req: Request, res: Response) => {
  * @access public
  */
 const getTopKeyword = async (req: Request, res: Response) => {
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.getTopKeyword(userId as string);
@@ -211,7 +211,7 @@ const getTopKeyword = async (req: Request, res: Response) => {
  */
 const getAllTitle = async (req: Request, res: Response) => {
   try {
-    const userId = req.body.user.id;
+    const userId = req.body.userId;
     const data = await DailyService.getAllTitle(userId as string);
     if (!data) {
       return res

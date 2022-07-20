@@ -20,8 +20,8 @@ const findCharacter = async (req: Request, res: Response) => {
   }
 
   try {
-    //const user = await UserService.findUserById(req.body.user.id);
-    const userId = req.body.user.id;
+    //const user = await UserService.findUserById(req.body.userId);
+    const userId = req.body.userId;
     const data = await HomeService.findCharacter(userId);
 
     if (!data) {
@@ -46,15 +46,14 @@ const findCharacter = async (req: Request, res: Response) => {
   }
 };
 
-
 /**
  * @route GET /home/capsule
  * @desc 하루캡슐 상세 조회
  * @access Public
  */
- const getRandomCapsule = async (req: Request, res: Response) => {
-  const userId = req.body.user.id;
-  
+const getRandomCapsule = async (req: Request, res: Response) => {
+  const userId = req.body.userId;
+
   try {
     const data = await HomeService.getRandomCapsule(userId);
     if (!data) {

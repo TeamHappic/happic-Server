@@ -17,7 +17,7 @@ import { MypageService } from '../services';
  */
 const getAllRank = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     let data: Object = [];
@@ -27,13 +27,12 @@ const getAllRank = async (req: Request, res: Response) => {
       data = await MypageService.getAllRank(
         userId as string,
         keyword_year as Number,
-        keyword_month as Number,
+        keyword_month as Number
       );
-    }
-    else{        
-        return res
-          .status(statusCode.BAD_REQUEST)
-          .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+    } else {
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
     }
     res
       .status(statusCode.OK)
@@ -60,7 +59,7 @@ const getAllRank = async (req: Request, res: Response) => {
  */
 const getKeywordRank = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     let data: Object = [];
@@ -101,7 +100,7 @@ const getKeywordRank = async (req: Request, res: Response) => {
  */
 const getKeywordByCategory = async (req: Request, res: Response) => {
   const { year, month, option } = req.query;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     let data: Object = [];
@@ -154,7 +153,7 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
  */
 const getKeywordByMonth = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     let data: Object = [];
