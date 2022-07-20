@@ -36,6 +36,7 @@
     "aws-sdk": "^2.1143.0",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
+    "bucket": "^0.0.1",
     "dayjs": "^1.11.3",
     "dotenv": "^16.0.0",
     "eslint-config-prettier": "^8.5.0",
