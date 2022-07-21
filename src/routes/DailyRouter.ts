@@ -23,7 +23,7 @@ router.post(
 
 router.get('/posted',auth, DailyController.postedDaily);
 router.get('/keyword', auth,DailyController.getTopKeyword);
-router.get('/title', auth,DailyController.getAllTitle);
+router.get('/title', DailyController.getAllTitle);
 router.delete('/:filmId',auth, DailyController.deleteDaily);
 
 export default router;

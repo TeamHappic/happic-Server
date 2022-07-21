@@ -211,8 +211,10 @@ const getTopKeyword = async (req: Request, res: Response) => {
  */
 const getAllTitle = async (req: Request, res: Response) => {
   try {
-    const userId = req.body.user.id;
+    //const userId = req.body.user.id;
+    const userId = '62cef0997f008c29128704ed'
     const data = await DailyService.getAllTitle(userId as string);
+    
     if (!data) {
       return res
         .status(statusCode.NOT_FOUND)

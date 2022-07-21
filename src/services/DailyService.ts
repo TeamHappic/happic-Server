@@ -440,7 +440,7 @@ const getAllTitle = async (userId: String): Promise<object[] | null> => {
   try {
     const films = await Film.find({ writer: userId });
     const data: object[] = [];
-
+    console.log('❤️❤️❤️')
     for (var i = 0; i < films.length; i++) {
       const id: String = films[i].id;
       const date: Date = films[i].createdAt;
