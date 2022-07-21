@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "happic-kiki",
+  "private_key_id": "c7b363e00df7a40ae98a9a78d965110ad9561c20",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC6fq/jVtKl6ph3\n4gFQFxKVJwwfjHC8CkRltxYPMdrWJPR3luYyqxrGGC363XCz0H+Ge/eminDkj2T5\ngOKB0IS76I3JqOtLbGxzK1FdmXLlyUQK6JoN0PQ2pTDY/zNpRNLxnZYakmeKjKTp\nRsrJgrLQsoLmWtTxvcEC54/bwlNr+qHE5On7FV/+OU10ws3iUifmk+RTFntYJwmm\nr5x6lnJEgeB/mFjvJUI19uR9joev8FrSKtk5ls/P1UWkVDcIAfx2zqatqgTh2VMN\nEdt/k6q/3w2sHfBvheoD/jse21GAbpSOi5yESW0ujmjt7AIin7bWABnwOdnZ3qb2\nHS9lCfzpAgMBAAECggEAHoRjkMkg1YXy0XnkqsU+b7TA3vASydpzlcy6FIjHyA9V\nB7VkJuS+kALd50qmyhiIqFTkfKvzzEWLXulQZ1tb6l8kGzHZNZw2Ojmw6fxAWR9a\n/d6mct3/UGqDTfGjaTWaFRqAjl7oXZDP3Ye4NaBTACPt7UxDbelrSj032lyisleR\n7+xGiGUrS8NzW6SN0RFJ7gvvxFQcxImDE6XRN+LyqN16u98KoHGYf+Kd1uqxdhcs\nrFs9iVByXAp2tNDemjun9XIXtLtz+l2HETwjheuacl9q06qZqZFvEU4Op3d7s8HX\nERbeo9f/8pagqyzDRFqD8rWJOWz64pOXcQhct6cvxwKBgQDbymf9kW40cdOKBxwq\nN3ytk8Vl+j02Zoz+LWq+yk/vSsdA2mPIRS6Y6/nle2aaDbzKISf/hLu9qra9cnea\nCBYRuXlYrsrhhGOp50JPwGYSmRh+Sc9blqfCsKb8mwKDeTSuxj0XtkZOOwWvxait\nb+a7SIwHEiTGrI5u9FQFCKKlowKBgQDZOAsFxZvEWbBey+q5q3fLfm069sSwn6sv\niRUSIgrL4gqWEIc3Mc9UplTprbjq586USY4N+bN21qeMJ5tzVHGXfWqiUTdHKRTy\nnAEwJrBnha3mdeo+EBuSP1h4d0+o+GCPt1HfBnfvqwbx1yhp0UdyiaqMtSdvvJfy\nmyno8v6EAwKBgQC4iWPweVePPva+kCOsqnPLBSQa8BTPBSFiE93pHNIqdp1/LR3U\nO4nZKV/itk46EEivaVE870P2BkxyGZajxCBLd2+T7wY2fMJ1F88MSN0qxlHTTsOE\nAaUPCOTbeIaOvohmKdmHfCnhaxrmLs3l+Os/2bSAB1LLYHwiWo/kvhBZgwKBgQDR\npGAnAu/yEinBZAc3iQDGOk+Lr+xnFsLtztyyMn6/BXr4GB2YLI+QgDPFkC+/L1hW\nD6N1Y4BMeqEcCIHkTiSPc7C91aqHGGQqPlx7L2vjjcYnfbhEi+FARbjKE0SjrIvt\nSJ1QpXqNqj+6mtBbSGsvZSRgRto34gm4UP6i4Bq6JwKBgQCiIHpMSI9cioVZ1vzT\nuvQnNhbeRUb4piLgRdLqB9JfDIbmhjgRtkmODOvJl5eGj+IBUJUByRvXt0TwmZHD\nWazjnARhFj+cU7tLOVHHSG5fQJHK+E3E2YBM5Pl3HU5gU4D30wo1PTC2YNFXkt8K\nnZn9i5r90MXJXbDtnCAzVDZJzQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-rb54f@happic-kiki.iam.gserviceaccount.com",
+  "client_id": "104751378024164748902",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-rb54f%40happic-kiki.iam.gserviceaccount.com"
+}

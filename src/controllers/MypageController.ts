@@ -123,6 +123,10 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
         keyword_month as Number,
         option as KeywordOptionType
       );
+    }else {
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
     }
     res
       .status(statusCode.OK)
