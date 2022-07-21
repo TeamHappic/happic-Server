@@ -12,7 +12,7 @@ describe('POST /user/signup', () => {
     //카카오 회원가입 성공 케이스
     it('카카오 회원가입 - 성공', (done) => {
         req(app)
-            .post('/user/user/signin')
+            .post('/user/signin')
             .set('Content-Type', 'application/json')
             .send({
                 social: process.env.SOCIAL,
