@@ -456,7 +456,8 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
 
         let createdAt = dayjs(films[i].createdAt);
         const day = createdAt.get('date');
-
+        const photo = films[i].photo;
+        const thumbnail = films[i].photo;
         const whenId = films[i].keyword[0].toString();
         const whereId = films[i].keyword[1].toString();
         const whoId = films[i].keyword[2].toString();
@@ -483,6 +484,8 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         const tempData = {              
           id: id,
           day: day,
+          photo: photo,
+          thumbnail: thumbnail,
           when: whenKeyword[0].content,
           where: whereKeyword[0].content,
           who: whoKeyword[0].content,
