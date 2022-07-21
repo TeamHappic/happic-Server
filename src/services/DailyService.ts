@@ -6,7 +6,6 @@ import User from '../models/User';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
-import NotificationService from './NotificationService';
 import { FilmTitleAllResponseDto } from '../interfaces/film/FilmTitleAllResponseDto';
 
 const getAllDaily = async (userId: string, year: string, month: string) => {
@@ -239,11 +238,6 @@ const createDaily = async (
       growthRate = 0;
     }
 
-    // 푸쉬 알림
-    if ((count as number) % 10 === 0) {
-      NotificationService.postCapsuleNotice(userId);
-    }
-    //NotificationService.postCapsuleNotice(userId);
 
     await User.findByIdAndUpdate(userId, {
       count: count,
