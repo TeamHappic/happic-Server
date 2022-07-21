@@ -15,7 +15,7 @@ const createFile = async (
     await file.save();
 
     const data = {
-      _id: file._id,
+      id: file._id,
       link,
     };
 

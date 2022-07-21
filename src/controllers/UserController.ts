@@ -12,64 +12,71 @@ import { logger } from '../config/winstonConfig';
 import User from '../models/User';
 import getToken from '../modules/jwtHandler';
 import { validationResult } from 'express-validator';
+import { UserFcmTokenDto } from '../interfaces/user/UserFcmTokenDto';
 
 /**
  * @route POST /signup
  * @desc 회원가입
  * @access Private
  */
- const signUp = async (req: Request, res: Response) => {
-    const social = req.body.social;
-    const characterId = req.body.characterId;
-    const characterName = req.body.characterName;
-    const accessToken = req.body.accessToken;
-    console.log(social, characterId, characterName, accessToken);
-    
-    // if (!social || !charId || !charName || !token) {
-    //   console.log(123);
-    //   return res
-    //     .status(statusCode.UNAUTHORIZED)
-    //     .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.NULL_VALUE_TOKEN));
-    // }
-  
-    try {
-      const token = await UserService.signUp(characterId, characterName, accessToken);
-      console.log(token);
-      if (!accessToken) {
-        return res
-          .status(statusCode.UNAUTHORIZED)
-          .send(BaseResponse.failure(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
-      }
-      // if (user === em.INVALID_USER) {
-      //   return res
-      //     .status(statusCode.UNAUTHORIZED)
-      //     .send(
-      //       BaseResponse.failure(
-      //         statusCode.UNAUTHORIZED,
-      //         responseMessage.UNAUTHORIZED_SOCIAL_USER,
-      //       ),
-      //     );
-      // }
-      
-      const data = {
-        jwtToken: token,
-      };
-      //console.log(data);
+const signUp = async (req: Request, res: Response) => {
+  const social = req.body.social;
+  const characterId = req.body.characterId;
+  const characterName = req.body.characterName;
+  const accessToken = req.body.accessToken;
+  console.log(social, characterId, characterName, accessToken);
+
+  // if (!social || !charId || !charName || !token) {
+  //   console.log(123);
+  //   return res
+  //     .status(statusCode.UNAUTHORIZED)
+  //     .send(BaseResponse.failure(statusCode.UNAUTHORIZED, responseMessage.NULL_VALUE_TOKEN));
+  // }
+
+  try {
+    const token = await UserService.signUp(
+      characterId,
+      characterName,
+      accessToken
+    );
+
+    if (!accessToken) {
       return res
-        .status(statusCode.OK)
-        .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS, data));
-    } catch (error) {
-      logger.e("UserController signUp error", error);
-      return res
-        .status(statusCode.INTERNAL_SERVER_ERROR)
+        .status(statusCode.UNAUTHORIZED)
         .send(
-          util.fail(
-            statusCode.INTERNAL_SERVER_ERROR,
-            responseMessage.INTERNAL_SERVER_ERROR
-          )
+          BaseResponse.failure(statusCode.UNAUTHORIZED, message.INVALID_TOKEN)
         );
     }
-  };
+    // if (user === em.INVALID_USER) {
+    //   return res
+    //     .status(statusCode.UNAUTHORIZED)
+    //     .send(
+    //       BaseResponse.failure(
+    //         statusCode.UNAUTHORIZED,
+    //         responseMessage.UNAUTHORIZED_SOCIAL_USER,
+    //       ),
+    //     );
+    // }
+
+    const data = {
+      jwtToken: token,
+    };
+    //console.log(data);
+    return res
+      .status(statusCode.OK)
+      .send(BaseResponse.success(statusCode.OK, message.SIGN_UP_SUCCESS, data));
+  } catch (error) {
+    logger.e('UserController signUp error', error);
+    return res
+      .status(statusCode.INTERNAL_SERVER_ERROR)
+      .send(
+        util.fail(
+          statusCode.INTERNAL_SERVER_ERROR,
+          message.INTERNAL_SERVER_ERROR
+        )
+      );
+  }
+};
 
 /**
  * @route POST /signin
@@ -79,28 +86,41 @@ import { validationResult } from 'express-validator';
 const signIn = async (req: Request, res: Response) => {
   //console.log("first signIn");
   //const {social} = req.body;
-  const {characterId} = req.body;
-  const {characterName} = req.body;
-  const {accessToken} = req.body;
+  const { characterId } = req.body;
+  const { characterName } = req.body;
+  const { accessToken } = req.body;
   const userId = req.body.userId;
   //console.log("req");
-  try{
+  try {
     const existUser = await UserService.findUserById(userId);
     //
     if (!existUser) {
-      const user = await UserService.signUp(characterId, characterName, accessToken);
+      const user = await UserService.signUp(
+        characterId,
+        characterName,
+        accessToken
+      );
       //console.log("exist?");
+      const data = {
+        jwtToken: user,
+      };
+
       return res
         .status(statusCode.CREATED)
         .send(
-          BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_IN_SUCCESS, await user),
+          BaseResponse.success(
+            statusCode.CREATED,
+            message.SIGN_IN_SUCCESS,
+            await data
+          )
         );
     }
-    
-    const jwtToken = getToken(existUser._id);
+
+    const token = getToken(existUser._id);
+
     const data = {
       user: existUser,
-      jwtToken: jwtToken,
+      jwtToken: token,
     };
 
     return res
@@ -118,6 +138,7 @@ const signIn = async (req: Request, res: Response) => {
       );
   }
 };
+
 // fcmToken 동록
 /**
  * @router POST /movie
@@ -125,17 +146,22 @@ const signIn = async (req: Request, res: Response) => {
  * @access Private
  */
 
- const registerFcm = async (req: Request, res: Response) => {
+const registerFcm = async (req: Request, res: Response) => {
   const error = validationResult(req);
   if (!error.isEmpty()) {
     return res
       .status(statusCode.BAD_REQUEST)
       .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-  const fcmToken: string = req.body;
-  const userId: string = req.body.user.id;
+  const fcmToken: UserFcmTokenDto = req.body;
+  const userId = req.body.userId;
 
   try {
+    if (!userId) {
+      return res
+        .status(statusCode.BAD_REQUEST)
+        .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+    }
     const data = await UserService.registerFcm(userId, fcmToken);
     res
       .status(statusCode.CREATED)
@@ -153,8 +179,8 @@ const signIn = async (req: Request, res: Response) => {
         )
       );
   }
- };
- 
+};
+
 export default {
   signUp,
   signIn,
