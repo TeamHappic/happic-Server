@@ -57,7 +57,7 @@ import { validationResult } from 'express-validator';
       //console.log(data);
       return res
         .status(statusCode.OK)
-        .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS, data));
+        .send(BaseResponse.success(statusCode.OK, message.SIGN_UP_SUCCESS, data));
     } catch (error) {
       logger.e("UserController signUp error", error);
       return res
@@ -65,7 +65,7 @@ import { validationResult } from 'express-validator';
         .send(
           util.fail(
             statusCode.INTERNAL_SERVER_ERROR,
-            responseMessage.INTERNAL_SERVER_ERROR
+            message.INTERNAL_SERVER_ERROR
           )
         );
     }
@@ -93,7 +93,7 @@ const signIn = async (req: Request, res: Response) => {
       return res
         .status(statusCode.CREATED)
         .send(
-          BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_IN_SUCCESS, await user),
+          BaseResponse.success(statusCode.CREATED, message.SIGN_IN_SUCCESS, await user),
         );
     }
     
