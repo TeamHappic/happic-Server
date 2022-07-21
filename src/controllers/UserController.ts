@@ -19,6 +19,7 @@ import { validationResult } from 'express-validator';
  * @access Private
  */
  const signUp = async (req: Request, res: Response) => {
+   
     const social = req.body.social;
     const characterId = req.body.characterId;
     const characterName = req.body.characterName;
