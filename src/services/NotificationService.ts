@@ -5,7 +5,7 @@ import Film from '../models/Film';
 
 var nodeschedule = require('node-schedule');
 
-const postCapsuleNotice = async () => {
+const postCapsuleNotice = async (): Promise<void> => {
   try {
     const users = await User.find({}, { count: 1, fcmToken: 1 });
     if (!users) {
@@ -61,7 +61,7 @@ const postCapsuleNotice = async () => {
   }
 };
 
-const postCheckNotice = async () => {
+const postCheckNotice = async (): Promise<void> => {
   const dayjs = require('dayjs');
   try {
     const users = await User.find({});

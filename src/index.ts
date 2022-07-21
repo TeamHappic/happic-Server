@@ -3,8 +3,9 @@ const app = express(); //express 이용하여 서버 띄울거니가~
 
 import connectDB from './loaders/db';
 import routes from './routes';
+import NotificationService from './services/NotificationService';
 require('dotenv').config();
-
+var nodeschedule = require('node-schedule')
 connectDB(); // 몽고디비에 연결한다.
 
 app.use(express.urlencoded({ extended: true }));
