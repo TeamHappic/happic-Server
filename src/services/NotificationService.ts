@@ -1,8 +1,7 @@
 import User from '../models/User';
 import Film from '../models/Film';
 import admin from 'firebase-admin';
-
-var nodeschedule = require('node-schedule');
+let serviceAccount = require('../../firebase-admin.json');
 
 const postCapsuleNotice = async (): Promise<void> => {
   try {
