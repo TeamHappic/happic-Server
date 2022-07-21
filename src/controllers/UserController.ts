@@ -97,10 +97,13 @@ const signIn = async (req: Request, res: Response) => {
         );
     }
     
-    const jwtToken = getToken(existUser._id);
+    const token = getToken(existUser._id);
+    existUser.accessToken = token;
+    await existUser.save();
+
     const data = {
       user: existUser,
-      jwtToken: jwtToken,
+      jwtToken: existUser.accessToken,
     };
 
     return res
