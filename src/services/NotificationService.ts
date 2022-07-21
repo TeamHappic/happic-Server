@@ -1,7 +1,6 @@
 import User from '../models/User';
-import * as admin from 'firebase-admin';
-import mongoose from 'mongoose';
 import Film from '../models/Film';
+import admin from 'firebase-admin';
 
 var nodeschedule = require('node-schedule');
 

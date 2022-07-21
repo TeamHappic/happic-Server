@@ -35,11 +35,11 @@ app.use(function (
 });
 
 // 푸쉬 알람
-// const capsuleRule = '0 29 19 * * *';
-// nodeschedule.scheduleJob(capsuleRule, function () {
-// NotificationService.postCapsuleNotice();
-// });
-
+const capsuleRule = '0 48 19 * * *';
+nodeschedule.scheduleJob(capsuleRule, function () {
+  NotificationService.postCapsuleNotice();
+});
+//
 // const checkRule = '0 8 3 * * *';
 // nodeschedule.scheduleJob(checkRule, function () {
 // NotificationService.postCheckNotice();
