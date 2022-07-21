@@ -87,7 +87,6 @@ const createDaily = async (req: Request, res: Response) => {
       .status(statusCode.BAD_REQUEST)
       .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-  console.log(124321323124132);
   const filmCreateDto: FilmCreateDto = req.body;
   const userId = req.body.userId;
 
@@ -146,7 +145,7 @@ const postedDaily = async (req: Request, res: Response) => {
 
   try {
     const data = await DailyService.postedDaily(userId as string);
-
+    console.log(data)
     if (!userId) {
       return res
         .status(statusCode.BAD_REQUEST)

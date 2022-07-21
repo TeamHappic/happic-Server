@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface FileResponseDto {
-    _id: mongoose.Schema.Types.ObjectId;
-    link: string;
+  id: mongoose.Schema.Types.ObjectId;
+  link: string;
 }

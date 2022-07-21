@@ -4,18 +4,12 @@ import { UserInfo } from '../interfaces/user/UserInfo';
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   social: {
     type: String,
     //required: true,
-    unique: true,
   },
   socialId: {
-    type: String,
-    unique: true,
-  },
-  email: {
     type: String,
     unique: true,
   },
@@ -35,12 +29,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
-  film: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'Film',
-    },
-  ],
   count: {
     type: Number,
     required: true,
@@ -48,7 +36,7 @@ const UserSchema = new mongoose.Schema({
   },
   accessToken: {
     type: String,
-    required: true
+    required: true,
   },
   fcmToken: {
     type: String,

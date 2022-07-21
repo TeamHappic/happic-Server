@@ -5,9 +5,7 @@ import auth from '../middleware/auth';
 
 const router: Router = Router();
 
-router.get('/',auth, DailyController.getAllDaily);
-router.get('/:filmId',auth, DailyController.getDaily);
-
+router.get('/', auth, DailyController.getAllDaily);
 router.post(
   '/',
   [
@@ -21,9 +19,10 @@ router.post(
   DailyController.createDaily
 );
 
-router.get('/posted',auth, DailyController.postedDaily);
-router.get('/keyword', auth,DailyController.getTopKeyword);
-router.get('/title', DailyController.getAllTitle);
-router.delete('/:filmId',auth, DailyController.deleteDaily);
+router.get('/posted', auth, DailyController.postedDaily);
+router.get('/keyword', auth, DailyController.getTopKeyword);
+router.get('/title', auth, DailyController.getAllTitle);
+router.get('/:filmId', auth, DailyController.getDaily);
+router.delete('/:filmId', auth, DailyController.deleteDaily);
 
 export default router;

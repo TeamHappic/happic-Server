@@ -6,86 +6,59 @@ import Film from '../models/Film';
 import kakaoAuth from '../config/kakaoAuth';
 import { SocialUser } from '../interfaces/SocialUser';
 import axios from 'axios';
-import getToken from '../modules/jwtHandler'
-
+import getToken from '../modules/jwtHandler';
+import { UserFcmTokenDto } from '../interfaces/user/UserFcmTokenDto';
 
 export type SocialPlatform = 'kakao';
 
 //로그인
-const signIn = async (social: SocialPlatform,  accessToken: string) => {
-  try{
-      // const signup = new SignUp({
-      //     characterId: userCreateDto.characterId,
-      //     characterName: userCreateDto.characterName,
-      //     accesToken: userCreateDto.accessToken
-      // });
+const signIn = async (social: SocialPlatform, accessToken: string) => {
+  try {
+    // const signup = new SignUp({
+    //     characterId: userCreateDto.characterId,
+    //     characterName: userCreateDto.characterName,
+    //     accesToken: userCreateDto.accessToken
+    // });
 
-      const user = await authStrategy[social].execute(accessToken);
-      return user;
-  // await signup.save();
+    const user = await authStrategy[social].execute(accessToken);
+    return user;
+    // await signup.save();
 
-  // const data = {
-  //   id: signup.id,
-  // };
+    // const data = {
+    //   id: signup.id,
+    // };
 
-  // return data;
+    // return data;
   } catch (error) {
     logger.e(error);
     throw error;
   }
 };
 
-
-// const signinUser = async (socialId: string, email: string) => {
-
-//   try {
-//     const signup = new SignUp({
-//       socialId: socialId,
-//       email: email,
-//     });
-
-//     await signup.save();
-
-//     return signup;
-//   } catch (error) {
-//     logger.e(error);
-//     throw error;
-//   }
-// };
-
-// const loginUser = async (accessToken: string) => {
-//   try {
-//     const user = await authStrategy[social].execute(accessToken);
-//     return user;
-//   } catch (error) {
-//     logger.e(error);
-//     throw error;
-//   }
-// };
-
 const findUserById = async (userId: string) => {
   try {
     const user = await User.findById(userId);
-    console.log(user);
+    //console.log(user);
     return user;
   } catch (error) {
     logger.e(error);
     throw error;
   }
 };
+
 //회원가입
-const signUp = async(
+const signUp = async (
   //social: string,
-  // socialId: string,
-  //email: string
   characterId: number,
   characterName: string,
   accessToken: string
 ) => {
   try {
-    const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me',{
-      headers: { Authorization: `Bearer ${accessToken}`,}
+    const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me', {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
+
+    //console.log("kakaouser");
 
     const kakaoUserData = kakaoUser.data;
 
@@ -101,8 +74,8 @@ const signUp = async(
     if (!existUser) {
       const user = new User({
         name: `해픽${characterId}`,
-        social: "kakao",
-        email: "asdf",
+        social: 'kakao',
+        email: 'asdf',
         socialId: kakaoUserData.id,
         characterId: characterId,
         characterName: characterName,
@@ -110,8 +83,9 @@ const signUp = async(
         level: 1,
         film: [],
         count: 0,
-        fcmToken: "12123"
+        fcmToken: '12123',
       });
+
       const jwtToken = getToken(user.id);
       user.accessToken = jwtToken;
       await user.save();
@@ -123,9 +97,9 @@ const signUp = async(
     existUser.accessToken = getToken(existUser.id);
     await User.findByIdAndUpdate(existUser._id, existUser);
     return existUser.accessToken;
-    
+
     //if (!email) {
-      
+
     // } else {
     //   user = new User({
     //     name: `해픽${socialId}`,
@@ -134,19 +108,18 @@ const signUp = async(
     //     email: email,
     //   });
     // }
-    }catch (error){
-      logger.e("", error);
-      throw error;
-    }
+  } catch (error) {
+    logger.e('', error);
+    throw error;
+  }
 };
 
 // fmcToken 등록
-const registerFcm = async (userId: string, fcmToken: string) => {
+const registerFcm = async (userId: string, fcmToken: UserFcmTokenDto) => {
   try {
     await User.findByIdAndUpdate(userId, {
-      fcmToken: fcmToken,
+      fcmToken: fcmToken.fcmToken,
     });
-
   } catch (error) {
     console.log(error);
     throw error;
