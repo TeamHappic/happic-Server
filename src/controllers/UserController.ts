@@ -34,7 +34,7 @@ import { validationResult } from 'express-validator';
   
     try {
       const token = await UserService.signUp(characterId, characterName, accessToken);
-      console.log(token);
+    
       if (!accessToken) {
         return res
           .status(statusCode.UNAUTHORIZED)
@@ -90,20 +90,22 @@ const signIn = async (req: Request, res: Response) => {
     if (!existUser) {
       const user = await UserService.signUp(characterId, characterName, accessToken);
       //console.log("exist?");
+      const data = {
+        jwtToken: user
+      };
+
       return res
         .status(statusCode.CREATED)
         .send(
-          BaseResponse.success(statusCode.CREATED, message.SIGN_IN_SUCCESS, await user),
+          BaseResponse.success(statusCode.CREATED, message.SIGN_IN_SUCCESS, await data),
         );
     }
     
     const token = getToken(existUser._id);
-    existUser.accessToken = token;
-    await existUser.save();
 
     const data = {
       user: existUser,
-      jwtToken: existUser.accessToken,
+      jwtToken: token,
     };
 
     return res
