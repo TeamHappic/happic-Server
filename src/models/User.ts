@@ -4,18 +4,12 @@ import { UserInfo } from '../interfaces/user/UserInfo';
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   social: {
     type: String,
     //required: true,
-    unique: true,
   },
   socialId: {
-    type: String,
-    unique: true,
-  },
-  email: {
     type: String,
     unique: true,
   },
