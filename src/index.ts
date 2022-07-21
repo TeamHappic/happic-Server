@@ -35,22 +35,22 @@ app.use(function (
 });
 
 // 푸쉬 알람
-// const capsuleRule = '0 * 20 * * *';
-// nodeschedule.scheduleJob(capsuleRule, function () {
-// NotificationService.postCapsuleNotice();
-// });
+const capsuleRule = '0 * 22 * * *';
+nodeschedule.scheduleJob(capsuleRule, function () {
+  NotificationService.postCapsuleNotice();
+});
 //
 // const checkRule = '0 8 3 * * *';
 // nodeschedule.scheduleJob(checkRule, function () {
 // NotificationService.postCheckNotice();
 // });
-//
+
 app
   .listen(process.env.PORT, () => {
     // 포트 열어주기: env에 포트있으니가 여기선 따로 안해줘도댐
     console.log(`
     ################################################
-          🛡️  Server listening on port 🛡️
+          🛡️  Server listening on port ${process.env.PORT} 🛡️
     ################################################
   `);
   })

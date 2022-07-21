@@ -2,6 +2,7 @@ import User from '../models/User';
 import Film from '../models/Film';
 import admin from 'firebase-admin';
 let serviceAccount = require('../../firebase-admin.json');
+//import serviceAccount from '../../firebase-admin.json';
 
 const firebaseKeys = {
   type: serviceAccount.type,
