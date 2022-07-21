@@ -35,49 +35,20 @@ const signIn = async (social: SocialPlatform,  accessToken: string) => {
   }
 };
 
-
-// const signinUser = async (socialId: string, email: string) => {
-
-//   try {
-//     const signup = new SignUp({
-//       socialId: socialId,
-//       email: email,
-//     });
-
-//     await signup.save();
-
-//     return signup;
-//   } catch (error) {
-//     logger.e(error);
-//     throw error;
-//   }
-// };
-
-// const loginUser = async (accessToken: string) => {
-//   try {
-//     const user = await authStrategy[social].execute(accessToken);
-//     return user;
-//   } catch (error) {
-//     logger.e(error);
-//     throw error;
-//   }
-// };
-
 const findUserById = async (userId: string) => {
   try {
     const user = await User.findById(userId);
-    console.log(user);
+    //console.log(user);
     return user;
   } catch (error) {
     logger.e(error);
     throw error;
   }
 };
+
 //회원가입
 const signUp = async(
   //social: string,
-  // socialId: string,
-  //email: string
   characterId: number,
   characterName: string,
   accessToken: string
@@ -86,6 +57,8 @@ const signUp = async(
     const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me',{
       headers: { Authorization: `Bearer ${accessToken}`,}
     });
+
+    //console.log("kakaouser");
 
     const kakaoUserData = kakaoUser.data;
 
@@ -110,8 +83,9 @@ const signUp = async(
         level: 1,
         film: [],
         count: 0,
-        fcmToken: "12123"
+        fcmToken: "12123",
       });
+
       const jwtToken = getToken(user.id);
       user.accessToken = jwtToken;
       await user.save();
