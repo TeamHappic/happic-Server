@@ -209,7 +209,6 @@ const getTopKeyword = async (req: Request, res: Response) => {
  *  @access Public
  */
 const getAllTitle = async (req: Request, res: Response) => {
-  console.log('잠잠잠');
   const { year, month } = req.query;
   const userId = req.body.userId;
   try {
