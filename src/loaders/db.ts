@@ -1,31 +1,37 @@
 import mongoose from "mongoose";
-import config from "../config"; 
-import Movie from "../models/Movie";
-import Review from "../models/Review";
+import config from "../config";
+import File from "../models/File";
+import Film from "../models/Film";
+import Keyword from "../models/Keyword";
+import User from "../models/User";
 
 const connectDB = async () => {
-  try {
-    // .env에 적어둔 connect URI로 연결시켜준다.
-    // config에 mongoURI로 설정되어있다.
-    await mongoose.connect(config.mongoURI);
+    try {
+        await mongoose.connect(config.mongoURI);
 
-    // mongoose option 를 선택 
-    // autoCreate: 서버실행시 collection이 자동으로 생성되게 한다.
-    mongoose.set('autoCreate', true);
+        mongoose.set('autoCreate', true);
+        
+        User.createCollection().then(function (collection) {
+            console.log("User Collection is created!");
+        });
+  
+        File.createCollection().then(function (collection) {
+            console.log("File Collection is created!");
+        });
 
-    console.log("Mongoose Connected ...");
+        Film.createCollection().then(function (collection) {
+            console.log("Film Collection is created!");
+        });
 
-    Movie.createCollection().then(function (collection) {
-      console.log("Movie Collection is created!");
-    });
+        Keyword.createCollection().then(function (collection) {
+            console.log("Keyword Collection is created!");
+        });
 
-    Review.createCollection().then(function (collection) {
-      console.log("Review Collection is created!");
-    });
-  } catch (err: any) {
-    console.error(err.message);
-    process.exit(1);
-  }
+        console.log("Mongoose Connected ...");
+    } catch (err: any) {
+        console.error(err.message);
+        process.exit(1);
+    }
 };
 
 export default connectDB;
