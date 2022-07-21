@@ -19,10 +19,10 @@ import getToken from '../modules/jwtHandler';
  */
  const signUp = async (req: Request, res: Response) => {
     const social = req.body.social;
-    const charId = req.body.charId;
-    const charName = req.body.charName;
-    const token = req.body.token;
-    //console.log(social, charId, charName, token);
+    const characterId = req.body.characterId;
+    const characterName = req.body.characterName;
+    const accessToken = req.body.accessToken;
+    console.log(social, characterId, characterName, accessToken);
     
     // if (!social || !charId || !charName || !token) {
     //   console.log(123);
@@ -32,8 +32,8 @@ import getToken from '../modules/jwtHandler';
     // }
   
     try {
-      const accessToken = await UserService.signUp(charId, charName, token);
-      console.log(accessToken);
+      const token = await UserService.signUp(characterId, characterName, accessToken);
+      console.log(token);
       if (!accessToken) {
         return res
           .status(statusCode.UNAUTHORIZED)
@@ -51,9 +51,9 @@ import getToken from '../modules/jwtHandler';
       // }
       
       const data = {
-        jwtToken: accessToken,
+        jwtToken: token,
       };
-
+      //console.log(data);
       return res
         .status(statusCode.OK)
         .send(BaseResponse.success(statusCode.OK, responseMessage.SIGN_UP_SUCCESS, data));
@@ -76,27 +76,28 @@ import getToken from '../modules/jwtHandler';
  * @access Private
  */
 const signIn = async (req: Request, res: Response) => {
-  console.log("first signIn");
+  //console.log("first signIn");
+  //const {social} = req.body;
   const {characterId} = req.body;
   const {characterName} = req.body;
   const {accessToken} = req.body;
   const userId = req.body.userId;
-   
+  //console.log("req");
   try{
     const existUser = await UserService.findUserById(userId);
-    
+    //
     if (!existUser) {
       const user = await UserService.signUp(characterId, characterName, accessToken);
-    
+      //console.log("exist?");
       return res
         .status(statusCode.CREATED)
         .send(
-          BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_UP_SUCCESS, await user),
+          BaseResponse.success(statusCode.CREATED, responseMessage.SIGN_IN_SUCCESS, await user),
         );
     }
-
-    const jwtToken = getToken(existUser._id)
-      
+    
+    const jwtToken = getToken(existUser._id);
+    console.log("jwt");
     const data = {
       user: existUser,
       jwtToken: jwtToken,
