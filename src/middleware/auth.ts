@@ -1,16 +1,14 @@
-import express, { Request, Response, NextFunction } from 'express';
-import jwt from '../modules/jwtHandler';
-import { JwtPayload } from 'jsonwebtoken';
-import { logger } from '../config/winstonConfig';
-import config from '../config';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { NextFunction, Request, Response } from 'express';
 import statusCode from '../modules/statusCode';
 import message from '../modules/responseMessage';
 import util from '../modules/util';
-import exceptionMessage from '../modules/exceptionMessage';
+import config from '../config';
+import User from '../models/User';
 
 export default (req: Request, res: Response, next: NextFunction) => {
   // request-header 에서 토큰 받아오기
-  const token = req.headers.token;
+  const token = req.headers['authorization']?.split(' ').reverse()[0];
 
   // 토큰 유무 검증
   if (!token) {
@@ -22,29 +20,27 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
   // 토큰 검증
   try {
-    // jwt.verify(token,secret key) : jwt token 해독
-    const decoded = jwt.verify(token as string);
+    // jwt token 해독
+    const decoded = jwt.verify(token, config.jwtSecret);
+    // payload 꺼내오기
+    const userId = (decoded as JwtPayload).user;
+    const user = User.findById(userId);
 
-    // payload 꺼냉기 - decoded 타입 단언 필요
-    req.body.user = (decoded as any).user;
+    // no user
+    if (!user) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NO_USER));
+    }
 
-    // next : middleware 끝나면 다음으로 넘기기
+    req.body.userId = userId.id;
+    // 다음으로 넘기기
     next();
   } catch (error: any) {
     console.log(error);
     if (error.name === 'TokenExpiredError') {
-      // 토큰 끝나면
-      return res
-        .status(statusCode.UNAUTHORIZED)
-        .send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.EXPIRED_TOKEN));
+    } else if (error.name === 'JsonWebTokenError') {
+      return res.status(statusCode.UNAUTHORIZED).send(util.fail(statusCode.UNAUTHORIZED, message.INVALID_TOKEN));
     }
-    res
-      .status(statusCode.INTERNAL_SERVER_ERROR)
-      .send(
-        util.fail(
-          statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
-        )
-      );
+    res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
   }
 };

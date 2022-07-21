@@ -36,16 +36,19 @@
     "aws-sdk": "^2.1143.0",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
+    "bucket": "^0.0.1",
     "dayjs": "^1.11.3",
     "dotenv": "^16.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "express": "^4.17.3",
     "express-validator": "^6.14.2",
+    "firebase-admin": "^11.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "multer": "^1.4.4",
     "multer-s3": "^2.10.0",
+    "node-schedule": "^2.1.0",
     "winston": "^3.8.1"
   }
 }

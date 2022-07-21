@@ -1,51 +1,18 @@
-import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import config from '../config';
-import { logger } from '../config/winstonConfig';
-import em from './exceptionMessage';
+import { JwtPayloadInfo } from '../interfaces/common/JwtPayloadInfo';
 
-const sign = (userId: mongoose.Schema.Types.ObjectId, email: String) => {
-  const payload = {
-    id: userId,
-    email: email,
+const getToken = (userId: mongoose.Schema.Types.ObjectId): string => {
+  const payload: JwtPayloadInfo = {
+    user: {
+      id: userId,
+    },
   };
 
-  const accessToken: string = jwt.sign(
-    // 암호화
-    payload,
-    config.jwtSecret,
-    { expiresIn: '14d' }
-  );
+  const accessToken: string = jwt.sign(payload, config.jwtSecret, { expiresIn: '14d' });
+
   return accessToken;
 };
 
-const createRefresh = () => {
-  const refreshToken = jwt.sign({}, config.jwtSecret, { expiresIn: '14d' });
-  return refreshToken;
-};
-
-const verify = (token: string) => {
-  try {
-    console.log(token);
-    const decoded = jwt.verify(token, config.jwtSecret);
-    return decoded;
-  } catch (error) {
-    if ((error as JsonWebTokenError).message === 'jwt expired') {
-      logger.e('만료된 토큰입니다.');
-      return em.TOKEN_EXPIRED;
-    }
-    if ((error as JsonWebTokenError).message === 'invalid signature') {
-      logger.e('유효하지 않은 토큰입니다.');
-      return em.TOKEN_INVALID;
-    }
-    logger.e('유효하지 않은 토큰입니다.');
-
-    return em.TOKEN_INVALID;
-  }
-};
-
-export default {
-  sign,
-  createRefresh,
-  verify,
-};
+export default getToken;

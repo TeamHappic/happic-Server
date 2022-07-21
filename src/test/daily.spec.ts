@@ -5,11 +5,11 @@ import req from 'supertest';
 dotenv.config();
 
 
-describe('GET /daily/poseted', () => {
+describe('GET /daily/posted', () => {
     // 하루해픽 생성 가능여부 조회 
   it('하루해픽 생성 가능여부 조회 - 성공', (done) => {
     req(app)
-      .get('/daily/poseted')
+      .get('/daily/posted')
       .set('Content-Type', 'application/json') 
       .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
       .expect(200)

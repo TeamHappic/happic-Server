@@ -6,6 +6,8 @@ import User from '../models/User';
 import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
+import NotificationService from './NotificationService';
+import { FilmTitleAllResponseDto } from '../interfaces/film/FilmTitleAllResponseDto';
 
 const getAllDaily = async (userId: string, year: string, month: string) => {
   const daily: FilmAllResponseDto[] = [];
@@ -57,7 +59,6 @@ const getDaily = async (
     } else {
       rightFilmId = ' ';
     }
-    
 
     const film = await Film.find(
       { writer: userId, _id: filmId },
@@ -238,6 +239,12 @@ const createDaily = async (
       growthRate = 0;
     }
 
+    // 푸쉬 알림
+    if ((count as number) % 10 === 0) {
+      NotificationService.postCapsuleNotice(userId);
+    }
+    //NotificationService.postCapsuleNotice(userId);
+
     await User.findByIdAndUpdate(userId, {
       count: count,
       growthRate: growthRate,
@@ -351,7 +358,7 @@ const deleteDaily = async (userId: string, filmId: string): Promise<void> => {
 const postedDaily = async (userId: string): Promise<object | null> => {
   try {
     const dayjs = require('dayjs');
-    const films = await Film.find({ writer: userId }).sort({ createAt: -1 });
+    const films = await Film.find({ writer: userId }).sort({ createdAt: -1 });
 
     var isPosted = false;
 
@@ -436,36 +443,60 @@ const getTopKeyword = async (userId: String): Promise<object> => {
   }
 };
 
-const getAllTitle = async (userId: String): Promise<object[] | null> => {
+const getAllTitle = async (userId: string, year: string, month: string) => {
+  const data: FilmTitleAllResponseDto[] = [];
+  const dayjs = require('dayjs');
+
   try {
-    const films = await Film.find({ writer: userId });
-    const data: object[] = [];
-    console.log('❤️❤️❤️')
-    for (var i = 0; i < films.length; i++) {
-      const id: String = films[i].id;
-      const date: Date = films[i].createdAt;
-      var when: String = '';
-      var where: String = '';
-      var who: String = '';
-      var what: String = '';
+    if (year && month) {
+      const films = await Film.find({
+        writer: userId,
+        year: Number(year),
+        month: Number(month),
+      });
 
-      const keywordArr = films[i].keyword;
-      for (var j = 0; j < keywordArr.length; j++) {
-        const keyword = await Keyword.findOne({ _id: keywordArr[j] });
-        if (keyword) {
-          if (keyword.category == 'when') when = keyword.content;
-          else if (keyword.category == 'where') where = keyword.content;
-          else if (keyword.category == 'who') who = keyword.content;
-          else if (keyword.category == 'what') what = keyword.content;
+      if (films.length === 0) return null;
+
+      for (var i = 0; i < films.length; i++) {
+        let id = films[i]._id;
+
+        let createdAt = dayjs(films[i].createdAt);
+        const day = createdAt.get('date');
+
+        const whenId = films[i].keyword[0].toString();
+        const whereId = films[i].keyword[1].toString();
+        const whoId = films[i].keyword[2].toString();
+        const whatId = films[i].keyword[3].toString();
+
+
+        const whenKeyword = await Keyword.find(
+          { writer: userId, _id: whenId },
+          { content: 1 }
+        );
+        const whereKeyword = await Keyword.find(
+          { writer: userId, _id: whereId },
+          { content: 1 }
+        );
+        const whoKeyword = await Keyword.find(
+          { writer: userId, _id: whoId },
+          { content: 1 }
+        );
+        const whatKeyword = await Keyword.find(
+          { writer: userId, _id: whatId },
+          { content: 1 }
+        );
+        
+        const tempData = {              
+          id: id,
+          day: day,
+          when: whenKeyword[0].content,
+          where: whereKeyword[0].content,
+          who: whoKeyword[0].content,
+          what: whatKeyword[0].content,
         }
+        data.push(tempData);
       }
-      data.push({ id, date, when, where, who, what });
     }
-
-    if (films.length === 0) {
-      return null;
-    }
-
     return data;
   } catch (error) {
     console.log(error);

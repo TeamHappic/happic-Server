@@ -12,7 +12,7 @@ import SettingService from '../services/SettingService';
  */
 const changeChar = async (req: Request, res: Response) => {
   const { characterId, characterName } = req.body;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     await SettingService.changeChar(userId, characterId, characterName);

@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
  */
 const getAllDaily = async (req: Request, res: Response) => {
   const { year, month } = req.query;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.getAllDaily(
@@ -50,7 +50,7 @@ const getAllDaily = async (req: Request, res: Response) => {
  */
 const getDaily = async (req: Request, res: Response) => {
   const { filmId } = req.params;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.getDaily(userId, filmId);
@@ -87,9 +87,9 @@ const createDaily = async (req: Request, res: Response) => {
       .status(statusCode.BAD_REQUEST)
       .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
   }
-
+  console.log(124321323124132);
   const filmCreateDto: FilmCreateDto = req.body;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.createDaily(userId, filmCreateDto);
@@ -118,7 +118,7 @@ const createDaily = async (req: Request, res: Response) => {
  */
 const deleteDaily = async (req: Request, res: Response) => {
   const { filmId } = req.params;
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
   try {
     await DailyService.deleteDaily(userId, filmId);
     res.status(statusCode.NO_CONTENT).send(); //204
@@ -142,7 +142,7 @@ const deleteDaily = async (req: Request, res: Response) => {
  * @access public
  */
 const postedDaily = async (req: Request, res: Response) => {
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.postedDaily(userId as string);
@@ -175,7 +175,7 @@ const postedDaily = async (req: Request, res: Response) => {
  * @access public
  */
 const getTopKeyword = async (req: Request, res: Response) => {
-  const userId = req.body.user.id;
+  const userId = req.body.userId;
 
   try {
     const data = await DailyService.getTopKeyword(userId as string);
@@ -210,11 +210,15 @@ const getTopKeyword = async (req: Request, res: Response) => {
  *  @access Public
  */
 const getAllTitle = async (req: Request, res: Response) => {
+  const { year, month } = req.query;
+  const userId = req.body.userId;
   try {
-    //const userId = req.body.user.id;
-    const userId = '62cef0997f008c29128704ed'
-    const data = await DailyService.getAllTitle(userId as string);
-    
+    const data = await DailyService.getAllTitle(
+      userId as string,
+      year as string,
+      month as string
+    );
+
     if (!data) {
       return res
         .status(statusCode.NOT_FOUND)

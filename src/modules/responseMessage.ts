@@ -5,7 +5,6 @@ const message = {
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
   INVALID_PASSWORD: '비밀번호 오류',
 
-  CREATED_CHAR_SUCCESS: '캐릭터 생성 성공',
   CHANGE_CHARACTER_SUCCESS: '캐릭터 수정 성공',
 
   //token
@@ -18,9 +17,11 @@ const message = {
   //social
   UNAUTHORIZED_SOCIAL_USER: '유효하지 않은 소셜 유저입니다',
 
-  //auth
+  //user
   SIGN_IN_SUCCESS: '로그인 성공!',
   SIGN_UP_SUCCESS: '회원가입 성공!',
+  NO_USER: '존재하지 않는 유저',
+  REGISTER_FCM_SUCCESS:'FCM 토큰 등록 성공',
 
   // 홈화면
   READ_USER_SUCCESS: '홈화면 조회 성공',

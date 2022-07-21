@@ -8,12 +8,11 @@ const UserSchema = new mongoose.Schema({
   },
   social: {
     type: String,
-    required: true,
+    //required: true,
     unique: true,
   },
   socialId: {
     type: String,
-    required: true,
     unique: true,
   },
   email: {
@@ -47,12 +46,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
-  // fcmToken: {
-  //   type: String,
-  //   required: true,
-  //   unique: true,
-  // },
-  refreshToken: {
+  accessToken: {
+    type: String,
+    required: true
+  },
+  fcmToken: {
     type: String,
     required: true,
     unique: true,
