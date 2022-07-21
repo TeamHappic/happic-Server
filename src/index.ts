@@ -3,7 +3,6 @@ import config from './config';
 const app = express();
 import connectDB from './loaders/db';
 import routes from './routes';
-import NotificationService from './services/NotificationService';
 require('dotenv').config();
 var nodeschedule = require('node-schedule');
 
@@ -34,21 +33,6 @@ app.use(function (
   //res.render('error');
   console.log(err);
   res.json({ error: res.locals.error });
-});
-
-// 푸쉬 알람
-app.use(function (req: Request, res: Response) {
-  const userId = req.body.userId;
-
-  const capsuleRule = '0 0 8 * * *';
-  nodeschedule.scheduleJob(capsuleRule, function () {
-    NotificationService.postCapsuleNotice(userId);
-  });
-
-  const checkRule = '0 0 22 * * *';
-  nodeschedule.scheduleJob(checkRule, function () {
-    NotificationService.postCheckNotice(userId);
-  });
 });
 
 app
