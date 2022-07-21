@@ -35,13 +35,7 @@ app.use(function (
 });
 
 // 푸쉬 알람
-const test = '* * 3 * * *';
-nodeschedule.scheduleJob(test, function () {
-  console.log('test');
-});
-
-// 푸쉬 알람
-const capsuleRule = '0 5 3 * * *';
+const capsuleRule = '0 * 18 * * *';
 nodeschedule.scheduleJob(capsuleRule, function () {
   NotificationService.postCapsuleNotice();
 });
