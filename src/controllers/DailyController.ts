@@ -146,7 +146,7 @@ const postedDaily = async (req: Request, res: Response) => {
 
   try {
     const data = await DailyService.postedDaily(userId as string);
-
+    console.log(data)
     if (!userId) {
       return res
         .status(statusCode.BAD_REQUEST)

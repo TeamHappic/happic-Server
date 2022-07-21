@@ -35,12 +35,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
-  film: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'Film',
-    },
-  ],
   count: {
     type: Number,
     required: true,
