@@ -39,7 +39,7 @@ const signUp = async (req: Request, res: Response) => {
       characterName,
       accessToken
     );
-    console.log(token);
+
     if (!accessToken) {
       return res
         .status(statusCode.UNAUTHORIZED)
@@ -101,24 +101,26 @@ const signIn = async (req: Request, res: Response) => {
         accessToken
       );
       //console.log("exist?");
+      const data = {
+        jwtToken: user,
+      };
+
       return res
         .status(statusCode.CREATED)
         .send(
           BaseResponse.success(
             statusCode.CREATED,
             message.SIGN_IN_SUCCESS,
-            await user
+            await data
           )
         );
     }
 
     const token = getToken(existUser._id);
-    existUser.accessToken = token;
-    await existUser.save();
 
     const data = {
       user: existUser,
-      jwtToken: existUser.accessToken,
+      jwtToken: token,
     };
 
     return res
@@ -136,6 +138,7 @@ const signIn = async (req: Request, res: Response) => {
       );
   }
 };
+
 // fcmToken 동록
 /**
  * @router POST /movie
