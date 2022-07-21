@@ -210,9 +210,15 @@ const getTopKeyword = async (req: Request, res: Response) => {
  *  @access Public
  */
 const getAllTitle = async (req: Request, res: Response) => {
+  const { year, month } = req.query;
+  const userId = req.body.userId;
   try {
-    const userId = req.body.userId;
-    const data = await DailyService.getAllTitle(userId as string);
+    const data = await DailyService.getAllTitle(
+      userId as string,
+      year as string,
+      month as string
+    );
+
     if (!data) {
       return res
         .status(statusCode.NOT_FOUND)

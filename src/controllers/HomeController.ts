@@ -23,7 +23,6 @@ const findCharacter = async (req: Request, res: Response) => {
     //const user = await UserService.findUserById(req.body.userId);
     const userId = req.body.userId;
     const data = await HomeService.findCharacter(userId);
-
     if (!data) {
       return res
         .status(statusCode.NOT_FOUND)

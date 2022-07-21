@@ -22,7 +22,7 @@ const findCharacter = async (
     if (!user) {
       return null;
     }
-
+    
     const film = await Film.findById(user.film[0]);
     var isPosted = false;
     if (film) {
