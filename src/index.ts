@@ -1,7 +1,7 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from 'express';
 const app = express(); //express 이용하여 서버 띄울거니가~
 
-import connectDB from "./loaders/db";
+import connectDB from './loaders/db';
 import routes from './routes';
 require('dotenv').config();
 
@@ -10,7 +10,7 @@ connectDB(); // 몽고디비에 연결한다.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(routes);   // "routes" 폴더안의 라우터를 사용할 것
+app.use(routes); // "routes" 폴더안의 라우터를 사용할 것
 
 // error handler
 interface ErrorType {
@@ -25,11 +25,22 @@ app.use(function (err: ErrorType, req: Request, res: Response, next: NextFunctio
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('error');
+});
+
+// 푸쉬 알람
+
+const capsuleRule = '0 0 8 * * *';
+nodeschedule.scheduleJob(capsuleRule, function () {
+  NotificationService.postCapsuleNotice();
+});
+const checkRule = '0 0 22 * * *';
+nodeschedule.scheduleJob(checkRule, function () {
+  NotificationService.postCheckNotice();
 });
 
 app
-  .listen(process.env.PORT, () => { 
+  .listen(process.env.PORT, () => {
     // 포트 열어주기: env에 포트있으니가 여기선 따로 안해줘도댐
     console.log(`
     ################################################
