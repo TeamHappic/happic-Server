@@ -225,7 +225,7 @@ const getAllTitle = async (req: Request, res: Response) => {
     }
     return res
       .status(statusCode.OK)
-      .send(util.success(statusCode.OK, message.GET_ALLTITLE_SUCCESS, data));
+      .send(util.success(statusCode.OK, message.READ_ALLDAILY_SUCCESS, data));
   } catch (error) {
     console.log(error);
     res

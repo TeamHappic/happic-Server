@@ -7,7 +7,7 @@
     "dev": "nodemon",
     "build": "tsc",
     "start:dev": "node dist/index.js",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts"
+    "test": "mocha -r ts-node/register src/test/daily.spec.ts"
   },
   "author": "",
   "license": "ISC",
