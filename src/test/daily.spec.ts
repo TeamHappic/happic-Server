@@ -76,7 +76,7 @@ describe('POST /daily ', () => {
         who: '엄마',
         what: '아침먹기',
       })
-      .expect(200)
+      .expect(201)
       .expect('Content-Type', /json/);
   });
 
@@ -92,17 +92,8 @@ describe('POST /daily ', () => {
   });
 });
 
-describe('DELETE /daily?filmId=', () => {
-    it('하루 해픽 삭제 - 성공', async () => {
-      await req(app)
-        .delete('/daily')
-        .set('Content-Type', 'application/json')
-        .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
-        .query({ filmId: '62da8baa31a4753ec1e8cacf' })
-        .expect(200)
-        .expect('Content-Type', /json/);
-    });
-  
+describe('DELETE /daily/filmId=', () => {
+
     it('하루 해픽 삭제 - 존재하지 않는 데이터입니다', async () => {
       await req(app)
         .delete('/daily')
