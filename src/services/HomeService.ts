@@ -37,6 +37,7 @@ const findCharacter = async (
       characterId: user.characterId,
       characterName: user.characterName,
       growthRate: user.growthRate,
+      growth_rate: user.growthRate,
       level: user.level,
       isPosted: isPosted,
     };

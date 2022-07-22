@@ -20,11 +20,11 @@ const getCategoryRank = async (
   let images: String[] = [];
 
   if (option==='when'){    
-    option = 'when'||'how';
+    option = 'when'||'hour';
   }
 
-  if (option==='how'){    
-    option = 'when'||'how';
+  if (option==='hour'){    
+    option = 'when'||'hour';
   }
 
   keywords = await Keyword.find({
