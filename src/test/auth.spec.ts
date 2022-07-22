@@ -5,32 +5,47 @@ import req from 'supertest';
 dotenv.config();
 
 /**
- * 카카오 회원가입
- * 201, 404 케이스
+ * 카카오 로그인
+ * 401 케이스
  */
-describe('POST /user/signup', () => {
-    //카카오 회원가입 성공 케이스
-    it('카카오 회원가입 - 성공', (done) => {
+ describe('POST /user/signin', () => {
+    //카카오 로그인 성공
+    it('카카오 로그인 - 성공', (done) => {
         req(app)
             .post('/user/signin')
             .set('Content-Type', 'application/json')
+            .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
             .send({
-                social: process.env.SOCIAL,
-                characterId: process.env.CHARACTER_ID,
-                characterName: process.env.CHARACTER_NAME,
-                accessToken: process.env.KAKAO_TOKEN
+                accessToken: process.env.TEST_TOKEN
             })
-            .expect(200)
-            .expect('Content-Type', /json/)
+            .expect(201)
             .then((res) => {
                 done();
-            })
+              })
             .catch((err => {
                 console.error('######Error >>', err);
                 done(err);
             }));
     });
-
-    //카카오 로그인 404 에러
+    
+     //카카오 로그인 401 에러
+     it('카카오 로그인 - 유효하지 않은 토큰', (done) => {
+        req(app)
+            .post('/user/signin')
+            .set('Content-Type', 'application/json')
+            .set({ Authorization: `Bearer ${'1234'}` })
+            .send({
+                accessToken: '1234'
+            })
+            .expect(500)
+            .expect('Content-Type', /json/)
+            .then((res) => {
+                done();
+              })
+            .catch((err => {
+                console.error('######Error >>', err);
+                done(err);
+            }));
+    });
     
 });
