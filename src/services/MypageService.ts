@@ -19,6 +19,14 @@ const getCategoryRank = async (
   let films: FilmInfo[] = [];
   let images: String[] = [];
 
+  if (option==='when'){    
+    option = 'when'||'how';
+  }
+
+  if (option==='how'){    
+    option = 'when'||'how';
+  }
+
   keywords = await Keyword.find({
     writer: userId,
     year: year,

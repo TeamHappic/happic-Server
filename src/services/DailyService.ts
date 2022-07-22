@@ -443,6 +443,15 @@ const getTopKeyword = async (userId: String): Promise<object> => {
   }
 };
 
+const getDayOfTheWeek = (day: Number): String => {
+  if (day === 0) return '일';
+  else if (day === 1) return '월';
+  else if (day === 2) return '화';
+  else if (day === 3) return '수';
+  else if (day === 4) return '목';
+  else if (day === 5) return '금';
+  else if (day === 6) return '토';
+};
 const getAllTitle = async (userId: string, year: string, month: string) => {
   const data: FilmTitleAllResponseDto[] = [];
   const dayjs = require('dayjs');
@@ -453,7 +462,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         writer: userId,
         year: Number(year),
         month: Number(month),
-      });
+      }).sort({ createdAt: -1 });
 
       if (films.length === 0) return data;
 
@@ -462,6 +471,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
 
         let createdAt = dayjs(films[i].createdAt);
         const day = createdAt.get('date');
+        const dayOfWeek = getDayOfTheWeek(createdAt.get('day'));
         const photo = films[i].photo;
         const thumbnail = films[i].photo;
         const whenId = films[i].keyword[0].toString();
@@ -489,6 +499,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         data.push({
           id: id,
           day: day,
+          dayOfWeek: dayOfWeek,
           photo: photo,
           thumbnail: thumbnail,
           when: whenKeyword.length ? Number(whenKeyword[0].content) : 12,

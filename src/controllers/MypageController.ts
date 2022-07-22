@@ -122,7 +122,7 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
     let data: Object = [];
     if (year && month && option) {
       const isOptionType = (option: string): option is KeywordOptionType => {
-        return ['when', 'where', 'who', 'what'].indexOf(option) !== -1;
+        return ['when', 'where', 'who', 'what', 'how'].indexOf(option) !== -1;
       }; //-1이면 저안에 없는 것임
 
       if (!isOptionType(option as string)) {
