@@ -7,7 +7,7 @@ import HomeService from '../services/HomeService';
 const router: Router = Router();
 
 router.get('/', auth, HomeController.findCharacter);
-router.get('/capsule', auth, HomeController.getRandomCapsule);
 router.get('/push/capsule', HomeService.capsulePushAlram);
-// router.get('push/check', HomeService.checkPushAlaram);
+router.get('/capsule', auth, HomeController.getRandomCapsule);
+// router.get('/push/check', HomeService.checkPushAlaram);
 export default router;
