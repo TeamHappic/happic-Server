@@ -42,6 +42,8 @@ jobs:
           echo S3_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
           echo S3_SECRET_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
           echo BUCKET_NAME=${{ secrets.BUCKET_NAME }} >> .env
+          echo DEV_WEB_HOOK_ERROR_MONITORING=${{ secrets.DEV_WEB_HOOK_ERROR_MONITORING }} >> .env
+          echo TEST_TOKEN=${{ secrets.TEST_TOKEN }} >> .env
           cat .env
 
       - name: build server files
