@@ -7,6 +7,7 @@ import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 import { FilmTitleAllResponseDto } from '../interfaces/film/FilmTitleAllResponseDto';
+import NotificationService from './NotificationService';
 
 const getAllDaily = async (userId: string, year: string, month: string) => {
   const daily: FilmAllResponseDto[] = [];
@@ -238,7 +239,6 @@ const createDaily = async (
       growthRate = 0;
     }
 
-
     await User.findByIdAndUpdate(userId, {
       count: count,
       growthRate: growthRate,
@@ -259,6 +259,8 @@ const createDaily = async (
     const data = {
       id: film._id,
     };
+
+    //NotificationService.postCapsuleNotice();
 
     return data;
   } catch (error) {
@@ -463,7 +465,6 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         const whoId = films[i].keyword[2].toString();
         const whatId = films[i].keyword[3].toString();
 
-
         const whenKeyword = await Keyword.find(
           { writer: userId, _id: whenId },
           { content: 1 }
@@ -480,8 +481,8 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           { writer: userId, _id: whatId },
           { content: 1 }
         );
-        
-        const tempData = {              
+
+        const tempData = {
           id: id,
           day: day,
           photo: photo,
@@ -490,7 +491,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           where: whereKeyword[0].content,
           who: whoKeyword[0].content,
           what: whatKeyword[0].content,
-        }
+        };
         data.push(tempData);
       }
     }
