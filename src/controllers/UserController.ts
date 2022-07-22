@@ -11,6 +11,8 @@ import User from '../models/User';
 import getToken from '../modules/jwtHandler';
 import { validationResult } from 'express-validator';
 import { UserFcmTokenDto } from '../interfaces/user/UserFcmTokenDto';
+import { slackMessage } from '../modules/slackMessage';
+import { sendMessageToSlack } from '../modules/slackAPI';
 
 /**
  * @route POST /signup
@@ -65,6 +67,13 @@ const signUp = async (req: Request, res: Response) => {
       .send(BaseResponse.success(statusCode.OK, message.SIGN_UP_SUCCESS, data));
   } catch (error) {
     logger.e('UserController signUp error', error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     return res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -126,6 +135,13 @@ const signIn = async (req: Request, res: Response) => {
       .send(BaseResponse.success(statusCode.OK, message.SIGN_IN_SUCCESS, data));
   } catch (error) {
     logger.e('UserController signIn error', error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     return res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -168,6 +184,13 @@ const registerFcm = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(

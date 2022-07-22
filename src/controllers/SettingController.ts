@@ -4,6 +4,8 @@ import message from '../modules/responseMessage';
 import util from '../modules/util';
 import { validationResult } from 'express-validator';
 import SettingService from '../services/SettingService';
+import { slackMessage } from '../modules/slackMessage';
+import { sendMessageToSlack } from '../modules/slackAPI';
 
 /**
  * @route PATCH /setting
@@ -21,6 +23,13 @@ const changeChar = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.CHANGE_CHARACTER_SUCCESS));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(

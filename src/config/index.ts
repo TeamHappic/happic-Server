@@ -28,4 +28,9 @@ export default {
    * jwt Algorithm
    */
   jwtAlgo: process.env.JWT_ALGO as string,
+
+  /**
+   * slack webhook
+   */
+  webhook: process.env.DEV_WEB_HOOK_ERROR_MONITORING as string,
 };
