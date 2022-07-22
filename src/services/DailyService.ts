@@ -452,7 +452,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         month: Number(month),
       });
 
-      if (films.length === 0) return null;
+      if (films.length === 0) return data;
 
       for (var i = 0; i < films.length; i++) {
         let id = films[i]._id;
@@ -488,7 +488,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           day: day,
           photo: photo,
           thumbnail: thumbnail,
-          when: whenKeyword[0].content,
+          when: Number(whenKeyword[0].content),
           where: whereKeyword[0].content,
           who: whoKeyword[0].content,
           what: whatKeyword[0].content,
