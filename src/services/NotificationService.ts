@@ -1,9 +1,14 @@
 import User from '../models/User';
-import * as admin from 'firebase-admin';
-import mongoose from 'mongoose';
 import Film from '../models/Film';
+import admin from 'firebase-admin';
+let serviceAccount = require('../../firebase-admin.json');
+//import serviceAccount from '../../firebase-admin.json';
 
-var nodeschedule = require('node-schedule');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+});
+
+console.log('파베', serviceAccount);
 
 const postCapsuleNotice = async (): Promise<void> => {
   try {
@@ -12,49 +17,52 @@ const postCapsuleNotice = async (): Promise<void> => {
       return null;
     }
 
+    let fcmTokens: string[] = [];
+
     for (var i = 0; i < users.length; i++) {
       const count = users[i].count;
       if ((count as number) % 10 !== 0) {
         return;
       }
       const fcmToken = users[i].fcmToken;
+      fcmTokens.push(fcmToken);
+    }
 
-      const message = {
-        android: {
-          notification: {
-            title: 'happic',
-            body: '어제 떨어진 별똥별을 선물로 가져왔어!',
-          },
+    console.log('랄ㄹ랄', fcmTokens);
+
+    const message = {
+      android: {
+        notification: {
+          title: 'happic',
+          body: '어제 떨어진 별똥별을 선물로 가져왔어!',
         },
-        apns: {
-          payload: {
-            aps: {
-              contentAvailable: true,
-              alert: {
-                title: 'happic',
-                body: '어제 떨어진 별똥별을 선물로 가져왔어!',
-              },
+      },
+      apns: {
+        payload: {
+          aps: {
+            contentAvailable: true,
+            alert: {
+              title: 'happic',
+              body: '어제 떨어진 별똥별을 선물로 가져왔어!',
             },
           },
         },
-        token: fcmToken,
-      };
+      },
+      tokens: fcmTokens,
+    };
 
-      // 푸시알림 보내기
-      admin
-        .messaging()
-        .send(message)
-        .then(function (response: any) {
-          // const rule = '0 0 8 * * *';
-          // nodeschedule.scheduleJob(rule, function () {
-          //   console.log('스케줄러 성공!');
-          // });
-          console.log('Successfully sent message: ', response);
-        })
-        .catch(function (err) {
-          console.log('Error Sending message!!! : ', err);
-        });
-    }
+    console.log(message);
+
+    // 푸시알림 보내기
+    admin
+      .messaging()
+      .sendMulticast(message)
+      .then(function (response: any) {
+        console.log('Successfully sent message: ', response);
+      })
+      .catch(function (err) {
+        console.log('Error Sending message!!! : ', err);
+      });
   } catch (err) {
     console.log(err);
     throw err;
@@ -69,6 +77,8 @@ const postCheckNotice = async (): Promise<void> => {
     if (!users) {
       return null;
     }
+
+    let fcmTokens: string[] = [];
 
     for (var i = 0; i < users.length; i++) {
       const userId = users[i]._id;
@@ -89,48 +99,49 @@ const postCheckNotice = async (): Promise<void> => {
       }
 
       const fcmToken = user[0].fcmToken;
-      const message = {
-        android: {
-          notification: {
-            title: 'happic',
-            body: '길잡이와 함께 해픽을 행복으로 채워보세요!',
-          },
+
+      fcmTokens.push(fcmToken);
+    }
+
+    const message = {
+      android: {
+        notification: {
+          title: 'happic',
+          body: '길잡이와 함께 해픽을 행복으로 채워보세요!',
         },
-        apns: {
-          payload: {
-            aps: {
-              contentAvailable: true,
-              alert: {
-                title: 'happic',
-                body: '길잡이와 함께 해픽을 행복으로 채워보세요!',
-              },
+      },
+      apns: {
+        payload: {
+          aps: {
+            contentAvailable: true,
+            alert: {
+              title: 'happic',
+              body: '길잡이와 함께 해픽을 행복으로 채워보세요!',
             },
           },
         },
-        token: fcmToken,
-      };
-      // 푸시알림 보내기
-      admin
-        .messaging()
-        .send(message)
-        .then(function (response: any) {
-          // const rule = '0 0 22 * * *';
-          // nodeschedule.scheduleJob(rule, function () {
-          //   console.log('스케줄러 성공!');
-          // });
-          console.log('Successfully sent message: ', response);
-        })
-        .catch(function (err) {
-          console.log('Error Sending message!!! : ', err);
-        });
-    }
+      },
+      tokens: fcmTokens,
+    };
+    // 푸시알림 보내기
+    admin
+      .messaging()
+      .sendMulticast(message)
+      .then(function (response: any) {
+        console.log('Successfully sent message: ', response);
+      })
+      .catch(function (err) {
+        console.log('Error Sending message!!! : ', err);
+      });
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
 
-export default {
+const NotificationService = {
   postCapsuleNotice,
   postCheckNotice,
 };
+
+export default NotificationService;

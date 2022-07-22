@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { SocialUser } from '../interfaces/SocialUser';
-import { UserCreateDto } from '../interfaces/user/UserCreateDto';
 import BaseResponse from '../modules/BaseResponse';
 import message from '../modules/responseMessage';
 import statusCode from '../modules/statusCode';
@@ -24,7 +22,7 @@ const signUp = async (req: Request, res: Response) => {
   const characterId = req.body.characterId;
   const characterName = req.body.characterName;
   const accessToken = req.body.accessToken;
-  console.log(social, characterId, characterName, accessToken);
+  //console.log(social, characterId, characterName, accessToken);
 
   // if (!social || !charId || !charName || !token) {
   //   console.log(123);
@@ -61,7 +59,7 @@ const signUp = async (req: Request, res: Response) => {
     const data = {
       jwtToken: token,
     };
-    //console.log(data);
+    console.log(data);
     return res
       .status(statusCode.OK)
       .send(BaseResponse.success(statusCode.OK, message.SIGN_UP_SUCCESS, data));
@@ -84,16 +82,16 @@ const signUp = async (req: Request, res: Response) => {
  * @access Private
  */
 const signIn = async (req: Request, res: Response) => {
-  //console.log("first signIn");
+  console.log("first signIn");
   //const {social} = req.body;
   const { characterId } = req.body;
   const { characterName } = req.body;
   const { accessToken } = req.body;
   const userId = req.body.userId;
-  //console.log("req");
+  console.log("req");
   try {
     const existUser = await UserService.findUserById(userId);
-    //
+  
     if (!existUser) {
       const user = await UserService.signUp(
         characterId,
@@ -101,7 +99,7 @@ const signIn = async (req: Request, res: Response) => {
         accessToken
       );
       //console.log("exist?");
-      const data = {
+      const data1 = {
         jwtToken: user,
       };
 
@@ -111,7 +109,7 @@ const signIn = async (req: Request, res: Response) => {
           BaseResponse.success(
             statusCode.CREATED,
             message.SIGN_IN_SUCCESS,
-            await data
+            await data1
           )
         );
     }
@@ -122,7 +120,7 @@ const signIn = async (req: Request, res: Response) => {
       user: existUser,
       jwtToken: token,
     };
-
+   
     return res
       .status(statusCode.OK)
       .send(BaseResponse.success(statusCode.OK, message.SIGN_IN_SUCCESS, data));

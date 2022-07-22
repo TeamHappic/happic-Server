@@ -14,21 +14,10 @@ export type SocialPlatform = 'kakao';
 //로그인
 const signIn = async (social: SocialPlatform, accessToken: string) => {
   try {
-    // const signup = new SignUp({
-    //     characterId: userCreateDto.characterId,
-    //     characterName: userCreateDto.characterName,
-    //     accesToken: userCreateDto.accessToken
-    // });
 
     const user = await authStrategy[social].execute(accessToken);
     return user;
-    // await signup.save();
-
-    // const data = {
-    //   id: signup.id,
-    // };
-
-    // return data;
+    
   } catch (error) {
     logger.e(error);
     throw error;
@@ -53,12 +42,13 @@ const signUp = async (
   characterName: string,
   accessToken: string
 ) => {
+  //console.log("first signup");
   try {
     const kakaoUser = await axios.get('https://kapi.kakao.com/v2/user/me', {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    //console.log("kakaouser");
+   // console.log("kakaouser");
 
     const kakaoUserData = kakaoUser.data;
 
