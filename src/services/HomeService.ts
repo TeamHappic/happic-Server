@@ -54,6 +54,7 @@ const getRandomCapsule = async (userId: string): Promise<object | null> => {
     const randomFilmIndex = Math.floor(Math.random() * filmsNum);
     const randomFilm = films[randomFilmIndex];
 
+    
     const whenId = randomFilm.keyword[0].toString();
     const whereId = randomFilm.keyword[1].toString();
     const whoId = randomFilm.keyword[2].toString();
