@@ -439,6 +439,12 @@ const KeywordSchema = new mongoose.Schema(
 
 <br />
 
+## 🛠 Server Architecture
+![180420764-1afac15d-1ef5-4c47-b68e-90cb128c3d7c](https://user-images.githubusercontent.com/69195315/180443174-4fd1612f-f095-4a99-a261-86cd0ddac6f4.png)
+
+
+<br />
+
 ## 📚 Task & Role <img width=25px src=https://user-images.githubusercontent.com/80062632/178400930-fffb094c-32ce-4b28-8901-527938888f0c.png>
 
 Route | 기능 | 구현 여부 | 담당자
