@@ -4,9 +4,8 @@ import dotenv from 'dotenv';
 import req from 'supertest';
 dotenv.config();
 
-
 describe('GET /mypage', () => {
-    // 해픽레포트 조회 
+  // 해픽레포트 조회 
   it('해픽레포트 조회 - 성공', (done) => {
     req(app)
       .get('/mypage')
