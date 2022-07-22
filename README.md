@@ -12,6 +12,19 @@
 
 `추후 릴리즈 예정 `
 
+
+## 주요 기능 소개
+
+
+![KakaoTalk_20220722_234934351](https://user-images.githubusercontent.com/78267146/180466639-5bf06199-1cb4-461a-bdd3-4f501f183d0f.jpg)
+
+![KakaoTalk_20220722_234934351_01](https://user-images.githubusercontent.com/78267146/180466650-074c26c8-2191-467a-9f3e-a6d483bb800c.jpg)
+
+![KakaoTalk_20220722_234934351_02](https://user-images.githubusercontent.com/78267146/180466658-40c0fe49-2cde-4eb4-bfa3-70eee4b604d5.jpg)
+
+![KakaoTalk_20220722_234934351_03](https://user-images.githubusercontent.com/78267146/180466675-ee5c00e8-78b7-4608-87c9-1006c6dddd42.jpg)
+
+
 <br>
 
 ## Service workflow
