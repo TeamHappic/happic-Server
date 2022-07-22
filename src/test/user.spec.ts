@@ -15,12 +15,12 @@ dotenv.config();
         req(app)
             .post('/user/signup')
             .set('Content-Type', 'application/json')
-            .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
+            .set({ Authorization: `Bearer ${process.env.KAKAO_TOKEN}` })
             .send({
                 social: process.env.SOCIAL,
                 characterId: process.env.CHARACTER_ID,
                 characterName: process.env.CHARACTER_NAME,
-                accessToken: process.env.TEST_TOKEN
+                accessToken: process.env.KAKAO_TOKEN
             })
             .expect(200)
             .then((res) => {
