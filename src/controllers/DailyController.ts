@@ -148,7 +148,9 @@ const deleteDaily = async (req: Request, res: Response) => {
   const userId = req.body.userId;
   try {
     await DailyService.deleteDaily(userId, filmId);
-    res.status(statusCode.NO_CONTENT).send(); //204
+    res
+      .status(statusCode.OK)
+      .send(util.success(statusCode.OK, message.DELETE_DAILY_SUCCESS)); //204
   } catch (error) {
     console.log(error);
     const errorMessage: string = slackMessage(
