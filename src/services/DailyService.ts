@@ -119,7 +119,11 @@ const createDaily = async (
 
     // #when 저장
     const whenKeyword = await Keyword.find(
-      { writer: userId, category: 'when', content: filmCreateDto.when },
+      {
+        writer: userId,
+        category: 'when',
+        content: String(filmCreateDto.when),
+      },
       { count: 1 }
     );
 
@@ -237,7 +241,6 @@ const createDaily = async (
       level = (level as number) + 1;
       growthRate = 0;
     }
-
 
     await User.findByIdAndUpdate(userId, {
       count: count,
@@ -463,7 +466,6 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         const whoId = films[i].keyword[2].toString();
         const whatId = films[i].keyword[3].toString();
 
-
         const whenKeyword = await Keyword.find(
           { writer: userId, _id: whenId },
           { content: 1 }
@@ -480,8 +482,8 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           { writer: userId, _id: whatId },
           { content: 1 }
         );
-        
-        const tempData = {              
+
+        const tempData = {
           id: id,
           day: day,
           photo: photo,
@@ -490,7 +492,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           where: whereKeyword[0].content,
           who: whoKeyword[0].content,
           what: whatKeyword[0].content,
-        }
+        };
         data.push(tempData);
       }
     }
