@@ -137,9 +137,9 @@ const createDaily = async (
         month: month,
         count: 1,
       });
-      await keyword1.save();
+      const uploadedKeyword = await keyword1.save();
 
-      keywordList.push(keyword1._id);
+      keywordList.push(uploadedKeyword._id);
     } else {
       let whenCount: Number = whenKeyword[0].count;
 
@@ -486,17 +486,16 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           { content: 1 }
         );
 
-        const tempData = {
+        data.push({
           id: id,
           day: day,
           photo: photo,
           thumbnail: thumbnail,
-          when: Number(whenKeyword[0].content),
-          where: whereKeyword[0].content,
-          who: whoKeyword[0].content,
-          what: whatKeyword[0].content,
-        };
-        data.push(tempData);
+          when: whenKeyword.length ? Number(whenKeyword[0].content) : 12,
+          where: whereKeyword.length ? whereKeyword[0].content : '',
+          who: whoKeyword.length ? whoKeyword[0].content : '',
+          what: whatKeyword.length ? whatKeyword[0].content : '',
+        });
       }
     }
     return data;

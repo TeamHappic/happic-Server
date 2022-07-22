@@ -18,16 +18,19 @@ const findCharacter = async (
   userId: string
 ): Promise<UserResponseDto | null> => {
   try {
-    const user = await User.findById(userId).populate('film', 'createdAt');
-
+    const user = await User.findById(userId);
     if (!user) {
       return null;
     }
 
-    const film = await Film.findById(user.film[0]);
+    const tempFilm = await Film.find({ sort: { createdAt: -1 } }).populate(
+      'writer',
+      { _id: userId }
+    );
+
     var isPosted = false;
-    if (film) {
-      isPosted = isSameDate(film.createdAt);
+    if (tempFilm.length) {
+      isPosted = isSameDate(tempFilm[0].createdAt);
     }
 
     const data = {
