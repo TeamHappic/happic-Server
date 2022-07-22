@@ -377,6 +377,68 @@ const KeywordSchema = new mongoose.Schema(
 
 <br />
 
+## 🛠 Dependencies module (package.json)
+```json
+{
+  "name": "node-typescript-init",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc",
+    "start:dev": "node dist/index.js",
+    "test": "mocha -r ts-node/register src/test/daily.spec.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/mocha": "^9.1.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.7",
+    "@types/multer-s3": "^2.7.12",
+    "@types/node": "^17.0.25",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "chai": "^4.3.6",
+    "eslint": "^8.19.0",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.7.1",
+    "supertest": "^6.2.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1143.0",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "bucket": "^0.0.1",
+    "dayjs": "^1.11.3",
+    "dotenv": "^16.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "firebase-admin": "^11.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.1",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "node-schedule": "^2.1.0",
+    "winston": "^3.8.1"
+  }
+}
+
+```
+
+
+<br />
+
 ## 📚 Task & Role <img width=25px src=https://user-images.githubusercontent.com/80062632/178400930-fffb094c-32ce-4b28-8901-527938888f0c.png>
 
 Route | 기능 | 구현 여부 | 담당자
