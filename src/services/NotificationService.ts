@@ -22,7 +22,6 @@ const postCapsuleNotice = async (): Promise<void> => {
       const count = users[i].count;
       console.log(count);
       if ((count as number) % 10 !== 0) {
-        console.log('아앙아');
         return;
       }
       const fcmToken = users[i].fcmToken;
@@ -64,12 +63,11 @@ const postCapsuleNotice = async (): Promise<void> => {
       .catch(function (err) {
         console.log('Error Sending message!!! : ', err);
       });
-
-    return;
   } catch (err) {
     console.log(err);
     throw err;
   }
+  //process.exit(0);
 };
 
 const postCheckNotice = async (): Promise<void> => {
@@ -84,27 +82,32 @@ const postCheckNotice = async (): Promise<void> => {
     let fcmTokens: string[] = [];
 
     for (var i = 0; i < users.length; i++) {
-      const userId = users[i]._id;
-      let films = await Film.find({ writer: userId }).sort({ createdAt: -1 });
-
-      const lastDate = dayjs(films[0].createdAt);
-      const lastDateFormat = lastDate.format('YY-MM-DD');
-      const nowDate = dayjs();
-      const nowDateFormat = nowDate.format('YY-MM-DD');
-      const todayPosted = lastDateFormat === nowDateFormat;
-      if (todayPosted == true) {
-        return;
+      const userId = users[i]._id.toString();
+      console.log('유저아이디', userId);
+      let filmsTemp = await Film.find({ writer: userId });
+      console.log('필름들', filmsTemp.length);
+      if (filmsTemp.length !== 0) {
+        let films = await Film.find({ writer: userId }).sort({
+          createdAt: -1,
+        });
+        const lastDate = dayjs(films[0].createdAt);
+        const lastDateFormat = lastDate.format('YY-MM-DD');
+        const nowDate = dayjs();
+        const nowDateFormat = nowDate.format('YY-MM-DD');
+        const todayPosted = lastDateFormat === nowDateFormat;
+        // if (todayPosted == true) {
+        //   return;
+        // }
+        const user = await User.find({ _id: userId }, { fcmToken: 1 });
+        if (!user) {
+          return null;
+        }
+        const fcmToken = user[0].fcmToken;
+        fcmTokens.push(fcmToken);
       }
-
-      const user = await User.find({ _id: userId }, { fcmToken: 1 });
-      if (!user) {
-        return null;
-      }
-
-      const fcmToken = user[0].fcmToken;
-
-      fcmTokens.push(fcmToken);
     }
+
+    console.log(fcmTokens);
 
     const message = {
       android: {
