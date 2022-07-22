@@ -9,10 +9,10 @@ import config from '../config';
 // axios.post(url, body);
 
 export const sendMessageToSlack = async (message: string): Promise<void> => {
-  try {
-    await axios.post(config.webhook, { text: message });
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  // try {
+  // await axios.post(config.webhook, { text: message });
+  // } catch (error) {
+  // console.log(error);
+  // throw error;
+  // }
 };
