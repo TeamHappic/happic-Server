@@ -7,8 +7,15 @@
     "dev": "nodemon",
     "build": "tsc",
     "start:dev": "node dist/index.js",
-    "test": "mocha -r ts-node/register src/test/*.spec.ts -exit",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint-staged": "lint-staged",
+    "test": "mocha -r ts-node/register src/test/mypage.spec.ts -exit",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +34,7 @@
     "chai": "^4.3.6",
     "eslint": "^8.19.0",
     "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.7.1",
