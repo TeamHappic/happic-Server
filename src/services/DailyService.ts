@@ -443,7 +443,7 @@ const getTopKeyword = async (userId: String): Promise<object> => {
   }
 };
 
-const getDayOfTheWeek =  (day: Number): String => {
+const getDayOfTheWeek = (day: Number): String => {
   if (day === 0) return '일';
   else if (day === 1) return '월';
   else if (day === 2) return '화';
