@@ -64,6 +64,8 @@ const postCapsuleNotice = async (): Promise<void> => {
       .catch(function (err) {
         console.log('Error Sending message!!! : ', err);
       });
+
+    return;
   } catch (err) {
     console.log(err);
     throw err;
