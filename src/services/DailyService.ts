@@ -362,7 +362,7 @@ const postedDaily = async (userId: string): Promise<object | null> => {
 
     var isPosted = false;
 
-    if (!films) {
+    if (!films.length) {
       return { isPosted: isPosted };
     }
 

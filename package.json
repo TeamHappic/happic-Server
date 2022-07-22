@@ -7,10 +7,7 @@
     "dev": "nodemon",
     "build": "tsc",
     "start:dev": "node dist/index.js",
-    "lint": "./node_modules/.bin/eslint .",
-    "lint-staged": "lint-staged",
-    "test": "mocha -r ts-node/register src/test/mypage.spec.ts -exit",
-    "prepare": "husky install"
+    "test": "mocha -r ts-node/register src/test/home.spec.ts"
   },
   "lint-staged": {
     "**/*.ts": [
