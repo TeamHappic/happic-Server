@@ -19,6 +19,10 @@ const getCategoryRank = async (
   let films: FilmInfo[] = [];
   let images: String[] = [];
 
+  if (option==='when'||'how'){    
+    option = 'when'||'how';
+  }
+
   keywords = await Keyword.find({
     writer: userId,
     year: year,
@@ -52,7 +56,7 @@ const getCategoryRank = async (
 const getAllRank = async (
   userId: String,
   year: Number,
-  month: Number,
+  month: Number
 ): Promise<object> => {
   let keywords: KeywordInfo[] = [];
   let films: FilmInfo[] = [];
@@ -124,10 +128,21 @@ const getAllRank = async (
 
       // rank3
       const rank3s_when = await getCategoryRank(userId, year, month, 'when', 4);
-      const rank3s_where = await getCategoryRank(userId, year, month, 'where', 4);
+      const rank3s_where = await getCategoryRank(
+        userId,
+        year,
+        month,
+        'where',
+        4
+      );
       const rank3s_who = await getCategoryRank(userId, year, month, 'who', 4);
       const rank3s_what = await getCategoryRank(userId, year, month, 'what', 4);
-      rank3s = {when:rank3s_when, where:rank3s_where, who:rank3s_who, what:rank3s_what};
+      rank3s = {
+        when: rank3s_when,
+        where: rank3s_where,
+        who: rank3s_who,
+        what: rank3s_what,
+      };
       // rank4
       films = await Film.find({ writer: userId, year: year, month: month });
       rank4s = { month: month, count: films.length };
@@ -197,7 +212,6 @@ const getKeywordByCategory = async (
       let images: String[] = [];
       data = await getCategoryRank(userId, year, month, option, 8);
     }
-
 
     return data;
   } catch (error) {

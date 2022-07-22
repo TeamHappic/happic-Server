@@ -12,6 +12,19 @@
 
 `추후 릴리즈 예정 `
 
+
+## 주요 기능 소개
+
+
+![KakaoTalk_20220722_234934351](https://user-images.githubusercontent.com/78267146/180466639-5bf06199-1cb4-461a-bdd3-4f501f183d0f.jpg)
+
+![KakaoTalk_20220722_234934351_01](https://user-images.githubusercontent.com/78267146/180466650-074c26c8-2191-467a-9f3e-a6d483bb800c.jpg)
+
+![KakaoTalk_20220722_234934351_02](https://user-images.githubusercontent.com/78267146/180466658-40c0fe49-2cde-4eb4-bfa3-70eee4b604d5.jpg)
+
+![KakaoTalk_20220722_234934351_03](https://user-images.githubusercontent.com/78267146/180466675-ee5c00e8-78b7-4608-87c9-1006c6dddd42.jpg)
+
+
 <br>
 
 ## Service workflow
@@ -374,6 +387,74 @@ const KeywordSchema = new mongoose.Schema(
 ## 🛠 API
 
 - [API 명세서](https://www.notion.so/API-7c20c52cd7444e1391762dc8b502fd1a)
+
+<br />
+
+## 🛠 Dependencies module (package.json)
+```json
+{
+  "name": "node-typescript-init",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc",
+    "start:dev": "node dist/index.js",
+    "test": "mocha -r ts-node/register src/test/daily.spec.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/mocha": "^9.1.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.7",
+    "@types/multer-s3": "^2.7.12",
+    "@types/node": "^17.0.25",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "chai": "^4.3.6",
+    "eslint": "^8.19.0",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.7.1",
+    "supertest": "^6.2.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1143.0",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "bucket": "^0.0.1",
+    "dayjs": "^1.11.3",
+    "dotenv": "^16.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "firebase-admin": "^11.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.1",
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0",
+    "node-schedule": "^2.1.0",
+    "winston": "^3.8.1"
+  }
+}
+
+```
+
+
+<br />
+
+## 🛠 Server Architecture
+![180420764-1afac15d-1ef5-4c47-b68e-90cb128c3d7c](https://user-images.githubusercontent.com/69195315/180443174-4fd1612f-f095-4a99-a261-86cd0ddac6f4.png)
+
 
 <br />
 

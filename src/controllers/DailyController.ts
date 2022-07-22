@@ -6,6 +6,8 @@ import { validationResult } from 'express-validator';
 import { FilmCreateDto } from '../interfaces/film/FilmCreateDto';
 import DailyService from '../services/DailyService';
 import dayjs from 'dayjs';
+import { sendMessageToSlack } from '../modules/slackAPI';
+import { slackMessage } from '../modules/slackMessage';
 
 /**
  * @route GET /daily?year=&month=
@@ -32,6 +34,13 @@ const getAllDaily = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.READ_ALLDAILY_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -64,6 +73,13 @@ const getDaily = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.READ_DAILY_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -99,6 +115,18 @@ const createDaily = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
+    console.log('실행되냐3');
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+
+    console.log('실행되니ㅑ');
+    sendMessageToSlack(errorMessage);
+    console.log('실행되니ㅑ2');
+
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -123,6 +151,13 @@ const deleteDaily = async (req: Request, res: Response) => {
     res.status(statusCode.NO_CONTENT).send(); //204
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     // 서버 내부에서 오류 발생
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
@@ -157,6 +192,13 @@ const postedDaily = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.GET_POSTED_DAILY, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -192,6 +234,13 @@ const getTopKeyword = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -228,6 +277,13 @@ const getAllTitle = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.READ_ALLDAILY_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(

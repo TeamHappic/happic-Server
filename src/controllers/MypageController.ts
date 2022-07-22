@@ -9,6 +9,8 @@ import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { KeywordResponseDto } from '../interfaces/keyword/KeywordResponseDto';
 import { KeywordOptionType } from '../interfaces/keyword/KeywordOptionType';
 import { MypageService } from '../services';
+import { slackMessage } from '../modules/slackMessage';
+import { sendMessageToSlack } from '../modules/slackAPI';
 
 /**\
  * @route GET /mypage?year=&month=&option=
@@ -41,6 +43,13 @@ const getAllRank = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -82,6 +91,13 @@ const getKeywordRank = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.GET_ALL_KEYWORD_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -106,7 +122,7 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
     let data: Object = [];
     if (year && month && option) {
       const isOptionType = (option: string): option is KeywordOptionType => {
-        return ['when', 'where', 'who', 'what'].indexOf(option) !== -1;
+        return ['when', 'where', 'who', 'what', 'how'].indexOf(option) !== -1;
       }; //-1이면 저안에 없는 것임
 
       if (!isOptionType(option as string)) {
@@ -123,7 +139,7 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
         keyword_month as Number,
         option as KeywordOptionType
       );
-    }else {
+    } else {
       return res
         .status(statusCode.BAD_REQUEST)
         .send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
@@ -139,6 +155,13 @@ const getKeywordByCategory = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -182,6 +205,13 @@ const getKeywordByMonth = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
