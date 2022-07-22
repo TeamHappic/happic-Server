@@ -23,10 +23,7 @@ const findCharacter = async (
       return null;
     }
 
-    const tempFilm = await Film.find({ sort: { createdAt: -1 } }).populate(
-      'writer',
-      { _id: userId }
-    );
+    const tempFilm = await Film.find({writer:userId}).sort({createdAt:-1});
 
     var isPosted = false;
     if (tempFilm.length) {
