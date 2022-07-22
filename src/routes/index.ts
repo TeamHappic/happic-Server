@@ -4,6 +4,7 @@ import DailyRouter from './DailyRouter';
 import FileRouter from './FileRouter';
 import HomeRouter from './HomeRouter';
 import MypageRouter from './MypageRouter';
+import NotificationRouter from './NotificationRouter';
 import SettingRouter from './SettingRouter';
 import UserRouter from './UserRouter';
 
@@ -15,5 +16,6 @@ router.use('/mypage', MypageRouter);
 router.use('/daily', DailyRouter);
 router.use('/user', UserRouter); //로그인, 회원가입
 router.use('/setting', SettingRouter);
+router.use('/notification', NotificationRouter);
 
 export default router;

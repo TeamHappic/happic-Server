@@ -54,6 +54,7 @@ const getRandomCapsule = async (userId: string): Promise<object | null> => {
     const randomFilmIndex = Math.floor(Math.random() * filmsNum);
     const randomFilm = films[randomFilmIndex];
 
+    
     const whenId = randomFilm.keyword[0].toString();
     const whereId = randomFilm.keyword[1].toString();
     const whoId = randomFilm.keyword[2].toString();
@@ -81,10 +82,10 @@ const getRandomCapsule = async (userId: string): Promise<object | null> => {
   }
 };
 
-const capsulePushAlram = () => {
-  NotificationService.postCapsuleNotice();
-  return 0;
-};
+// const capsulePushAlram = () => {
+// NotificationService.postCapsuleNotice();
+// return 0;
+// };
 // const checkPushAlaram = () => {
 //   NotificationService.postCheckNotice();
 // };
@@ -92,6 +93,6 @@ const capsulePushAlram = () => {
 export default {
   findCharacter,
   getRandomCapsule,
-  capsulePushAlram,
+  //capsulePushAlram,
   // checkPushAlaram,
 };
