@@ -78,17 +78,17 @@ const getRandomCapsule = async (userId: string): Promise<object | null> => {
   }
 };
 
-const capsulePushAlram = () => {
-  NotificationService.postCapsuleNotice();
-};
+// const capsulePushAlram = () => {
+//   NotificationService.postCapsuleNotice();
+// };
 
-const checkPushAlaram = () => {
-  NotificationService.postCheckNotice();
-};
+// const checkPushAlaram = () => {
+//   NotificationService.postCheckNotice();
+// };
 
 export default {
   findCharacter,
   getRandomCapsule,
-  capsulePushAlram,
-  checkPushAlaram,
+  // capsulePushAlram,
+  // checkPushAlaram,
 };
