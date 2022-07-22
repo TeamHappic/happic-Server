@@ -98,7 +98,7 @@ describe('DELETE /daily?filmId=', () => {
         .delete('/daily')
         .set('Content-Type', 'application/json')
         .set({ Authorization: `Bearer ${process.env.TEST_TOKEN}` })
-        .query({ filmId: '62d959e1d57341aedd43d765' })
+        .query({ filmId: '62da8baa31a4753ec1e8cacf' })
         .expect(200)
         .expect('Content-Type', /json/);
     });
