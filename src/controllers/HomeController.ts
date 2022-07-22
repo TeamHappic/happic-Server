@@ -5,6 +5,8 @@ import util from '../modules/util';
 import { validationResult } from 'express-validator';
 import { UserService } from '../services';
 import HomeService from '../services/HomeService';
+import { slackMessage } from '../modules/slackMessage';
+import { sendMessageToSlack } from '../modules/slackAPI';
 
 /**
  *  @route GET /home
@@ -34,6 +36,13 @@ const findCharacter = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.READ_USER_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
@@ -65,6 +74,13 @@ const getRandomCapsule = async (req: Request, res: Response) => {
       .send(util.success(statusCode.OK, message.READ_DAILY_SUCCESS, data));
   } catch (error) {
     console.log(error);
+    const errorMessage: string = slackMessage(
+      req.method.toUpperCase(),
+      req.originalUrl,
+      error,
+      req.body.user?.id
+    );
+    sendMessageToSlack(errorMessage);
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
       .send(
