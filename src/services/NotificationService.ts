@@ -2,7 +2,6 @@ import User from '../models/User';
 import Film from '../models/Film';
 import admin from 'firebase-admin';
 let serviceAccount = require('../../firebase-admin.json');
-//import serviceAccount from '../../firebase-admin.json';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
@@ -21,7 +20,9 @@ const postCapsuleNotice = async (): Promise<void> => {
 
     for (var i = 0; i < users.length; i++) {
       const count = users[i].count;
+      console.log(count);
       if ((count as number) % 10 !== 0) {
+        console.log('아앙아');
         return;
       }
       const fcmToken = users[i].fcmToken;
