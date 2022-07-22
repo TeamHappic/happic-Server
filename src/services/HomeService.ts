@@ -3,6 +3,7 @@ import { UserResponseDto } from '../interfaces/user/UserResponseDto';
 import Film from '../models/Film';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 import Keyword from '../models/Keyword';
+import NotificationService from './NotificationService';
 
 const isSameDate = (date1: Date) => {
   const today = new Date();
@@ -22,7 +23,7 @@ const findCharacter = async (
     if (!user) {
       return null;
     }
-    
+
     const film = await Film.findById(user.film[0]);
     var isPosted = false;
     if (film) {
@@ -43,14 +44,11 @@ const findCharacter = async (
   }
 };
 
-
-const getRandomCapsule = async (
-  userId: string,
-): Promise<object | null> => {
+const getRandomCapsule = async (userId: string): Promise<object | null> => {
   try {
     const films = await Film.find({ writer: userId });
     const filmsNum = films.length;
-    const randomFilmIndex = Math.floor(Math.random()*filmsNum);
+    const randomFilmIndex = Math.floor(Math.random() * filmsNum);
     const randomFilm = films[randomFilmIndex];
 
     const whenId = randomFilm.keyword[0].toString();
@@ -58,18 +56,10 @@ const getRandomCapsule = async (
     const whoId = randomFilm.keyword[2].toString();
     const whatId = randomFilm.keyword[3].toString();
 
-    const whenKeyword = await Keyword.find(
-      { writer: userId, _id: whenId },
-    );
-    const whereKeyword = await Keyword.find(
-      { writer: userId, _id: whereId },
-    );
-    const whoKeyword = await Keyword.find(
-      { writer: userId, _id: whoId },
-    );
-    const whatKeyword = await Keyword.find(
-      { writer: userId, _id: whatId },
-    );
+    const whenKeyword = await Keyword.find({ writer: userId, _id: whenId });
+    const whereKeyword = await Keyword.find({ writer: userId, _id: whereId });
+    const whoKeyword = await Keyword.find({ writer: userId, _id: whoId });
+    const whatKeyword = await Keyword.find({ writer: userId, _id: whatId });
 
     const data = {
       date: randomFilm.createdAt,
@@ -82,15 +72,23 @@ const getRandomCapsule = async (
 
     if (!data) return null;
     return data;
-    
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
 
+const capsulePushAlram = () => {
+  NotificationService.postCapsuleNotice();
+};
+
+const checkPushAlaram = () => {
+  NotificationService.postCheckNotice();
+};
 
 export default {
   findCharacter,
   getRandomCapsule,
+  capsulePushAlram,
+  checkPushAlaram,
 };
