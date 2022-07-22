@@ -154,7 +154,7 @@ const getKeywordRank = async (
 ): Promise<object> => {
   let keywords: KeywordInfo[] = [];
   let films: FilmInfo[] = [];
-  let ranks: Array<object> = [];
+  let data: Array<object> = [];
   try {
     if (year && month) {
       //rank2
@@ -166,7 +166,7 @@ const getKeywordRank = async (
       }).sort({ count: -1 });
       for (var i = 0; i < 8; i++) {
         if (all_keywords[i]) {
-          ranks.push({
+          data.push({
             content: all_keywords[i].content,
             category: all_keywords[i].category,
             count: all_keywords[i].count,
@@ -174,10 +174,6 @@ const getKeywordRank = async (
         }
       }
     }
-
-    const data = {
-      ranks,
-    };
 
     return data;
   } catch (error) {
@@ -194,17 +190,14 @@ const getKeywordByCategory = async (
 ): Promise<object> => {
   let keywords: KeywordInfo[] = [];
   let films: FilmInfo[] = [];
-  let ranks: Array<object> = [];
+  let data: Array<object> = [];
   try {
     if (year && month && option) {
       // rank3
       let images: String[] = [];
-      ranks = await getCategoryRank(userId, year, month, option, 8);
+      data = await getCategoryRank(userId, year, month, option, 8);
     }
 
-    const data = {
-      ranks,
-    };
 
     return data;
   } catch (error) {
