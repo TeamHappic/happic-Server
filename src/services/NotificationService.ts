@@ -4,22 +4,11 @@ import admin from 'firebase-admin';
 let serviceAccount = require('../../firebase-admin.json');
 //import serviceAccount from '../../firebase-admin.json';
 
-const firebaseKeys = {
-  type: serviceAccount.type,
-  projectId: serviceAccount.project_id,
-  privateKeyId: serviceAccount.private_key_id,
-  privateKey: serviceAccount.private_key,
-  clientEmail: serviceAccount.client_email,
-  clientId: serviceAccount.client_id,
-  authUri: serviceAccount.auth_uri,
-  tokenUri: serviceAccount.token_uri,
-  authProviderX509CertUrl: serviceAccount.auth_provider_x509_cert_url,
-  clientC509CertUrl: serviceAccount.client_x509_cert_url,
-};
-
 admin.initializeApp({
-  credential: admin.credential.cert(firebaseKeys),
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
 });
+
+console.log('파베', serviceAccount);
 
 const postCapsuleNotice = async (): Promise<void> => {
   try {
@@ -38,6 +27,8 @@ const postCapsuleNotice = async (): Promise<void> => {
       const fcmToken = users[i].fcmToken;
       fcmTokens.push(fcmToken);
     }
+
+    console.log('랄ㄹ랄', fcmTokens);
 
     const message = {
       android: {
@@ -59,6 +50,8 @@ const postCapsuleNotice = async (): Promise<void> => {
       },
       tokens: fcmTokens,
     };
+
+    console.log(message);
 
     // 푸시알림 보내기
     admin

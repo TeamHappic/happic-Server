@@ -7,6 +7,7 @@ import { KeywordInfo } from '../interfaces/keyword/KeywordInfo';
 import { FilmAllResponseDto } from '../interfaces/film/FilmAllResponseDto';
 import { FilmResponseDto } from '../interfaces/film/FilmResponseDto';
 import { FilmTitleAllResponseDto } from '../interfaces/film/FilmTitleAllResponseDto';
+import NotificationService from './NotificationService';
 
 const getAllDaily = async (userId: string, year: string, month: string) => {
   const daily: FilmAllResponseDto[] = [];
@@ -262,6 +263,8 @@ const createDaily = async (
     const data = {
       id: film._id,
     };
+
+    //NotificationService.postCapsuleNotice();
 
     return data;
   } catch (error) {
