@@ -453,7 +453,7 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
         writer: userId,
         year: Number(year),
         month: Number(month),
-      });
+      }).sort({createdAt:-1});
 
       if (films.length === 0) return data;
 
