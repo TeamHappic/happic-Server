@@ -503,9 +503,9 @@ const getAllTitle = async (userId: string, year: string, month: string) => {
           photo: photo,
           thumbnail: thumbnail,
           when: whenKeyword.length ? Number(whenKeyword[0].content) : 12,
-          where: whereKeyword.length ? whereKeyword[0].content : '',
-          who: whoKeyword.length ? whoKeyword[0].content : '',
-          what: whatKeyword.length ? whatKeyword[0].content : '',
+          where: whereKeyword.length ? whereKeyword[0].content : '홍대',
+          who: whoKeyword.length ? whoKeyword[0].content : '엄마',
+          what: whatKeyword.length ? whatKeyword[0].content : '배고파',
         });
       }
     }
