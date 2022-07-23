@@ -10,7 +10,7 @@ const changeChar = async (
       characterId: characterId,
       characterName: characterName,
       growthRate: 0,
-      level: 0,
+      level: 1,
     });
   } catch (error) {
     console.log(error);
