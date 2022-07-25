@@ -143,13 +143,13 @@
 ## 🗂 Project Foldering
 
 ```
-📦 config                    // port, mongoURI 등 설정
+📦 config                   
  ┗ 📜 index.ts
 
-📦 controllers               // service에서 처리된 로직들을 전달 받아 response해줌
+📦 controllers               
  ┣ 📜 index.ts
 
-📦 interfaces                // type interface 정의
+📦 interfaces                
  ┗ 📂 film
  ┃ ┗ 📜 FilmInfo.ts
  ┗ 📂 keyword
@@ -163,7 +163,7 @@
 📦 middlewares
  ┗ 📜 auth.ts
 
-📦 models                    // mongoose.Schema 정의
+📦 models                    
  ┣ 📜 Film.ts
  ┣ 📜 Keyword.ts
  ┗ 📜 User.ts
@@ -173,10 +173,10 @@
  ┗ 📜 statusCode.ts
  ┗ 📜 responseMessage.ts
 
-📦 routes                    // endpoint 정의
+📦 routes                    
  ┣ 📜 index.ts
 
-📦 services                  // 상세 구현, controller로 전달 됨
+📦 services                  
  ┣ 📜 index.ts
 ```
 
@@ -453,32 +453,15 @@ const KeywordSchema = new mongoose.Schema(
 <br />
 
 ## 🛠 Server Architecture
+
+- 개발 환경 : Typescript, Express(Node.js)
+- 데이터베이스 : MongoDB, AWS S3
+- 서버 환경 : AWS EC2, PM2
 ![180420764-1afac15d-1ef5-4c47-b68e-90cb128c3d7c](https://user-images.githubusercontent.com/69195315/180443174-4fd1612f-f095-4a99-a261-86cd0ddac6f4.png)
 
 
 <br />
-
-## 📚 Task & Role <img width=25px src=https://user-images.githubusercontent.com/80062632/178400930-fffb094c-32ce-4b28-8901-527938888f0c.png>
-
-Route | 기능 | 구현 여부 | 담당자
-:---------:|---------|:----------:|:---------:
- home | 메인화면 조회 |  | 유송경
- &nbsp; | 푸시알림 조회 |  | 김동재
-  &nbsp; | 해픽캡슐 조회 |  | 김동재
-  character | 캐릭터 이름 입력 | | 김동재 
-  mypage | 해픽레포트 조회 |  | 유송경
-  &nbsp; | 키워드 전체 순위 조회 |  | 유송경
-  &nbsp; | 카테고리별 전체 순위 조회 |  | 유송경
-  &nbsp; | 월별 하루해픽 횟수 조회 | | 유송경
-  daily | 하루해픽 전체 조회 | | 이서우
-   &nbsp; | 하루해픽 생성 |  | 이서우
-  &nbsp; | 하루해픽 키워드 조회 |  | 이서우
-  &nbsp; | 하루해픽 상세 조회 |  | 이서우
-  &nbsp; | 하루해픽 삭제 |  | 이서우
-  &nbsp; | 하루제목 전체 조회 | | 유송경
-  user | 소셜로그인 | | 김동재
-  setting | 캐릭터 변경 | | 김동재 
-  
+ 
 
 
 ---
