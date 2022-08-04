@@ -413,36 +413,48 @@ const getTopKeyword = async (userId: String): Promise<object> => {
       writer: userId,
       category: 'where',
     }).sort({ count: -1 });
-    who_keywords = await Keyword.find({ writer: userId, category: 'who' }).sort(
-      { count: -1 }
-    );
+
+    who_keywords = await Keyword.find({
+      writer: userId,
+      category: 'who',
+    }).sort({ count: -1 });
+
     what_keywords = await Keyword.find({
       writer: userId,
       category: 'what',
     }).sort({ count: -1 });
 
-    for (var i = 0; i < 9; i++) {
-      if (!where_keywords[i]) {
-        break;
-      } else {
-        where.push(where_keywords[i].content);
+    let whereFlag: boolean;
+    for (var i = 0; i < where_keywords.length; i++) {
+      whereFlag = false;
+      for (var j = i; j < where_keywords.length - 1; j++) {
+        if (where_keywords[j].content === where_keywords[j + 1].content)
+          whereFlag = true;
       }
+      if (whereFlag === false) where.push(where_keywords[i].content);
+      if (where.length === 10) break;
     }
 
-    for (var i = 0; i < 9; i++) {
-      if (!who_keywords[i]) {
-        break;
-      } else {
-        who.push(who_keywords[i].content);
+    let whoFlag: boolean;
+    for (var i = 0; i < who_keywords.length; i++) {
+      whoFlag = false;
+      for (var j = i; j < who_keywords.length - 1; j++) {
+        if (who_keywords[j].content === who_keywords[j + 1].content)
+          whoFlag = true;
       }
+      if (whoFlag === false) who.push(who_keywords[i].content);
+      if (who.length === 10) break;
     }
 
-    for (var i = 0; i < 9; i++) {
-      if (!what_keywords[i]) {
-        break;
-      } else {
-        what.push(what_keywords[i].content);
+    let whatFlag: boolean;
+    for (var i = 0; i < what_keywords.length; i++) {
+      whatFlag = false;
+      for (var j = i + 1; j < what_keywords.length; j++) {
+        if (what_keywords[i].content === what_keywords[j].content)
+          whatFlag = true;
       }
+      if (whatFlag === false) what.push(what_keywords[i].content);
+      if (what.length === 10) break;
     }
 
     const currentDate = dayjs();
