@@ -124,6 +124,8 @@ const createDaily = async (
         writer: userId,
         category: 'when',
         content: String(filmCreateDto.when),
+        year: year,
+        month: month,
       },
       { count: 1 }
     );
@@ -150,7 +152,13 @@ const createDaily = async (
 
     // # where 저장
     const whereKeyword = await Keyword.find(
-      { writer: userId, category: 'where', content: filmCreateDto.where },
+      {
+        writer: userId,
+        category: 'where',
+        content: filmCreateDto.where,
+        year: year,
+        month: month,
+      },
       { count: 1 }
     );
 
@@ -177,7 +185,13 @@ const createDaily = async (
 
     // # who 저장
     const whoKeyword = await Keyword.find(
-      { writer: userId, category: 'who', content: filmCreateDto.who },
+      {
+        writer: userId,
+        category: 'who',
+        content: filmCreateDto.who,
+        year: year,
+        month: month,
+      },
       { count: 1 }
     );
     if (whoKeyword.length === 0) {
@@ -202,7 +216,13 @@ const createDaily = async (
 
     // # what 저장
     const whatKeyword = await Keyword.find(
-      { writer: userId, category: 'what', content: filmCreateDto.what },
+      {
+        writer: userId,
+        category: 'what',
+        content: filmCreateDto.what,
+        year: year,
+        month: month,
+      },
       { count: 1 }
     );
     if (whatKeyword.length === 0) {
@@ -263,8 +283,6 @@ const createDaily = async (
     const data = {
       id: film._id,
     };
-
-    //NotificationService.postCapsuleNotice();
 
     return data;
   } catch (error) {

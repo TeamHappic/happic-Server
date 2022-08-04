@@ -115,7 +115,6 @@ const createDaily = async (req: Request, res: Response) => {
       );
   } catch (error) {
     console.log(error);
-    console.log('실행되냐3');
     const errorMessage: string = slackMessage(
       req.method.toUpperCase(),
       req.originalUrl,
@@ -123,9 +122,7 @@ const createDaily = async (req: Request, res: Response) => {
       req.body.user?.id
     );
 
-    console.log('실행되니ㅑ');
     sendMessageToSlack(errorMessage);
-    console.log('실행되니ㅑ2');
 
     res
       .status(statusCode.INTERNAL_SERVER_ERROR)
